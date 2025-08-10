@@ -4,32 +4,34 @@ using UnityEngine;
 public class SonicTurretController : TurretBase
 {
     [Header("Turret Settings")]
-    public Transform turretHead;       // Phần xoay của turret
-    public float rotationSpeed = 5f;   // Tốc độ xoay
-    public GameObject bulletPrefab;    // Prefab viên đạn
-    public Transform firePoint;        // Vị trí bắn đạn
-    public float fireInterval = 0.5f;  // Thời gian giữa các lần bắn
+    public Transform turretHead;
+    public float rotationSpeed = 5f;
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float fireInterval = 0.5f;
+    public float attackRange = 10f;
 
-    private Transform target;          // Enemy đang bị khóa
+    private Transform target;
     private Coroutine shootingCoroutine;
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.CompareTag("Enemy"))
+        target = FindClosestEnemy();
+
+        if (target != null)
         {
-            target = other.transform;
+            // Xoay turret
+            Vector3 direction = target.position - turretHead.position;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            turretHead.rotation = Quaternion.Lerp(turretHead.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
             // Bắt đầu bắn
             if (shootingCoroutine == null)
                 shootingCoroutine = StartCoroutine(ShootRoutine());
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy") && other.transform == target)
+        else
         {
-            target = null;
-            // Ngừng bắn
+            // Dừng bắn
             if (shootingCoroutine != null)
             {
                 StopCoroutine(shootingCoroutine);
@@ -38,15 +40,22 @@ public class SonicTurretController : TurretBase
         }
     }
 
-    private void Update()
+    private Transform FindClosestEnemy()
     {
-        if (target != null)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Transform closest = null;
+        float minDist = Mathf.Infinity;
+
+        foreach (GameObject enemy in enemies)
         {
-            // Xoay turret hướng về enemy
-            Vector3 direction = target.position - turretHead.position;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            turretHead.rotation = Quaternion.Lerp(turretHead.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+            if (dist < minDist && dist <= attackRange)
+            {
+                minDist = dist;
+                closest = enemy.transform;
+            }
         }
+        return closest;
     }
 
     private IEnumerator ShootRoutine()
@@ -60,9 +69,14 @@ public class SonicTurretController : TurretBase
 
     private void Shoot()
     {
-        if (bulletPrefab && firePoint)
+        if (bulletPrefab && firePoint && target != null)
         {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Bullet bullet = bulletObj.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                bullet.SetTarget(target);
+            }
         }
     }
 }
