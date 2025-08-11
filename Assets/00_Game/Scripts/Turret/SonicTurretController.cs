@@ -17,11 +17,11 @@ public class SonicTurretController : TurretBase
     private void Update()
     {
         target = FindClosestEnemy();
-
         if (target != null)
         {
             // Xoay turret
             Vector3 direction = target.position - turretHead.position;
+            direction.y = 0;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             turretHead.rotation = Quaternion.Lerp(turretHead.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
