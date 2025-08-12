@@ -2,37 +2,47 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class PoolInfor
+public interface IPoolable
 {
-    public int maxCount;
-    public float timeToDeactive;
-    public GameObject prefab;
-    public Stack<GameObject> deActiveGO;
+    void OnSpawned();
+    void OnDespawned();
 }
+[Serializable]
 public class ObjectPool : MonoBehaviour
 {
-    protected float timeToDeactive;
-    protected string key;
-    protected Transform spawnPoint;
-    
-    public virtual void OnInit(float timeLife, string nameKey)
+    public int total;
+    public string poolName;
+    public Transform prefab;
+    [NonSerialized] public List<Transform> elements = new List<Transform>();
+    [NonSerialized] public List<IPoolable> poolableCache = new List<IPoolable>();
+    private int index;
+    public ObjectPool() { }
+    public ObjectPool(string poolName, int total, Transform prefab)
     {
-        timeToDeactive = timeLife;
+        this.poolName = poolName;
+        this.total = total;
+        this.prefab = prefab;
     }
-
-    public virtual void OnInit(float timeLife)
+    public Transform OnSpawned()
     {
-        timeToDeactive = timeLife;
+        if (elements.Count == 0) return null;
+
+        index++;
+        if (index >= elements.Count) index = 0;
+
+        Transform trans = elements[index];
+        trans.gameObject.SetActive(true);
+
+        poolableCache[index]?.OnSpawned();
+        return trans;
     }
-    
-    public virtual void OnSpawn(Vector3 newPosition, Transform parent)
+    public void OnDespawned(Transform trans)
     {
-
-    }
-
-    public virtual void OnDespawn()
-    {
-        
+        int idx = elements.IndexOf(trans);
+        if (idx >= 0)
+        {
+            poolableCache[idx]?.OnDespawned();
+            trans.gameObject.SetActive(false);
+        }
     }
 }

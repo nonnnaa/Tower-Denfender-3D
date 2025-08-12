@@ -1,34 +1,41 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : ObjectPool
 {
     public float speed = 15f;
-    public float lifeTime = 3f; // Tự hủy sau 3s nếu không trúng
+    public float lifeTime = 3f; // Tự hủy nếu không trúng
 
     private Transform target;
+    private float lifeTimer;
 
     public void SetTarget(Transform enemy)
     {
         target = enemy;
-    }
-
-    private void Start()
-    {
-        Destroy(gameObject, lifeTime);
+        lifeTimer = lifeTime; // Reset lại thời gian sống mỗi khi bắn
     }
 
     private void Update()
     {
-        if (target == null)
+        // Giảm thời gian sống
+        lifeTimer -= Time.deltaTime;
+        if (lifeTimer <= 0f)
         {
-            Destroy(gameObject);
+            ReleaseToPool();
             return;
         }
 
+        // Nếu mất target
+        if (target == null)
+        {
+            ReleaseToPool();
+            return;
+        }
+
+        // Tính hướng bay
         Vector3 direction = target.position - transform.position;
         float distanceThisFrame = speed * Time.deltaTime;
 
-        // Nếu đạn đủ gần để coi như trúng mục tiêu
+        // Nếu đủ gần để trúng
         if (direction.magnitude <= distanceThisFrame)
         {
             HitTarget();
@@ -36,13 +43,19 @@ public class Bullet : MonoBehaviour
         }
 
         // Bay về hướng enemy
-        transform.Translate(direction.normalized * distanceThisFrame, Space.World);
+        transform.position += direction.normalized * distanceThisFrame;
         transform.LookAt(target);
     }
 
     void HitTarget()
     {
-        // TODO: Thêm xử lý gây sát thương
-        Destroy(gameObject);
+        // TODO: Gây sát thương
+        ReleaseToPool();
+    }
+
+    private void ReleaseToPool()
+    {
+        // Trả lại object pool thay vì Destroy
+        gameObject.SetActive(false);
     }
 }

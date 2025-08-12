@@ -1,73 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class ObjectPoolManager : SingletonMono<ObjectPoolManager>
-{
-    public List<PoolInfor> poolInfors = new List<PoolInfor>();
-    private Dictionary<string, PoolInfor> poolMapping = new Dictionary<string, PoolInfor>();
-    private void Start()
-    {
-        foreach (PoolInfor poolInfor in poolInfors)
-        {
-            poolMapping[poolInfor.prefab.name] = poolInfor;
-            poolInfor.deActiveGO = new Stack<GameObject>();
-            // spawn object when maxCount > 0 => fixed number of object
-            
-            if (poolInfor.maxCount > 0)
-            {
-                for (int i = 0; i < poolInfor.maxCount; i++)
-                {
-                    var go = Instantiate(poolInfor.prefab);
-                    go.SetActive(false);
-                    poolInfor.deActiveGO.Push(go);
-                }
-            }
-        }
-    }
-    public PoolInfor GetPoolInforByName(string name)
-    {
-        return poolMapping[name];
-    }
 
-    public GameObject GetObjectPool(PoolInfor p)
+public class PoolManager : SingletonMono<PoolManager>
+{
+    public List<ObjectPool> pools;
+    public static Dictionary<string, ObjectPool> dic_pool = new Dictionary<string, ObjectPool>();
+
+    void Start()
     {
-        if (p.deActiveGO.Count > 0)
+        foreach (ObjectPool pool in pools)
         {
-            var go = p.deActiveGO.Pop(); ;
-            go.SetActive(true);
-            return go;
+            CreatePoolObjects(pool);
+            dic_pool[pool.poolName] = pool;
         }
-        return null;
     }
-    public GameObject GetObjectPooled(string prefabName)
+    
+    public void AddNewPool(ObjectPool pool)
     {
-        PoolInfor infor = GetPoolInforByName(prefabName);
-        if (infor != null)
+        if (!dic_pool.ContainsKey(pool.poolName))
         {
-            // handle maxCount != 0 case => unlimited number of gameObject.
-            if (infor.maxCount <= 0)
-            {
-                // size stack > 0
-                var objPool1 = GetObjectPool(infor);
-                if (objPool1 != null)
-                {
-                    return objPool1;
-                }
-                else
-                {
-                    // size stack <= 0
-                    var prefab = Instantiate(infor.prefab);
-                    return prefab;
-                }
-            }
-            else
-            {
-                // handle maxCount = 0 => limit number of gameObject active <= maxCount.
-                var objPool2 = GetObjectPool(infor);
-                if(objPool2 != null)
-                    return objPool2;
-            }
+            CreatePoolObjects(pool);
+            dic_pool[pool.poolName] = pool;
         }
-        Debug.Log("Null Infor");
-        return null;
+    }
+    private void CreatePoolObjects(ObjectPool pool)
+    {
+        for (int i = 0; i < pool.total; i++)
+        {
+            Transform trans = Instantiate(pool.prefab, Vector3.zero, Quaternion.identity);
+            trans.gameObject.SetActive(false);
+            pool.elements.Add(trans);
+            pool.poolableCache.Add(trans.GetComponent<IPoolable>());
+        }
+    }
+    private void OnDestroy()
+    {
+        dic_pool.Clear();
     }
 }
