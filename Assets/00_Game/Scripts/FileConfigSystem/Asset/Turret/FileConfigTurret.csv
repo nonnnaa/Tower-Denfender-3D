@@ -1,0 +1,6 @@
+﻿type,name,description,prefabName,hp,buyPrice,sellPrice
+0,Lightning,des1,Lightning,2,16,10
+1,Shield,des2,Shield,3,20,9
+2,Rocket,des3,Rocket,2,17,5
+3,Plasma,des4,Plasma,3,12,10
+4,Shotgun,des5,Shotgun,2,17,10
