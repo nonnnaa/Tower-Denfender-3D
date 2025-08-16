@@ -195,13 +195,13 @@ public class LightningControl : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            ChangeMaterial(currentMaterialIndex + 1);
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Mouse0))
+    //     {
+    //         ChangeMaterial(currentMaterialIndex + 1);
+    //     }
+    // }
 
     private void ChangeMaterial(int value)
     {

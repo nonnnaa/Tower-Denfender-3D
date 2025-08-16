@@ -6,60 +6,64 @@ using UnityEngine.SceneManagement;
 public class LoadSceneManager : SingletonMono<LoadSceneManager>
 {
     private string sceneName;
-    private int sceneIndex;
     private Action callback;
     public event Action<float> OnUpdateProgressEvent;
-    public void LoadSceneById(int sceneIndex, Action callback)
+
+    private float currentProgress;
+
+    public void LoadSceneByName(string newSceneName, Action newCallback)
     {
-        sceneName = string.Empty;
-        this.sceneIndex = sceneIndex;
-        this.callback = callback;
-        StopCoroutine(LoadSceneProgress());
-        StartCoroutine(LoadSceneProgress());
+        sceneName = newSceneName;
+        callback = newCallback;
+        StopCoroutine(nameof(LoadSceneProgress));
+        StartCoroutine(nameof(LoadSceneProgress));
     }
 
-    public void LoadSceneByName(string sceneName, Action callback)
-    {
-        sceneIndex = -1;
-        this.sceneName = sceneName;
-        this.callback = callback;
-        StopCoroutine(LoadSceneProgress());
-        StartCoroutine(LoadSceneProgress());
-    }
-    private AsyncOperation asyncOperation;
-    private float currentProgress;
     IEnumerator LoadSceneProgress()
     {
         currentProgress = 0f;
         yield return new WaitForEndOfFrame();
-        asyncOperation = sceneIndex > 0 ? SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Single) : SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        int count = 0; ;
-        while(count<50)
+
+        // Khởi tạo AsyncOperation nhưng chưa cho phép active scene
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        if (asyncOperation != null)
         {
-            yield return new WaitForSeconds(.05f);
-            currentProgress += 1;
-            count++;
-            OnUpdateProgressEvent?.Invoke(currentProgress);
+            asyncOperation.allowSceneActivation = false;
+
+            // Giả lập progress đến ~90%
+            int count = 0;
+            while (count < 50)
+            {
+                yield return new WaitForSeconds(0.05f);
+                currentProgress += 1;
+                count++;
+                OnUpdateProgressEvent?.Invoke(currentProgress);
+            }
+
+            // Lấy tiến trình thực sự từ asyncOperation (0 -> 0.9)
+            while (asyncOperation.progress < 0.9f)
+            {
+                yield return new WaitForSeconds(0.01f);
+                currentProgress = asyncOperation.progress * 100f;
+                OnUpdateProgressEvent?.Invoke(currentProgress);
+            }
+
+            // Đưa progress lên 100% từ từ (UI mượt hơn)
+            while (currentProgress < 100f)
+            {
+                yield return new WaitForSeconds(0.02f);
+                currentProgress += 1f;
+                OnUpdateProgressEvent?.Invoke(currentProgress);
+            }
+
+            // Khi UI đã đầy 100% thì mới cho phép active scene
+            asyncOperation.allowSceneActivation = true;
+
+            // Chờ scene thực sự được active
+            while (!asyncOperation.isDone)
+                yield return null;
         }
-        yield return new WaitForSeconds(2f);
-        while(count<98)
-        {
-            yield return new WaitForSeconds(.05f);
-            currentProgress += 1;
-            count++;
-            OnUpdateProgressEvent?.Invoke(currentProgress);
-        }
-        yield return new WaitForSeconds(1f);
-        
-        while(asyncOperation is { isDone: false }) // <=> asyncOperation != null && asyncOperation.isDone == false
-        {
-            yield return new WaitForSeconds(0.01f);
-            currentProgress = asyncOperation.progress * 100f;
-            OnUpdateProgressEvent?.Invoke(currentProgress);
-        }
-        currentProgress = 100f ;
-        OnUpdateProgressEvent?.Invoke(currentProgress);
-        callback();
-        
+
+        callback?.Invoke();
     }
 }

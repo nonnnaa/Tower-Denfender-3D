@@ -3,33 +3,66 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Constant;
+
 public class CanvasLoading : UICanvas
 {
     [SerializeField] private Slider loadingValueSlider;
-    [SerializeField] private TextMeshProUGUI  loadingValueText;
+    [SerializeField] private TextMeshProUGUI loadingValueText;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Animator loadingAnimator;
 
     protected override void Awake()
     {
         base.Awake();
-        LoadSceneManager.Instance.OnUpdateProgressEvent += UpdateLoadingUI;
+        if (LoadSceneManager.Instance != null)
+        {
+            LoadSceneManager.Instance.OnUpdateProgressEvent += UpdateLoadingUI;
+        }
     }
+
     public override void Open()
     {
         base.Open();
         Debug.Log("Open");
+
+        if (canvasGroup == null) return;
+
         canvasGroup.alpha = 0;
-        canvasGroup.DOFade(1, 1).OnComplete(() =>
-        {
-            canvasGroup.alpha = 1;
-            LoadSceneManager.Instance.LoadSceneByName(SceneName.InGameScene, null);
-        });
+        canvasGroup.DOFade(1, 1)
+            .SetLink(canvasGroup.gameObject) // tween sẽ bị kill khi object bị destroy
+            .OnComplete(() =>
+            {
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = 1;
+                    if (LoadSceneManager.Instance != null)
+                        LoadSceneManager.Instance.LoadSceneByName(SceneName.InGameScene, FadeUI);
+                }
+            });
     }
-    
-    void UpdateLoadingUI(float progressValue)
+
+    private void FadeUI()
     {
-        loadingValueSlider.value = (int)progressValue;
+        if (canvasGroup == null) return;
+
+        canvasGroup.DOFade(0, 1)
+            .SetLink(canvasGroup.gameObject);
+    }
+
+    private void UpdateLoadingUI(float progressValue)
+    {
+        if (loadingValueSlider == null || loadingValueText == null) return;
+
+        loadingValueSlider.value = progressValue;
         loadingValueText.text = $"Loading... {(int)progressValue}%";
+    }
+
+    private void OnDestroy()
+    {
+        if (LoadSceneManager.Instance != null)
+            LoadSceneManager.Instance.OnUpdateProgressEvent -= UpdateLoadingUI;
+
+        if (canvasGroup != null)
+            DOTween.Kill(canvasGroup); // Kill mọi tween liên quan đến canvasGroup
     }
 }

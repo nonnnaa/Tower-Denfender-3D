@@ -26,7 +26,6 @@ public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         instance = this as T;
         DontDestroyOnLoad(gameObject);
     }
