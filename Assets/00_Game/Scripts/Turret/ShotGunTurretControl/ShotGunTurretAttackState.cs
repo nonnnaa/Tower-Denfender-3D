@@ -101,35 +101,22 @@ public class ShotGunTurretAttackState : FSMState
 
     private void Fire()
     {
-        if (!PoolManager.dic_pool.TryGetValue("Bullet", out var pool))
-        {
-            Debug.LogWarning("Pool 'Bullet' not found!");
-            return;
-        }
-        Transform bulletObj = null;
-        foreach (var item in pool.elements)
-        {
-            if (!item.gameObject.activeInHierarchy)
-            {
-                bulletObj = item;
-                break;
-            }
-        }
+        if (target == null) return;
 
-        if (bulletObj == null)
-        {
-            bulletObj = Object.Instantiate(pool.prefab, turretControl.firePoint.position, turretControl.firePoint.rotation);
-            pool.elements.Add(bulletObj);
-            pool.poolableCache.Add(bulletObj.GetComponent<IPoolable>());
-        }
-        bulletObj.position = turretControl.firePoint.position;
-        bulletObj.rotation = turretControl.firePoint.rotation;
-        bulletObj.gameObject.SetActive(true);
+        // Spawn bullet từ pool (position mặc định là firePoint)
+        Transform bulletObj = PoolManager.Instance.Spawn(
+            "BulletPool",
+            turretControl.firePoint.position
+        );
 
+        if (bulletObj == null) return;
+
+        // Lấy component Bullet và thiết lập hướng bay
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         if (bullet != null)
         {
-            bullet.SetTarget(target);
+            Vector3 direction = (target.position - turretControl.firePoint.position).normalized;
+            bullet.Shoot(direction);
         }
     }
 }

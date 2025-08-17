@@ -4,37 +4,37 @@ using UnityEngine;
 public class PoolManager : SingletonMono<PoolManager>
 {
     public List<ObjectPool> pools;
-    public static Dictionary<string, ObjectPool> dic_pool = new Dictionary<string, ObjectPool>();
+    private Dictionary<string, ObjectPool> dictionaryPool = new Dictionary<string, ObjectPool>();
 
-    void Start()
+    private void Awake()
     {
-        foreach (ObjectPool pool in pools)
+        foreach (var pool in pools)
         {
-            CreatePoolObjects(pool);
-            dic_pool[pool.poolName] = pool;
+            pool.Initialize(transform);
+            dictionaryPool[pool.poolName] = pool;
         }
     }
-    
-    public void AddNewPool(ObjectPool pool)
+
+    public Transform Spawn(string poolName, Vector3 position)
     {
-        if (!dic_pool.ContainsKey(pool.poolName))
+        if (!dictionaryPool.TryGetValue(poolName, out var pool))
         {
-            CreatePoolObjects(pool);
-            dic_pool[pool.poolName] = pool;
+            return null;
         }
+        return pool.GetElement(position);
     }
-    private void CreatePoolObjects(ObjectPool pool)
+
+    public void Despawn(string poolName, Transform t)
     {
-        for (int i = 0; i < pool.total; i++)
+        if (!dictionaryPool.TryGetValue(poolName, out var pool))
         {
-            Transform trans = Instantiate(pool.prefab, Vector3.zero, Quaternion.identity);
-            trans.gameObject.SetActive(false);
-            pool.elements.Add(trans);
-            pool.poolableCache.Add(trans.GetComponent<IPoolable>());
+            return;
         }
+        pool.Despawn(t);
     }
+
     private void OnDestroy()
     {
-        dic_pool.Clear();
+        dictionaryPool.Clear();
     }
 }

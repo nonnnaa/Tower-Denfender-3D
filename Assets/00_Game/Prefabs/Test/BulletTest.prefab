@@ -118,8 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d077721088448804bb0b9e063fee96c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  total: 5
-  poolName: Bullet
-  prefab: {fileID: 127768645131736641}
-  speed: 15
+  speed: 300
   lifeTime: 3

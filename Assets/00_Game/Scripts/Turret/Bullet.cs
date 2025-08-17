@@ -1,22 +1,24 @@
 using UnityEngine;
 
-public class Bullet : ObjectPool
+public class Bullet : MonoBehaviour, IPoolable
 {
     public float speed = 15f;
-    public float lifeTime = 3f; // Tự hủy nếu không trúng
+    public float lifeTime = 3f;
 
-    private Transform target;
     private float lifeTimer;
+    private Vector3 moveDirection;
 
-    public void SetTarget(Transform enemy)
+    private static RaycastHit[] hitBuffer = new RaycastHit[3];
+
+    public void Shoot(Vector3 direction)
     {
-        target = enemy;
-        lifeTimer = lifeTime; // Reset lại thời gian sống mỗi khi bắn
+        moveDirection = direction.normalized;
+        transform.forward = moveDirection;
+        lifeTimer = lifeTime;
     }
 
     private void Update()
     {
-        // Giảm thời gian sống
         lifeTimer -= Time.deltaTime;
         if (lifeTimer <= 0f)
         {
@@ -24,38 +26,45 @@ public class Bullet : ObjectPool
             return;
         }
 
-        // Nếu mất target
-        if (target == null)
-        {
-            ReleaseToPool();
-            return;
-        }
-
-        // Tính hướng bay
-        Vector3 direction = target.position - transform.position;
         float distanceThisFrame = speed * Time.deltaTime;
+        int hitCount = Physics.RaycastNonAlloc(transform.position, moveDirection, hitBuffer, distanceThisFrame);
 
-        // Nếu đủ gần để trúng
-        if (direction.magnitude <= distanceThisFrame)
+        if (hitCount > 0)
         {
-            HitTarget();
-            return;
+            for (int i = 0; i < hitCount; i++)
+            {
+                if (hitBuffer[i].collider.CompareTag("Enemy"))
+                {
+                    HitTarget(hitBuffer[i].collider.gameObject);
+                    return;
+                }
+            }
         }
 
-        // Bay về hướng enemy
-        transform.position += direction.normalized * distanceThisFrame;
-        transform.LookAt(target);
+        transform.position += moveDirection * distanceThisFrame;
     }
 
-    void HitTarget()
+    private void HitTarget(GameObject enemy)
     {
-        // TODO: Gây sát thương
+        // TODO: apply damage nếu cần
         ReleaseToPool();
     }
 
     private void ReleaseToPool()
     {
-        // Trả lại object pool thay vì Destroy
-        gameObject.SetActive(false);
+        PoolManager.Instance.Despawn("BulletPool", transform);
+    }
+
+    // IPoolable
+    public void OnSpawned(Vector3 position)
+    {
+        transform.position = position;
+        transform.SetParent(PoolManager.Instance.transform);
+        gameObject.SetActive(true);
+    }
+
+    public void OnDespawned()
+    {
+        // Reset trạng thái nếu cần (particle, trail renderer...)
     }
 }
