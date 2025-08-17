@@ -6,8 +6,9 @@ public class PoolManager : SingletonMono<PoolManager>
     public List<ObjectPool> pools;
     private Dictionary<string, ObjectPool> dictionaryPool = new Dictionary<string, ObjectPool>();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         foreach (var pool in pools)
         {
             pool.Initialize(transform);

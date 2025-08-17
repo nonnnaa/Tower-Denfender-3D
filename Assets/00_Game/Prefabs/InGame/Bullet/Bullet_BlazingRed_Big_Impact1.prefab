@@ -9480,8 +9480,9 @@ GameObject:
   - component: {fileID: 4765356010445163824}
   - component: {fileID: 9102895405363040102}
   - component: {fileID: 1571509712682312325}
+  - component: {fileID: 2535647717128806144}
   m_Layer: 0
-  m_Name: Bullet_BlazingRed_Big_Impact
+  m_Name: Bullet_BlazingRed_Big_Impact1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9495,7 +9496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211629083996896605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9507,7 +9508,7 @@ Transform:
   - {fileID: 7981756222381000143}
   - {fileID: 6299058598606676267}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &6053271304317633957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9515,7 +9516,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211629083996896605}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0937d8b31b6b2647971c24f4d8f0ea4, type: 3}
   m_Name: 
@@ -9728,7 +9729,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211629083996896605}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a895231490da6545890b1e1794f8704, type: 3}
   m_Name: 
@@ -14543,6 +14544,20 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &2535647717128806144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211629083996896605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74e646bae931ff43bf12509821ea9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particle: {fileID: 1571509712682312325}
+  lifeTime: 1
 --- !u!1 &2597928218365464275
 GameObject:
   m_ObjectHideFlags: 0

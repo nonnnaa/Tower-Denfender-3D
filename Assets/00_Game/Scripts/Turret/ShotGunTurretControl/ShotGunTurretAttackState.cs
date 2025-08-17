@@ -62,11 +62,11 @@ public class ShotGunTurretAttackState : FSMState
         }
     }
 
-    private IEnumerator RotateUntilAimed(Transform target)
+    private IEnumerator RotateUntilAimed(Transform newTarget)
     {
         while (true)
         {
-            Vector3 dir = target.position - turretControl.firePoint.position;
+            Vector3 dir = newTarget.position - turretControl.firePoint.position;
 
             // xoay theo Y
             Vector3 flatDir = new Vector3(dir.x, 0f, dir.z);
@@ -103,14 +103,15 @@ public class ShotGunTurretAttackState : FSMState
     {
         if (target == null) return;
 
+        Transform vfx = PoolManager.Instance.Spawn("MuzzleFlare", turretControl.firePoint.position);
+        
         // Spawn bullet từ pool (position mặc định là firePoint)
         Transform bulletObj = PoolManager.Instance.Spawn(
-            "BulletPool",
+            "Bullet",
             turretControl.firePoint.position
         );
 
         if (bulletObj == null) return;
-
         // Lấy component Bullet và thiết lập hướng bay
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         if (bullet != null)

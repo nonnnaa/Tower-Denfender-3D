@@ -207,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[0]
@@ -223,27 +223,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[0].total
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[1].total
-      value: 10
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: pools.Array.data[2].total
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 8470854846808316020, guid: 0b68024d1241ffe46a4ae47e99028faa, type: 3}
+      objectReference: {fileID: 6797351696656066369, guid: 0a049cbcfb57fa24ba911a0b8692d441, type: 3}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 8627927385916275809, guid: 85c21d7c044727d4aa4e0a1861998063, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: pools.Array.data[2].prefab
       value: 
       objectReference: {fileID: 1211629083996896605, guid: 76532b77fb7f5124f8e9f20dea26219e, type: 3}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[0].poolName
-      value: BulletPool
+      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[1].poolName
-      value: BlazingRed
+      value: MuzzleFlare
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: pools.Array.data[2].poolName
+      value: Impact
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

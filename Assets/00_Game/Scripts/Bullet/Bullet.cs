@@ -3,29 +3,19 @@ using UnityEngine;
 public class Bullet : MonoBehaviour, IPoolable
 {
     public float speed = 15f;
-    public float lifeTime = 3f;
-
     private float lifeTimer;
     private Vector3 moveDirection;
 
-    private static RaycastHit[] hitBuffer = new RaycastHit[3];
+    private static RaycastHit[] hitBuffer = new RaycastHit[10];
 
     public void Shoot(Vector3 direction)
     {
         moveDirection = direction.normalized;
         transform.forward = moveDirection;
-        lifeTimer = lifeTime;
     }
 
     private void Update()
     {
-        lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0f)
-        {
-            ReleaseToPool();
-            return;
-        }
-
         float distanceThisFrame = speed * Time.deltaTime;
         int hitCount = Physics.RaycastNonAlloc(transform.position, moveDirection, hitBuffer, distanceThisFrame);
 
@@ -35,7 +25,7 @@ public class Bullet : MonoBehaviour, IPoolable
             {
                 if (hitBuffer[i].collider.CompareTag("Enemy"))
                 {
-                    HitTarget(hitBuffer[i].collider.gameObject);
+                    HitTarget(hitBuffer[i].collider.gameObject, hitBuffer[i].point);
                     return;
                 }
             }
@@ -44,15 +34,16 @@ public class Bullet : MonoBehaviour, IPoolable
         transform.position += moveDirection * distanceThisFrame;
     }
 
-    private void HitTarget(GameObject enemy)
+    private void HitTarget(GameObject enemy, Vector3 point)
     {
-        // TODO: apply damage nếu cần
+        PoolManager.Instance.Spawn("Impact", point);
         ReleaseToPool();
+        OnDespawned();
     }
 
     private void ReleaseToPool()
     {
-        PoolManager.Instance.Despawn("BulletPool", transform);
+        PoolManager.Instance.Despawn("Bullet", transform);
     }
 
     // IPoolable
@@ -65,6 +56,6 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void OnDespawned()
     {
-        // Reset trạng thái nếu cần (particle, trail renderer...)
+        gameObject.SetActive(false);
     }
 }
