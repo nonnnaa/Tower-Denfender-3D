@@ -7,10 +7,11 @@ public class UIManager : SingletonMono<UIManager>
     Dictionary<System.Type, UICanvas> canvasActives = new Dictionary<System.Type, UICanvas>();
     Dictionary<System.Type, UICanvas> canvasPrefabs = new Dictionary<System.Type, UICanvas>();
     [SerializeField] private Transform parent;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         // load UI Prefab tu Resources
-        UICanvas[] prefabs = Resources.LoadAll<UICanvas>("UI/");
+        UICanvas[] prefabs = Resources.LoadAll<UICanvas>($"UI/");
         for (int i = 0; i < prefabs.Length; i++)
         {
             canvasPrefabs.Add(prefabs[i].GetType(), prefabs[i]);

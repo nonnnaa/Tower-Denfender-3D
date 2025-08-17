@@ -8,7 +8,6 @@ public class LoadSceneManager : SingletonMono<LoadSceneManager>
     private string sceneName;
     private Action callback;
     public event Action<float> OnUpdateProgressEvent;
-
     private float currentProgress;
 
     public void LoadSceneByName(string newSceneName, Action newCallback)
@@ -55,7 +54,9 @@ public class LoadSceneManager : SingletonMono<LoadSceneManager>
                 currentProgress += 1f;
                 OnUpdateProgressEvent?.Invoke(currentProgress);
             }
-
+            callback?.Invoke();
+            yield return new WaitForSeconds(1f);
+            
             // Khi UI đã đầy 100% thì mới cho phép active scene
             asyncOperation.allowSceneActivation = true;
 
@@ -64,6 +65,6 @@ public class LoadSceneManager : SingletonMono<LoadSceneManager>
                 yield return null;
         }
 
-        callback?.Invoke();
+        
     }
 }

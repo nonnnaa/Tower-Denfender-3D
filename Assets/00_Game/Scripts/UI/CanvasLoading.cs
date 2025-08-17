@@ -23,30 +23,28 @@ public class CanvasLoading : UICanvas
     public override void Open()
     {
         base.Open();
-        Debug.Log("Open");
-
+        //Debug.Log("Open");
         if (canvasGroup == null) return;
-
         canvasGroup.alpha = 0;
         canvasGroup.DOFade(1, 1)
             .SetLink(canvasGroup.gameObject) // tween sẽ bị kill khi object bị destroy
             .OnComplete(() =>
             {
-                if (canvasGroup != null)
-                {
-                    canvasGroup.alpha = 1;
-                    if (LoadSceneManager.Instance != null)
-                        LoadSceneManager.Instance.LoadSceneByName(SceneName.InGameScene, FadeUI);
-                }
+                canvasGroup.alpha = 1;
+                if (LoadSceneManager.Instance != null)
+                    LoadSceneManager.Instance.LoadSceneByName(SceneName.InGameScene, FadeUI);
             });
     }
 
     private void FadeUI()
     {
         if (canvasGroup == null) return;
-
         canvasGroup.DOFade(0, 1)
-            .SetLink(canvasGroup.gameObject);
+            .SetLink(canvasGroup.gameObject)
+            .OnComplete(() => 
+            {
+                Close(0f);
+            });
     }
 
     private void UpdateLoadingUI(float progressValue)
@@ -57,12 +55,10 @@ public class CanvasLoading : UICanvas
         loadingValueText.text = $"Loading... {(int)progressValue}%";
     }
 
-    private void OnDestroy()
+    public override void Close(float time)
     {
-        if (LoadSceneManager.Instance != null)
-            LoadSceneManager.Instance.OnUpdateProgressEvent -= UpdateLoadingUI;
-
+        base.Close(time);
         if (canvasGroup != null)
-            DOTween.Kill(canvasGroup); // Kill mọi tween liên quan đến canvasGroup
+            DOTween.Kill(canvasGroup); 
     }
 }

@@ -5,7 +5,10 @@ public class FSMSystem : MonoBehaviour
 
     public void ChangeState(FSMState newState)
     {
-        currentState.ExitState();
+        if (currentState != null)
+        {
+            currentState.ExitState();
+        }
         currentState = newState;
         currentState.EnterState();
     }

@@ -35,6 +35,12 @@ public class UICanvas : MonoBehaviour
     // tat canvas sau t (s)
     public virtual void Close(float time)
     {
+        StartCoroutine(CloseE(time));
+    }
+
+    IEnumerator CloseE(float time)
+    {
+        yield return new WaitForSeconds(time);
         if (isDestroyOnClose)
         {
             Destroy(gameObject);
@@ -43,12 +49,6 @@ public class UICanvas : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        StartCoroutine(CloseE(time));
-    }
-
-    IEnumerator CloseE(float time)
-    {
-        yield return new WaitForSeconds(time);
     }
     
 }
