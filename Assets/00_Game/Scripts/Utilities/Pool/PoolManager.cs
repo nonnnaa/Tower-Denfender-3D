@@ -16,13 +16,13 @@ public class PoolManager : SingletonMono<PoolManager>
         }
     }
 
-    public Transform Spawn(string poolName, Vector3 position)
+    public Transform Spawn(string poolName, Vector3 position, Transform parent)
     {
         if (!dictionaryPool.TryGetValue(poolName, out var pool))
         {
             return null;
         }
-        return pool.GetElement(position);
+        return pool.GetElement(position, parent);
     }
 
     public void Despawn(string poolName, Transform t)

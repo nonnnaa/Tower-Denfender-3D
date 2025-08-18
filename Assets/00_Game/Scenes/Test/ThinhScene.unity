@@ -223,15 +223,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[0].total
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[1].total
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[2].total
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
       propertyPath: pools.Array.data[0].prefab
@@ -343,6 +343,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f2efdd36f49107478a688559183f955, type: 3}
+--- !u!4 &475033103 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 425980, guid: b9836ac70b57ca5408f79c7a48ee16db, type: 3}
+  m_PrefabInstance: {fileID: 1484046134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1295967222
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,11 +680,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1484046139}
   m_SourcePrefab: {fileID: 100100000, guid: b9836ac70b57ca5408f79c7a48ee16db, type: 3}
---- !u!4 &1484046135 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 467076, guid: b9836ac70b57ca5408f79c7a48ee16db, type: 3}
-  m_PrefabInstance: {fileID: 1484046134}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1484046136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 130390, guid: b9836ac70b57ca5408f79c7a48ee16db, type: 3}
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 989b41031c857364780eeab808ee166a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBaseY: {fileID: 1484046135}
+  turretBaseY: {fileID: 475033103}
   turretHeadX: {fileID: 1484046138}
   firePoint: {fileID: 46600782}
   rotationSpeed: 5

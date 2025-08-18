@@ -23,8 +23,9 @@ public class Impact : MonoBehaviour, IPoolable
             }
         }
     }
-    public void OnSpawned(Vector3 position)
+    public void OnSpawned(Vector3 position, Transform parent)
     {
+        transform.SetParent(parent);
         particle.Play();
         lifeTime = 1.5f;
     }

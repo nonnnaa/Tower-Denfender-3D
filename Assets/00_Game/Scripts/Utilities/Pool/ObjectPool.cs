@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public interface IPoolable
 {
-    void OnSpawned(Vector3 position);
+    void OnSpawned(Vector3 position, [CanBeNull] Transform parent);
     void OnDespawned();
 }
 
@@ -31,7 +32,7 @@ public class ObjectPool
     }
 
     // Lấy object từ pool
-    public Transform GetElement(Vector3 position)
+    public Transform GetElement(Vector3 position,  [CanBeNull] Transform parent)
     {
         for (int i = 0; i < elements.Count; i++)
         {
@@ -40,7 +41,7 @@ public class ObjectPool
                 elements[i].position = position;
                 elements[i].gameObject.SetActive(true);
                 elements[i].TryGetComponent<IPoolable>(out var poolable);
-                poolable?.OnSpawned(position);
+                poolable?.OnSpawned(position, parent);
                 return elements[i];
             }
         }
@@ -51,7 +52,7 @@ public class ObjectPool
         elements.Add(newObj.transform);
 
         newObj.TryGetComponent<IPoolable>(out var newPoolable);
-        newPoolable?.OnSpawned(position);
+        newPoolable?.OnSpawned(position, null);
 
         return newObj.transform;
     }

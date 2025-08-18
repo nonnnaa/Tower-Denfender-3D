@@ -103,12 +103,13 @@ public class ShotGunTurretAttackState : FSMState
     {
         if (target == null) return;
 
-        Transform vfx = PoolManager.Instance.Spawn("MuzzleFlare", turretControl.firePoint.position);
+        Transform vfx = PoolManager.Instance.Spawn("MuzzleFlare", turretControl.firePoint.position, PoolManager.Instance.transform);
         
         // Spawn bullet từ pool (position mặc định là firePoint)
         Transform bulletObj = PoolManager.Instance.Spawn(
             "Bullet",
-            turretControl.firePoint.position
+            turretControl.firePoint.position,
+            PoolManager.Instance.transform
         );
 
         if (bulletObj == null) return;

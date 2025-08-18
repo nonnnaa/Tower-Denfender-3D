@@ -1,12 +1,19 @@
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolable
 {
     public float speed = 15f;
-    private float lifeTimer;
+    [SerializeField] private float lifeTime = 3f;
+    private float timer;
     private Vector3 moveDirection;
 
-    private static RaycastHit[] hitBuffer = new RaycastHit[10];
+    private static RaycastHit[] hitBuffer = new RaycastHit[5];
+
+    private void Start()
+    {
+        timer = lifeTime;
+    }
 
     public void Shoot(Vector3 direction)
     {
@@ -16,6 +23,16 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void Update()
     {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            timer = lifeTime;
+            ReleaseToPool();
+            return;
+        }
         float distanceThisFrame = speed * Time.deltaTime;
         int hitCount = Physics.RaycastNonAlloc(transform.position, moveDirection, hitBuffer, distanceThisFrame);
 
@@ -36,7 +53,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void HitTarget(GameObject enemy, Vector3 point)
     {
-        PoolManager.Instance.Spawn("Impact", point);
+        PoolManager.Instance.Spawn("Impact", point, enemy.transform);
         ReleaseToPool();
         OnDespawned();
     }
@@ -47,10 +64,10 @@ public class Bullet : MonoBehaviour, IPoolable
     }
 
     // IPoolable
-    public void OnSpawned(Vector3 position)
+    public void OnSpawned(Vector3 position, Transform parent)
     {
         transform.position = position;
-        transform.SetParent(PoolManager.Instance.transform);
+        transform.SetParent(parent);
         gameObject.SetActive(true);
     }
 
