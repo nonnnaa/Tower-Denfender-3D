@@ -27,8 +27,10 @@ public class LightningControl : MonoBehaviour
     private Material instanceMaterial;
     private Material[] instanceMaterials; // cache các instance
     private int max;
+    //[SerializeField] 
     private int columns = 2;
-    private int rows = 8;
+    //[SerializeField] 
+    private int rows = 16;
     private int currentFrame;
     private readonly bool distanceBasedDisplacement = true;
     private readonly bool zDisplacement = false;
@@ -36,12 +38,12 @@ public class LightningControl : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool run;
 
+    
+    
     private void Awake()
     {
-        // Khởi tạo cache
         instanceMaterials = new Material[materials.Length];
     }
-
     void Start()
     {
         Initialize();
@@ -56,49 +58,16 @@ public class LightningControl : MonoBehaviour
         StopCoroutine(UpdateTiling());
     }
 
-    void OnEnable()
-    {
-        if (lineRendererComponent != null)
-        {
-            lineRendererComponent.enabled = true;
-            Initialize();
-        } 
-        StartCoroutine(UpdateTiling());
-    }
+    
 
     private void Initialize()
     {
-        max = rows * columns;
-
-        // add LineRenderer nếu chưa có
-        if (lineRendererComponent == null)
-        {
-            lineRendererComponent = gameObject.GetComponent<LineRenderer>();
-            if (lineRendererComponent == null)
-                lineRendererComponent = gameObject.AddComponent<LineRenderer>();
-        }
-
         lineRendererComponent.positionCount = points;
-
-        // ✅ lấy instance từ cache
-        if (instanceMaterials[currentMaterialIndex] == null)
-        {
-            instanceMaterials[currentMaterialIndex] = Instantiate(materials[currentMaterialIndex]);
-        }
-        instanceMaterial = instanceMaterials[currentMaterialIndex];
-
-        // apply material
-        lineRendererComponent.material = instanceMaterial;
-
-        // set tile size
-        size = new Vector2(1f / columns, 1f / rows);
-        instanceMaterial.SetTextureScale(MainTex, size);
-
-        // get offsets array
-        GetRandomOffsets();
-        run = true;
-
         lineRendererComponent.sortingLayerName = "3";
+        instanceMaterials[currentMaterialIndex] = Instantiate(materials[currentMaterialIndex]);
+        instanceMaterial = instanceMaterials[currentMaterialIndex];
+        run = true;
+        ChangeMaterial(currentMaterialIndex);
     }
 
     private void GetRandomOffsets()
@@ -112,11 +81,18 @@ public class LightningControl : MonoBehaviour
         }
     }
     
-    private void UpdateMaterial(int newRows, int newColumns, Material newMaterial)
+    private void UpdateMaterial()
     {
-        rows = newRows;
-        columns = newColumns;
-        Initialize();
+        max = rows * columns;
+        if (instanceMaterials[currentMaterialIndex] == null)
+        {
+            instanceMaterials[currentMaterialIndex] = Instantiate(materials[currentMaterialIndex]);
+        }
+        instanceMaterial = instanceMaterials[currentMaterialIndex];
+        lineRendererComponent.material = instanceMaterial;
+        size = new Vector2(1f / columns, 1f / rows);
+        instanceMaterial.SetTextureScale(MainTex, size);
+        GetRandomOffsets();
     }
 
     private IEnumerator UpdateTiling()
@@ -195,42 +171,40 @@ public class LightningControl : MonoBehaviour
         }
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.Mouse0))
-    //     {
-    //         ChangeMaterial(currentMaterialIndex + 1);
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            currentMaterialIndex = (currentMaterialIndex + 1) % instanceMaterials.Length;
+            ChangeMaterial(currentMaterialIndex);
+        }
+    }
 
     private void ChangeMaterial(int value)
     {
-        if (currentMaterialIndex == value) return;
+        currentMaterialIndex = value;
 
-        currentMaterialIndex = value >= materials.Length ? 0 : value;
-        
         switch (currentMaterialIndex)
         {
             case 0:
             case 1:
             case 2:
-                HandleMaterialChange(8, 2, materials[currentMaterialIndex]);
+                rows = 8;
+                columns = 2;
                 break;
             case 3:
             case 4:
             case 5:
-                HandleMaterialChange(16, 2, materials[currentMaterialIndex]);
+                rows = 16;
+                columns = 2;
                 break;
             case 6:
             case 7:
             case 8:
-                HandleMaterialChange(16, 4, materials[currentMaterialIndex]);
+                rows = 16;
+                columns = 4;
                 break;
         }
-    }
-
-    private void HandleMaterialChange(int newRows, int newColumns, Material newMaterial)
-    {
-        UpdateMaterial(newRows, newColumns, newMaterial);
+        UpdateMaterial();
     }
 }

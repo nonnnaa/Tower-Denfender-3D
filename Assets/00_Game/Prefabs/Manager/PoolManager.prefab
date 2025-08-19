@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3894984271328198960}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,4 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pools:
-  - {fileID: -1168375394099556290, guid: 0b68024d1241ffe46a4ae47e99028faa, type: 3}
+  - poolName: ProjectileShortGunTurret
+    prefab: {fileID: 6797351696656066369, guid: 0a049cbcfb57fa24ba911a0b8692d441, type: 3}
+    total: 5
+  - poolName: MuzzleFlareShortGunTurret
+    prefab: {fileID: 8627927385916275809, guid: 85c21d7c044727d4aa4e0a1861998063, type: 3}
+    total: 5
+  - poolName: ImpactShortGunTurret
+    prefab: {fileID: 1211629083996896605, guid: 76532b77fb7f5124f8e9f20dea26219e, type: 3}
+    total: 5
+  - poolName: ProjectilePlasmaTurret
+    prefab: {fileID: 168183224690210804, guid: eb32dde7579e9134b9ca6b391bd0f7e2, type: 3}
+    total: 5
+  - poolName: MuzzleFlarePlasmaTurret
+    prefab: {fileID: 5011227052427988256, guid: 0fc67c0f795193045a186d3573c03beb, type: 3}
+    total: 5
+  - poolName: ImpactPlasmaTurret
+    prefab: {fileID: 8359183860168525469, guid: 1f3f3d8d2f149684bad0e977f0d726ff, type: 3}
+    total: 5

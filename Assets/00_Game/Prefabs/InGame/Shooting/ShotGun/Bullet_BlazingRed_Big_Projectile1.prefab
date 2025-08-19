@@ -19566,3 +19566,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
+  lifeTime: 3
+  projectileName: ProjectileShortGunTurret
+  impactName: ImpactShortGunTurret

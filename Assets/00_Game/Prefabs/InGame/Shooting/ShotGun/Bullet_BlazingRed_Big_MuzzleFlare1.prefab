@@ -4854,13 +4854,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995966374590694608}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000010220627, y: -0.0000010220597, z: -0.70710576, w: 0.70710784}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5008500323130465431}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.00001}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &514834527344850870
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9628,13 +9628,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8306168975617817141}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000007, y: 1.0000007, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5008500323130465431}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &4758241609766871470
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14439,8 +14439,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5008500323130465431}
-  - component: {fileID: 7656243493103639993}
-  - component: {fileID: 3690976966129611626}
   - component: {fileID: 6152888335985841943}
   - component: {fileID: 7892392046881800377}
   - component: {fileID: 4191289976801002547}
@@ -14459,7 +14457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8627927385916275809}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14468,134 +14466,7 @@ Transform:
   - {fileID: 7965470706514290790}
   - {fileID: 6972269453852603}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &7656243493103639993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8627927385916275809}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0937d8b31b6b2647971c24f4d8f0ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colorChangeList:
-  - Name: Cone
-    colored_ParticleSystem:
-    - {fileID: 514834527344850870}
-    Gradient_custom:
-      serializedVersion: 2
-      key0: {r: 1, g: 0.9849599, b: 0.9338235, a: 1}
-      key1: {r: 1, g: 0.491, b: 0, a: 1}
-      key2: {r: 1, g: 0.10696416, b: 0.0039215684, a: 0}
-      key3: {r: 1, g: 0.39215687, b: 0.003921569, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 29684
-      ctime1: 34888
-      ctime2: 44718
-      ctime3: 65535
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 49151
-      atime2: 65535
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_ColorSpace: -1
-      m_NumColorKeys: 3
-      m_NumAlphaKeys: 3
-  - Name: Sprite
-    colored_ParticleSystem:
-    - {fileID: 4758241609766871470}
-    Gradient_custom:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 0.51724136, b: 0, a: 1}
-      key2: {r: 1, g: 0.30831644, b: 0.19117647, a: 0}
-      key3: {r: 0.19117647, g: 0.5649088, b: 1, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 9638
-      ctime2: 24094
-      ctime3: 34310
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 49151
-      atime2: 65535
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_ColorSpace: -1
-      m_NumColorKeys: 3
-      m_NumAlphaKeys: 3
-  - Name: Glow
-    colored_ParticleSystem:
-    - {fileID: 1921993757825473781}
-    Gradient_custom:
-      serializedVersion: 2
-      key0: {r: 1, g: 0.091, b: 0, a: 0}
-      key1: {r: 1, g: 0.091, b: 0, a: 1}
-      key2: {r: 1, g: 0.24827586, b: 0, a: 1}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 65535
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 11486
-      atime2: 42699
-      atime3: 65535
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_ColorSpace: -1
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 4
-  applyChanges: 0
-  Keep_applyChanges: 0
---- !u!114 &3690976966129611626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8627927385916275809}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a895231490da6545890b1e1794f8704, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathtimer: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &6152888335985841943
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -19418,4 +19289,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 7892392046881800377}
+  muzzleFlareName: MuzzleFlareShortGunTurret
   lifeTime: 1

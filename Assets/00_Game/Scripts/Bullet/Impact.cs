@@ -1,8 +1,8 @@
 using UnityEngine;
-
 public class Impact : MonoBehaviour, IPoolable
 {
     [SerializeField] private ParticleSystem particle;
+    [SerializeField] private string impactName;
     public float lifeTime = 1.5f;
     private void Awake()
     {
@@ -11,7 +11,7 @@ public class Impact : MonoBehaviour, IPoolable
             particle = GetComponent<ParticleSystem>();
         }
     }
-
+    
     private void Update()
     {
         if (lifeTime > 0)
@@ -19,19 +19,27 @@ public class Impact : MonoBehaviour, IPoolable
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
-                PoolManager.Instance.Despawn("Impact", transform);
+                PoolManager.Instance.Despawn(impactName, transform);
             }
         }
     }
-    public void OnSpawned(Vector3 position, Transform parent)
+    public void OnSpawned(Vector3 position, Transform newParent)
     {
-        transform.SetParent(parent);
+        if (newParent != null)
+        {
+            transform.SetParent(newParent);
+            Quaternion combinedRotation = newParent.rotation * Quaternion.LookRotation((transform.position - newParent.transform.position).normalized);
+            transform.rotation = combinedRotation;
+        }
+        
         particle.Play();
         lifeTime = 1.5f;
     }
 
     public void OnDespawned()
     {
+        lifeTime = 1.5f;
+        gameObject.transform.SetParent(PoolManager.Instance.transform);
         gameObject.SetActive(false);
     }
 }

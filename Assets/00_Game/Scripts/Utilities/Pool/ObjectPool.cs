@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 public interface IPoolable
 {
-    void OnSpawned(Vector3 position, [CanBeNull] Transform parent);
+    void OnSpawned(Vector3 position, [CanBeNull] Transform newParent);
     void OnDespawned();
 }
 
@@ -29,6 +29,16 @@ public class ObjectPool
             obj.SetActive(false);
             elements.Add(obj.transform);
         }
+    }
+
+    public void RemoveFromPool(Transform element)
+    {
+        elements.Remove(element);
+    }
+
+    public void ReturnToPool(Transform element)
+    {
+        elements.Add(element);
     }
 
     // Lấy object từ pool

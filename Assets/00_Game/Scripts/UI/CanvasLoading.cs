@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Constant;
+using CONSTANT;
 
 public class CanvasLoading : UICanvas
 {

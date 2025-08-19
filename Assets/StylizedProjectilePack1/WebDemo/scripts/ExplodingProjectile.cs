@@ -32,10 +32,10 @@ public class ExplodingProjectile : MonoBehaviour
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
-        if (Missile)
-        {
-            missileTarget = GameObject.FindWithTag("Target").transform;
-        }
+        // if (Missile)
+        // {
+        //     missileTarget = GameObject.FindWithTag("Target").transform;
+        // }
         thisCollider = GetComponent<Collider>();
         previousPosition = transform.position;
     }
@@ -91,14 +91,14 @@ public class ExplodingProjectile : MonoBehaviour
             Instantiate(impactPrefab, pos, rot);
             if (!explodeOnTimer && Missile == false)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
             else if (Missile == true)
             {
                 thisCollider.enabled = false;
                 particleKillGroup.SetActive(false);
                 thisRigidbody.velocity = Vector3.zero;
-                Destroy(gameObject, 5);
+                //Destroy(gameObject, 5);
             }
 
         }
@@ -118,7 +118,7 @@ public class ExplodingProjectile : MonoBehaviour
             Instantiate(impactPrefab, pos, rot);
             if (!explodeOnTimer && Missile == false)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
             else if (Missile == true)
             {
@@ -127,7 +127,7 @@ public class ExplodingProjectile : MonoBehaviour
                 particleKillGroup.SetActive(false);
                 thisRigidbody.velocity = Vector3.zero;
 
-                Destroy(gameObject, 5);
+                //Destroy(gameObject, 5);
 
             }
         }
@@ -136,7 +136,7 @@ public class ExplodingProjectile : MonoBehaviour
     void Explode()
     {
         Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.Euler(0, 0, 0));
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 }

@@ -1,17 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using CONSTANT;
-public class ShotGunTurretAttackState : FSMState
+public class PlasmaTurretAttackState : FSMState
 {
-    private readonly ShotGunTurretControl turretControl;
+    private readonly PlasmaTurretControl turretControl;
     private Transform target;
     private Coroutine attackCoroutine;
-
-    public ShotGunTurretAttackState(ShotGunTurretControl turretControl)
+    public PlasmaTurretAttackState(PlasmaTurretControl turretControl)
     {
         this.turretControl = turretControl;
     }
-
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
@@ -19,13 +17,11 @@ public class ShotGunTurretAttackState : FSMState
 
     public override void EnterState()
     {
-        // start attack coroutine
         attackCoroutine = turretControl.StartCoroutine(AttackRoutine());
     }
 
     public override void ExitState()
     {
-        // stop when leaving state
         if (attackCoroutine != null)
         {
             turretControl.StopCoroutine(attackCoroutine);
@@ -67,7 +63,6 @@ public class ShotGunTurretAttackState : FSMState
         while (true)
         {
             Vector3 dir = newTarget.position - turretControl.firePoint.position;
-
             // xoay theo Y
             Vector3 flatDir = new Vector3(dir.x, 0f, dir.z);
             if (flatDir.sqrMagnitude > 0.01f)
@@ -102,16 +97,13 @@ public class ShotGunTurretAttackState : FSMState
     private void Fire()
     {
         if (target == null) return;
-
-        PoolManager.Instance.Spawn(MuzzleFlareName.MuzzleFlareShortGunTurret, turretControl.firePoint.position, turretControl.firePoint);
-        
         // Spawn bullet từ pool (position mặc định là firePoint)
         Transform bulletObj = PoolManager.Instance.Spawn(
-            ProjectileName.ProjectileShortGunTurret,
+            ProjectileName.ProjectilePlasmaTurret,
             turretControl.firePoint.position,
             PoolManager.Instance.transform
         );
-
+        bulletObj.GetComponent<PlasmaBullet>().SetCurrentParent(turretControl.firePoint);
         if (bulletObj == null) return;
         // Lấy component ShotGunBullet và thiết lập hướng bay
         IBullet bullet = bulletObj.GetComponent<IBullet>();
