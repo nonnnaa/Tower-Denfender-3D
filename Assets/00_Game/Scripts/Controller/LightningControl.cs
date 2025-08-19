@@ -9,8 +9,9 @@ public class LightningControl : MonoBehaviour
 
     [Header("Components")] 
     [SerializeField] private Transform beginPoint;
-    [SerializeField] private GameObject targetPoint;
+    [SerializeField] private Transform targetPoint;
     [SerializeField] private LineRenderer lineRendererComponent;
+    [SerializeField] private Transform impactLightningTransform;
     
     [Header("Lightning Settings")]
     [SerializeField] private Material[] materials;
@@ -44,12 +45,16 @@ public class LightningControl : MonoBehaviour
     {
         instanceMaterials = new Material[materials.Length];
     }
-    void Start()
+
+    private void OnEnable()
     {
         Initialize();
         StartCoroutine(UpdateTiling());
+        if (lineRendererComponent != null)
+            lineRendererComponent.enabled = true;
+        targetPoint.SetParent(transform);
     }
-    
+
     void OnDisable()
     {
         if (lineRendererComponent != null)
@@ -58,7 +63,19 @@ public class LightningControl : MonoBehaviour
         StopCoroutine(UpdateTiling());
     }
 
-    
+    public void SetTarget(Transform newTarget)
+    {
+        // if (Physics.Raycast(transform.position, (newTarget.position - transform.position).normalized, 
+        //         out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask($"Enemy")))
+        // {
+           // targetPoint.position = hit.point;
+           // targetPoint.LookAt(newTarget);
+           
+           targetPoint.position = newTarget.position;
+           targetPoint.rotation = newTarget.rotation;
+           targetPoint.SetParent(newTarget);
+        //}
+    }
 
     private void Initialize()
     {
@@ -101,6 +118,12 @@ public class LightningControl : MonoBehaviour
         {
             if (targetPoint != null)
             {
+                if (Physics.Raycast(transform.position, (targetPoint.position - transform.position).normalized, 
+                        out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask($"Enemy")))
+                {
+                    impactLightningTransform.position = hit.point;
+                    impactLightningTransform.LookAt(transform);
+                }
                 currentFrame++;
                 if (currentFrame >= rows * columns)
                     currentFrame = 0;
@@ -110,7 +133,7 @@ public class LightningControl : MonoBehaviour
                 lineRendererComponent.endWidth = lineScale;
 
                 Vector3 startPos = beginPoint.position;
-                Vector3 endPos = targetPoint.transform.position;
+                Vector3 endPos = targetPoint.position;
                 lineRendererComponent.SetPosition(0, startPos);
                 lineRendererComponent.SetPosition(points - 1, endPos);
 
@@ -168,15 +191,6 @@ public class LightningControl : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f / framesPerSecond);
             }
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            currentMaterialIndex = (currentMaterialIndex + 1) % instanceMaterials.Length;
-            ChangeMaterial(currentMaterialIndex);
         }
     }
 

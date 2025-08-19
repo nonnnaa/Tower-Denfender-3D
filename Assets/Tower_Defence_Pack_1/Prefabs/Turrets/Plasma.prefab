@@ -180,7 +180,6 @@ GameObject:
   - component: {fileID: 2301066}
   - component: {fileID: 9525550}
   - component: {fileID: 6579638}
-  - component: {fileID: 2589793405648891929}
   m_Layer: 0
   m_Name: Plasma
   m_TagString: Untagged
@@ -296,26 +295,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.7906017, y: 0.81869465, z: 2.790603}
   m_Center: {x: 0, y: 0.40934703, z: 0}
---- !u!114 &2589793405648891929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ac2251d34374f40a5fbb773292ea0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretBaseY: {fileID: 438652}
-  turretHeadX: {fileID: 442642}
-  firePoint: {fileID: 7442682485995881857}
-  rotationSpeed: 5
-  fireInterval: 0.5
-  attackRange: 15
-  minAttackRange: 5
-  target: {fileID: 0}
 --- !u!1 &138512
 GameObject:
   m_ObjectHideFlags: 0
