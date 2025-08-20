@@ -19,17 +19,20 @@ namespace CONSTANT
     {
         public static readonly string MuzzleFlareShortGunTurret = "MuzzleFlareShortGunTurret";
         public static readonly string MuzzleFlarePlasmaTurret = "MuzzleFlarePlasmaTurret";
+        
     }
 
     public static class ProjectileName
     {
         public static readonly string ProjectileShortGunTurret = "ProjectileShortGunTurret";
         public static readonly string ProjectilePlasmaTurret = "ProjectilePlasmaTurret";
+        public static readonly string ProjectileRocketTurret = "ProjectileRocketTurret";
     }
 
     public static class ImpactName
     {
         public static readonly string ImpactShortGunTurret = "ImpactShortGunTurret";
         public static string ImpactPlasmaTurret = "ImpactPlasmaTurret";
+        public static readonly string ImpactRocketTurret = "ImpactRocketTurret";
     }
 }

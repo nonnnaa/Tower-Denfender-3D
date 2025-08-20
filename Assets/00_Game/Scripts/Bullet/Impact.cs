@@ -11,7 +11,10 @@ public class Impact : MonoBehaviour, IPoolable
             particle = GetComponent<ParticleSystem>();
         }
     }
-    
+    public void SetScaleParticleSystem(float scale)
+    {
+        particle.transform.localScale = new Vector3(scale, scale, scale);
+    }
     private void Update()
     {
         if (lifeTime > 0)
