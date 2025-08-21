@@ -24,10 +24,10 @@ public class LightningTurretControl : FSMSystem
     public Transform turretHeadX;        // trục xoay X
     public Transform firePoint;          // điểm bắn
     public float rotationSpeed = 5f;
-    public float fireInterval = 0.5f;
-    public float attackRange = 15f;
+    public float fireInterval = 2f;
+    public float attackRange = 100f;
     public float minAttackRange = 3f;
-    public float timeAttack;
+    public float timeAttack = 10f;
 
     [HideInInspector] public Transform target;
 

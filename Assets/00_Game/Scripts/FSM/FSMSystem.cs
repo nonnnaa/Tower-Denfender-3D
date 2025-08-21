@@ -20,26 +20,26 @@ public class FSMSystem : MonoBehaviour
     }
     protected virtual void FixedUpdate()
     {
-        currentState.FixedUpdateState();
+        currentState?.FixedUpdateState();
     }
     protected virtual  void LateUpdate()
     {
-        currentState.LateUpdateState();
+        currentState?.LateUpdateState();
     }
     protected virtual void Update()
     {
-        currentState.UpdateState();
+        currentState?.UpdateState();
     }
     public void OnEnterAnim()
     {
-        currentState.OnEnterAnim();
+        currentState?.OnEnterAnim();
     }
     public void OnMidleAnim()
     {
-        currentState.OnMidleAnim();
+        currentState?.OnMidleAnim();
     }
     public void OnExitAnim()
     {
-        currentState.OnExitAnim();
+        currentState?.OnExitAnim();
     }
 }

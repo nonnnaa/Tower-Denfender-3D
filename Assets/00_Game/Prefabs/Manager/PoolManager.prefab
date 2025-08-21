@@ -47,19 +47,25 @@ MonoBehaviour:
   pools:
   - poolName: ProjectileShortGunTurret
     prefab: {fileID: 6797351696656066369, guid: 0a049cbcfb57fa24ba911a0b8692d441, type: 3}
-    total: 5
+    total: 3
   - poolName: MuzzleFlareShortGunTurret
     prefab: {fileID: 8627927385916275809, guid: 85c21d7c044727d4aa4e0a1861998063, type: 3}
-    total: 5
+    total: 3
   - poolName: ImpactShortGunTurret
     prefab: {fileID: 1211629083996896605, guid: 76532b77fb7f5124f8e9f20dea26219e, type: 3}
-    total: 5
+    total: 3
   - poolName: ProjectilePlasmaTurret
     prefab: {fileID: 168183224690210804, guid: eb32dde7579e9134b9ca6b391bd0f7e2, type: 3}
-    total: 5
+    total: 3
   - poolName: MuzzleFlarePlasmaTurret
     prefab: {fileID: 5011227052427988256, guid: 0fc67c0f795193045a186d3573c03beb, type: 3}
-    total: 5
+    total: 3
   - poolName: ImpactPlasmaTurret
     prefab: {fileID: 8359183860168525469, guid: 1f3f3d8d2f149684bad0e977f0d726ff, type: 3}
-    total: 5
+    total: 3
+  - poolName: ProjectileRocketTurret
+    prefab: {fileID: 289301740773114842, guid: 354d314ca42f6864c8eca59e52fb42b9, type: 3}
+    total: 10
+  - poolName: TurretBuffDef
+    prefab: {fileID: 4468672898765065068, guid: a46942f593ee1144b911c0106d892ec8, type: 3}
+    total: 10

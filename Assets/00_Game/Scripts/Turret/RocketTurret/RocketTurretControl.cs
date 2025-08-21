@@ -66,7 +66,7 @@ public class RocketTurretControl : FSMSystem
             {
                 rocketTransforms[i] = PoolManager.Instance.Spawn(ProjectileName.ProjectileRocketTurret, rocketSlotTransforms[i].position, rocketSlotTransforms[i]);
                 rocketTransforms[i].localRotation = Quaternion.Euler(0, 0, 0);
-                Debug.Log(rocketTransforms[i].name);
+                //Debug.Log(rocketTransforms[i].name);
                 return;
             }
         }

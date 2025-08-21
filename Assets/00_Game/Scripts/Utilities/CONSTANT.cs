@@ -12,8 +12,6 @@ namespace CONSTANT
         public static string Enemy = "Enemy";
         public static string Bullet = "ShotGunBullet";
     }
-
-    
     // MuzzleFlare + Impact + ShotGunBullet thì đặt tên hậu số tên súng theo vd : MuzzleFlare + ShortGunTurret
     public static class MuzzleFlareName
     {
@@ -34,5 +32,11 @@ namespace CONSTANT
         public static readonly string ImpactShortGunTurret = "ImpactShortGunTurret";
         public static string ImpactPlasmaTurret = "ImpactPlasmaTurret";
         public static readonly string ImpactRocketTurret = "ImpactRocketTurret";
+    }
+
+    public static class BuffVfxName
+    {
+        public static  readonly string TurretBuffHp = "TurretBuffHp";
+        public static readonly string TurretBuffDef = "TurretBuffDef";
     }
 }

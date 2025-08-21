@@ -4,6 +4,7 @@ public class Impact : MonoBehaviour, IPoolable
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private string impactName;
     public float lifeTime = 1.5f;
+    public float currentLifeTime;
     private void Awake()
     {
         if (particle == null)
@@ -17,10 +18,10 @@ public class Impact : MonoBehaviour, IPoolable
     }
     private void Update()
     {
-        if (lifeTime > 0)
+        if (currentLifeTime > 0)
         {
-            lifeTime -= Time.deltaTime;
-            if (lifeTime <= 0)
+            currentLifeTime -= Time.deltaTime;
+            if (currentLifeTime <= 0)
             {
                 PoolManager.Instance.Despawn(impactName, transform);
             }
@@ -28,20 +29,19 @@ public class Impact : MonoBehaviour, IPoolable
     }
     public void OnSpawned(Vector3 position, Transform newParent)
     {
+        currentLifeTime = lifeTime;
         if (newParent != null)
         {
             transform.SetParent(newParent);
             Quaternion combinedRotation = newParent.rotation * Quaternion.LookRotation((transform.position - newParent.transform.position).normalized);
             transform.rotation = combinedRotation;
         }
-        
         particle.Play();
-        lifeTime = 1.5f;
     }
 
     public void OnDespawned()
     {
-        lifeTime = 1.5f;
+        currentLifeTime = lifeTime;
         gameObject.transform.SetParent(PoolManager.Instance.transform);
         gameObject.SetActive(false);
     }

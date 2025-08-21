@@ -16,8 +16,7 @@ public class ObjectPool
     public string poolName;
     public GameObject prefab;
     public int total;
-
-    [NonSerialized] private List<Transform> elements = new List<Transform>();
+    private List<Transform> elements = new List<Transform>();
 
     // Khởi tạo pool
     public void Initialize(Transform poolParent)
@@ -60,10 +59,8 @@ public class ObjectPool
         GameObject newObj = Object.Instantiate(prefab, PoolManager.Instance.transform);
         newObj.transform.position = position;
         elements.Add(newObj.transform);
-
         newObj.TryGetComponent<IPoolable>(out var newPoolable);
         newPoolable?.OnSpawned(position, null);
-
         return newObj.transform;
     }
 

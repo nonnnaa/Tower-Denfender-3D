@@ -2,31 +2,37 @@ using UnityEngine;
 
 public class TurretControl : FSMSystem
 {
-    protected void OnInit()
+    protected HealthControl healthControl;
+    protected virtual void OnInit()
     {
         
     }
-    protected void Select()
+    protected virtual void OnSelect()
     {
         
     }
-    protected void OnDeselect()
+    protected virtual void OnDeselect()
     {
         
     }
-    protected void OnSell()
+    protected virtual void OnSell()
     {
         
     }
-    protected void OnDead()
+    protected virtual void OnDead()
     {
         
     }
-    protected void OnActivateEffect()
+    protected virtual void OnActivateEffect()
     {
         
     }
-    protected void OnDespawn()
+
+    protected virtual void OnDamaged()
+    {
+        
+    }
+    protected virtual void OnDespawn()
     {
         
     }

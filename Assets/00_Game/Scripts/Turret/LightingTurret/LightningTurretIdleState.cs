@@ -17,7 +17,7 @@ public class LightningTurretIdleState : FSMState
         Transform enemy = FindNearestEnemy();
         if (enemy != null)
         {
-            Debug.Log(enemy);
+            //Debug.Log(enemy);
             float dist = Vector3.Distance(turretControl.gameObject.transform.position, enemy.position);
 
             // trong khoảng min - max attack range thì mới chuyển sang Attack
