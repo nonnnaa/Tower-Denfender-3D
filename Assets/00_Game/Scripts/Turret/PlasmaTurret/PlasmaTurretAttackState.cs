@@ -98,7 +98,7 @@ public class PlasmaTurretAttackState : FSMState
     {
         if (target == null) return;
         // Spawn bullet từ pool (position mặc định là firePoint)
-        Transform bulletObj = PoolManager.Instance.Spawn(
+        PoolableObject bulletObj = PoolManager.Instance.Spawn(
             ProjectileName.ProjectilePlasmaTurret,
             turretControl.firePoint.position,
             PoolManager.Instance.transform

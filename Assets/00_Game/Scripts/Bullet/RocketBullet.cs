@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
-
-public class RocketBullet : MonoBehaviour, IPoolable, IBullet
+using CONSTANT;
+public class RocketBullet : PoolableObject, IBullet
 {
     [Header("Rocket Settings")]
     [SerializeField] private float speed = 15f;
@@ -105,7 +105,7 @@ public class RocketBullet : MonoBehaviour, IPoolable, IBullet
     {
         if (moveTween != null && moveTween.IsActive())
             moveTween.Kill();
-        PoolManager.Instance.Despawn(projectileName, transform);
+        PoolManager.Instance.Despawn(projectileName, this);
     }
 
     public void HitTarget(GameObject enemy, Vector3 point)
@@ -120,8 +120,9 @@ public class RocketBullet : MonoBehaviour, IPoolable, IBullet
     }
 
     //--- IPoolable ---
-    public void OnSpawned(Vector3 position, Transform newParent)
+    public override void OnSpawn(Vector3 position, Transform newParent = null)
     {
+        base.OnSpawn(position, newParent);
         transform.position = position;
         if (newParent != null)
         {
@@ -130,11 +131,13 @@ public class RocketBullet : MonoBehaviour, IPoolable, IBullet
         gameObject.SetActive(true);
     }
 
-    public void OnDespawned()
+    public override void OnDespawn()
     {
+        base.OnDespawn();
         if (moveTween != null && moveTween.IsActive())
             moveTween.Kill();
         transform.SetParent(PoolManager.Instance.transform);
+        PoolManager.Instance.ReleaseToPool(ProjectileName.ProjectileRocketTurret,this);
         gameObject.SetActive(false);
     }
 }

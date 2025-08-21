@@ -106,7 +106,7 @@ public class ShotGunTurretAttackState : FSMState
         PoolManager.Instance.Spawn(MuzzleFlareName.MuzzleFlareShortGunTurret, turretControl.firePoint.position, turretControl.firePoint);
         
         // Spawn bullet từ pool (position mặc định là firePoint)
-        Transform bulletObj = PoolManager.Instance.Spawn(
+        PoolableObject bulletObj = PoolManager.Instance.Spawn(
             ProjectileName.ProjectileShortGunTurret,
             turretControl.firePoint.position,
             PoolManager.Instance.transform

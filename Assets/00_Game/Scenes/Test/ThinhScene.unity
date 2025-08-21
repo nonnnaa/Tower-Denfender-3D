@@ -174,6 +174,106 @@ PrefabInstance:
       propertyPath: m_Name
       value: PoolManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[0].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[1].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[2].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[3].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[4].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[5].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[6].total
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[7].total
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 9213086936205658979, guid: 1f3f3d8d2f149684bad0e977f0d726ff, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 8626064646917120117, guid: 0fc67c0f795193045a186d3573c03beb, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 6803930914982924177, guid: eb32dde7579e9134b9ca6b391bd0f7e2, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 2535647717128806144, guid: 76532b77fb7f5124f8e9f20dea26219e, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[4].prefab
+      value: 
+      objectReference: {fileID: 4191289976801002547, guid: 85c21d7c044727d4aa4e0a1861998063, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[5].prefab
+      value: 
+      objectReference: {fileID: 4957752249381196554, guid: 0a049cbcfb57fa24ba911a0b8692d441, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[6].prefab
+      value: 
+      objectReference: {fileID: 3467973861361565570, guid: 354d314ca42f6864c8eca59e52fb42b9, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[7].prefab
+      value: 
+      objectReference: {fileID: -4489637227528692262, guid: a46942f593ee1144b911c0106d892ec8, type: 3}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[0].poolName
+      value: ImpactPlasmaTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[1].poolName
+      value: MuzzleFlarePlasmaTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[2].poolName
+      value: ProjectilePlasmaTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[3].poolName
+      value: ImpactShortGunTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[4].poolName
+      value: MuzzleFlareShortGunTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[5].poolName
+      value: ProjectileShortGunTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[6].poolName
+      value: ProjectileRocketTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483353392479969865, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+      propertyPath: poolInfors.Array.data[7].poolName
+      value: TurretBuffDef
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

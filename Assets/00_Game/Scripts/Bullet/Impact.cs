@@ -1,5 +1,5 @@
 using UnityEngine;
-public class Impact : MonoBehaviour, IPoolable
+public class Impact : PoolableObject
 {
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private string impactName;
@@ -23,12 +23,14 @@ public class Impact : MonoBehaviour, IPoolable
             currentLifeTime -= Time.deltaTime;
             if (currentLifeTime <= 0)
             {
-                PoolManager.Instance.Despawn(impactName, transform);
+                PoolManager.Instance.Despawn(impactName, this);
             }
         }
     }
-    public void OnSpawned(Vector3 position, Transform newParent)
+    public override void OnSpawn(Vector3 position, Transform newParent = null)
     {
+        base.OnSpawn(position, newParent);
+        gameObject.SetActive(true);
         currentLifeTime = lifeTime;
         if (newParent != null)
         {
@@ -39,10 +41,13 @@ public class Impact : MonoBehaviour, IPoolable
         particle.Play();
     }
 
-    public void OnDespawned()
+    public override void OnDespawn()
     {
+        base.OnDespawn();
+        particle.Stop();
         currentLifeTime = lifeTime;
         gameObject.transform.SetParent(PoolManager.Instance.transform);
+        PoolManager.Instance.ReleaseToPool(impactName, this);
         gameObject.SetActive(false);
     }
 }

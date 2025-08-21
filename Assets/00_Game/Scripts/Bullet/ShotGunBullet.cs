@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
-using JetBrains.Annotations;
+using CONSTANT;
 
 public interface IBullet
 {
     public void Shoot(Vector3 direction);
     public void HitTarget(GameObject enemy, Vector3 point);
 }
-public class ShotGunBullet : MonoBehaviour, IPoolable, IBullet
+public class ShotGunBullet : PoolableObject, IBullet
 {
     [SerializeField] private float speed = 15f;
     [SerializeField] private float lifeTime = 3f;
@@ -83,18 +83,18 @@ public class ShotGunBullet : MonoBehaviour, IPoolable, IBullet
     }
     private void ReleaseToPool()
     {
-        PoolManager.Instance.Despawn(projectileName, transform);
+        PoolManager.Instance.Despawn(projectileName, this);
     }
     
     public void HitTarget(GameObject enemy, Vector3 point)
     {
         PoolManager.Instance.Spawn(impactName, point, enemy.transform);
-        PoolManager.Instance.RemoveFromPool(transform, projectileName);
         Invoke(nameof(ReleaseToPool), delayAfterHit);
     }
-    // IPoolable
-    public void OnSpawned(Vector3 position, Transform newParent)
+    // Poolable function
+    public override void OnSpawn(Vector3 position, Transform newParent = null)
     {
+        base.OnSpawn(position, newParent);
         transform.position = position;
         if (newParent != null)
         {
@@ -104,10 +104,11 @@ public class ShotGunBullet : MonoBehaviour, IPoolable, IBullet
         gameObject.SetActive(true);
     }
 
-    public void OnDespawned()
+    public override void OnDespawn()
     {
-        PoolManager.Instance.ReturnToPool(transform, projectileName);
+        base.OnDespawn();
         transform.SetParent(PoolManager.Instance.transform);
+        PoolManager.Instance.ReleaseToPool(projectileName,this);
         gameObject.SetActive(false);
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MuzzleFlare : MonoBehaviour, IPoolable
+public class MuzzleFlare : PoolableObject
 {
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private string muzzleFlareName;
@@ -19,24 +19,27 @@ public class MuzzleFlare : MonoBehaviour, IPoolable
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
-                PoolManager.Instance.Despawn(muzzleFlareName, transform);
+                PoolManager.Instance.Despawn(muzzleFlareName, this);
             }
         }
     }
-    public void OnSpawned(Vector3 position, Transform newParent)
+    public override void OnSpawn(Vector3 position, Transform newParent = null)
     {
         if (newParent != null)
         {
             Quaternion combinedRotation = newParent.rotation * Quaternion.LookRotation((transform.position - newParent.transform.position).normalized);
             transform.rotation = combinedRotation;
         }
+        gameObject.SetActive(true);
         particle.Play();
         lifeTime = 1.5f;
     }
 
-    public void OnDespawned()
+    public override void OnDespawn()
     {
+        base.OnDespawn();
         transform.SetParent(PoolManager.Instance.transform);
+        PoolManager.Instance.ReleaseToPool(muzzleFlareName, this);
         gameObject.SetActive(false);
     }
 }

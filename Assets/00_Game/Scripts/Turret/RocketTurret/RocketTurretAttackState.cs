@@ -128,17 +128,17 @@ private IEnumerator RotateUntilAimed(Transform newTarget)
     private void Fire()
     {
         if (target == null) return;
-        Transform[] transforms = turretControl.GetRocketTransforms();
-        for (int i = 0; i < transforms.Length; i++)
+        PoolableObject[] rockets = turretControl.GetRockets();
+        for (int i = 0; i < rockets.Length; i++)
         {
-            if (transforms[i] != null)
+            if (rockets[i] != null)
             {
-                var bullet = transforms[i].GetComponent<RocketBullet>();
+                var bullet = rockets[i].GetComponent<RocketBullet>();
                 if (bullet != null)
                 {
                     bullet.SetTarget(target);
-                    PoolManager.Instance.Spawn(MuzzleFlareName.MuzzleFlareShortGunTurret, transforms[i].position, transforms[i]);
-                    transforms[i] = null;
+                    PoolManager.Instance.Spawn(MuzzleFlareName.MuzzleFlareShortGunTurret, rockets[i].gameObject.transform.position, rockets[i].gameObject.transform);
+                    rockets[i] = null;
                     return;
                 }
             }

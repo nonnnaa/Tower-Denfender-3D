@@ -44,6 +44,7 @@ public class ShieldTurretControl : TurretControl
 
     private void BuffDef()
     {
+        Debug.Log("BuffDef");
         GameObject[] turrets = GameObject.FindGameObjectsWithTag($"Turret");
         foreach (GameObject turret in turrets)
         {

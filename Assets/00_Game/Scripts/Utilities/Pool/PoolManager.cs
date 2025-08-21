@@ -3,48 +3,42 @@ using UnityEngine;
 
 public class PoolManager : SingletonMono<PoolManager>
 {
-    public List<ObjectPool> pools;
-    private Dictionary<string, ObjectPool> dictionaryPool = new Dictionary<string, ObjectPool>();
+    [SerializeField] private List<PoolControl> poolInfors = new List<PoolControl>();
+    private Dictionary<string, PoolControl> poolMapping = new Dictionary<string, PoolControl>();
 
     protected override void Awake()
     {
         base.Awake();
-        foreach (var pool in pools)
+        foreach (var pool in poolInfors)
         {
-            pool.Initialize(transform);
-            dictionaryPool[pool.poolName] = pool;
+            pool.Initialize(transform);                
+            poolMapping[pool.PoolName] = pool;         
+        }
+    }
+    
+    public PoolableObject Spawn(string poolName, Vector3 pos, Transform parent = null)
+    {
+        if (poolMapping.TryGetValue(poolName, out var pool))
+        {
+            return pool.Spawn(pos, parent);
+        }
+        return null;
+    }
+
+    public void Despawn(string poolName, PoolableObject obj)
+    {
+        if (poolMapping.TryGetValue(poolName, out var pool))
+        {
+            pool.Despawn(obj);
         }
     }
 
-    public void RemoveFromPool(Transform element, string poolName)
+    public void ReleaseToPool(string poolName, PoolableObject obj)
     {
-        dictionaryPool[poolName].RemoveFromPool(element);
-    }
-
-    public void ReturnToPool(Transform element, string poolName)
-    {
-        dictionaryPool[poolName].ReturnToPool(element);
-    }
-    public Transform Spawn(string poolName, Vector3 position, Transform parent)
-    {
-        if (!dictionaryPool.TryGetValue(poolName, out var pool))
+        if (poolMapping.TryGetValue(poolName, out var poolControl))
         {
-            return null;
+            poolControl.ReleaseToPool(obj);
         }
-        return pool.GetElement(position, parent);
     }
-
-    public void Despawn(string poolName, Transform t)
-    {
-        if (!dictionaryPool.TryGetValue(poolName, out var pool))
-        {
-            return;
-        }
-        pool.Despawn(t);
-    }
-
-    private void OnDestroy()
-    {
-        dictionaryPool.Clear();
-    }
+    
 }

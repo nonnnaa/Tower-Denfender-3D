@@ -14,8 +14,8 @@ public class RocketTurretControl : FSMSystem
     public float minPitch = 5f; // góc thấp (địch gần)
     public float maxPitch = 50f; // góc cao (địch xa)
     [SerializeField] private Transform[] rocketSlotTransforms = new Transform[8];
-    private Transform[] rocketTransforms = new Transform[8];
-    public Transform[] GetRocketTransforms() => rocketTransforms;
+    private PoolableObject[] rockets = new PoolableObject[8];
+    public PoolableObject[] GetRockets() => rockets;
     [HideInInspector] public Transform target;
 
     private Quaternion defaultBaseYRot;
@@ -62,11 +62,10 @@ public class RocketTurretControl : FSMSystem
     {
         for (int i = 0 ; i < 8; i++)
         {
-            if (rocketTransforms[i] == null)
+            if (rockets[i] == null)
             {
-                rocketTransforms[i] = PoolManager.Instance.Spawn(ProjectileName.ProjectileRocketTurret, rocketSlotTransforms[i].position, rocketSlotTransforms[i]);
-                rocketTransforms[i].localRotation = Quaternion.Euler(0, 0, 0);
-                //Debug.Log(rocketTransforms[i].name);
+                rockets[i] = PoolManager.Instance.Spawn(ProjectileName.ProjectileRocketTurret, rocketSlotTransforms[i].position, rocketSlotTransforms[i]);
+                rockets[i].gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 return;
             }
         }
