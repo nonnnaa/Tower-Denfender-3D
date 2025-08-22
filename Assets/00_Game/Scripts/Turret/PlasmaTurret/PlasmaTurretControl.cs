@@ -1,42 +1,63 @@
 using UnityEngine;
 
-public class PlasmaTurretControl : FSMSystem
+public class PlasmaTurretControl : TurretControl
 {
-    [Header("Turret Settings")]
-    public Transform turretBaseY;        // trục xoay Y
-    public Transform turretHeadX;        // trục xoay X
-    public Transform firePoint;          // điểm bắn
-    public float rotationSpeed = 5f;
-    public float fireInterval = 0.5f;
-    public float attackRange = 15f;
-    public float minAttackRange = 3f;
+    [Header("Turret Data")]
+    [SerializeField] private Transform turretBaseY;        
+    [SerializeField] private Transform turretHeadX;        
+    [SerializeField] private Transform firePoint;          
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float fireInterval = 3f;
+    [SerializeField] private float maxAttackRange = 15f;
+    [SerializeField] private float minAttackRange = 5f;
 
-    [HideInInspector] public Transform target;
-
+    #region Temp
+    private Transform target;
     private Quaternion defaultBaseYRot;
     private Quaternion defaultHeadXRot;
 
-    // giữ reference các state
+    #endregion
+
+    #region Turret State
     public PlasmaTurretIdleState idleState;
     public PlasmaTurretAttackState attackState;
+    
+    #endregion
 
+
+    #region Get Set
+
+    public Transform GetTurretBaseY() => turretBaseY;
+    public Transform GetTurretHeadX() => turretHeadX;
+    public Transform GetFirePoint() => firePoint;
+    public float GetRotationSpeed() => rotationSpeed;
+    public float GetFireInterval() => fireInterval;
+    public float GetMaxAttackRange() => maxAttackRange;
+    public float GetMinAttackRange() => minAttackRange;
+    
+    public Transform GetTarget() => target;
+    public void SetTarget(Transform newTarget) => target = newTarget;
+
+    #endregion
+    
+    #region Unity Functions
     private void Awake()
     {
-        // lưu góc mặc định
         defaultBaseYRot = turretBaseY.rotation;
         defaultHeadXRot = turretHeadX.localRotation;
-
-        // tạo state 1 lần
         idleState = new PlasmaTurretIdleState(this);
         attackState = new PlasmaTurretAttackState(this);
     }
-
     private void Start()
     {
-        // set state ban đầu
         ChangeState(idleState);
     }
-
+    
+    
+    #endregion
+    
+    
+    #region Functions
     public void ResetRotation()
     {
         turretBaseY.rotation = Quaternion.Lerp(
@@ -44,4 +65,6 @@ public class PlasmaTurretControl : FSMSystem
         turretHeadX.localRotation = Quaternion.Lerp(
             turretHeadX.localRotation, defaultHeadXRot, Time.deltaTime * rotationSpeed);
     }
+    #endregion
+    
 }

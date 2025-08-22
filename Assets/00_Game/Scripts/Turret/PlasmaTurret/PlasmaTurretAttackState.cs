@@ -10,13 +10,13 @@ public class PlasmaTurretAttackState : FSMState
     {
         this.turretControl = turretControl;
     }
-    public void SetTarget(Transform newTarget)
-    {
-        target = newTarget;
-    }
-
     public override void EnterState()
     {
+        target = turretControl.GetTarget();
+        if (attackCoroutine != null)
+        {
+            turretControl.StopCoroutine(attackCoroutine);
+        }
         attackCoroutine = turretControl.StartCoroutine(AttackRoutine());
     }
 
@@ -39,22 +39,16 @@ public class PlasmaTurretAttackState : FSMState
                 yield break;
             }
 
-            float dist = Vector3.Distance(turretControl.firePoint.position, target.position);
+            float dist = Vector3.Distance(turretControl.GetFirePoint().position, target.position);
 
-            if (dist <= turretControl.minAttackRange || dist >= turretControl.attackRange)
+            if (dist <= turretControl.GetMinAttackRange() || dist >= turretControl.GetMaxAttackRange())
             {
                 turretControl.ChangeState(turretControl.idleState);
                 yield break;
             }
-
-            // --- xoay turret cho tới khi thẳng hướng ---
             yield return RotateUntilAimed(target);
-
-            // --- bắn ---
             Fire();
-
-            // chờ interval trước khi lặp lại
-            yield return new WaitForSeconds(turretControl.fireInterval);
+            yield return new WaitForSeconds(turretControl.GetFireInterval());
         }
     }
 
@@ -62,54 +56,50 @@ public class PlasmaTurretAttackState : FSMState
     {
         while (true)
         {
-            Vector3 dir = newTarget.position - turretControl.firePoint.position;
-            // xoay theo Y
+            Vector3 dir = newTarget.position - turretControl.GetFirePoint().position;
+            // Rotate Y
             Vector3 flatDir = new Vector3(dir.x, 0f, dir.z);
             if (flatDir.sqrMagnitude > 0.01f)
             {
                 Quaternion yRot = Quaternion.LookRotation(flatDir);
-                turretControl.turretBaseY.rotation = Quaternion.Lerp(
-                    turretControl.turretBaseY.rotation,
+                turretControl.GetTurretBaseY().rotation = Quaternion.Lerp(
+                    turretControl.GetTurretBaseY().rotation,
                     yRot,
-                    Time.deltaTime * turretControl.rotationSpeed
+                    Time.deltaTime * turretControl.GetRotationSpeed()
                 );
             }
 
-            // xoay theo X
-            Vector3 localDir = turretControl.turretBaseY.InverseTransformDirection(dir);
+            // Rotate X
+            Vector3 localDir = turretControl.GetTurretBaseY().InverseTransformDirection(dir);
             float angleX = Mathf.Atan2(localDir.y, localDir.z) * Mathf.Rad2Deg;
 
             Quaternion xRot = Quaternion.Euler(-angleX, 0f, 0f);
-            turretControl.turretHeadX.localRotation = Quaternion.Lerp(
-                turretControl.turretHeadX.localRotation,
+            turretControl.GetTurretHeadX().localRotation = Quaternion.Lerp(
+                turretControl.GetTurretHeadX().localRotation,
                 xRot,
-                Time.deltaTime * turretControl.rotationSpeed
+                Time.deltaTime * turretControl.GetRotationSpeed()
             );
-
-            // check nếu đã aim thẳng (góc lệch nhỏ hơn ngưỡng)
-            float angleToTarget = Vector3.Angle(turretControl.firePoint.forward, dir);
-            if (angleToTarget < 2f) // bạn có thể chỉnh ngưỡng 2°
+            float angleToTarget = Vector3.Angle(turretControl.GetFirePoint().forward, dir);
+            if (angleToTarget < 2f) 
                 break;
-            yield return null; // chờ frame sau
+            yield return null; 
         }
     }
 
     private void Fire()
     {
         if (target == null) return;
-        // Spawn bullet từ pool (position mặc định là firePoint)
         PoolableObject bulletObj = PoolManager.Instance.Spawn(
             ProjectileName.ProjectilePlasmaTurret,
-            turretControl.firePoint.position,
+            turretControl.GetFirePoint().position,
             PoolManager.Instance.transform
         );
-        bulletObj.GetComponent<PlasmaBullet>().SetCurrentParent(turretControl.firePoint);
+        bulletObj.GetComponent<PlasmaBullet>().SetCurrentParent(turretControl.GetFirePoint());
         if (bulletObj == null) return;
-        // Lấy component ShotGunBullet và thiết lập hướng bay
         IBullet bullet = bulletObj.GetComponent<IBullet>();
         if (bullet != null)
         {
-            Vector3 direction = (target.position - turretControl.firePoint.position).normalized;
+            Vector3 direction = (target.position - turretControl.GetFirePoint().position).normalized;
             bullet.Shoot(direction);
         }
     }
