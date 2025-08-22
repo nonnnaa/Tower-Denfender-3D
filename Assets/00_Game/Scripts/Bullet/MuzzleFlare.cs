@@ -4,7 +4,8 @@ public class MuzzleFlare : PoolableObject
 {
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private string muzzleFlareName;
-    public float lifeTime = 1.5f;
+    [SerializeField] private float lifeTime = 1.5f;
+    private float currentLifeTime;
     private void Awake()
     {
         if (particle == null)
@@ -14,10 +15,10 @@ public class MuzzleFlare : PoolableObject
     }
     private void Update()
     {
-        if (lifeTime > 0)
+        if (currentLifeTime > 0)
         {
-            lifeTime -= Time.deltaTime;
-            if (lifeTime <= 0)
+            currentLifeTime -= Time.deltaTime;
+            if (currentLifeTime <= 0)
             {
                 PoolManager.Instance.Despawn(muzzleFlareName, this);
             }
@@ -33,7 +34,7 @@ public class MuzzleFlare : PoolableObject
         gameObject.SetActive(true);
         transform.position = position;
         particle.Play();
-        lifeTime = 1.5f;
+        currentLifeTime = lifeTime;
     }
 
     public override void OnDespawn()

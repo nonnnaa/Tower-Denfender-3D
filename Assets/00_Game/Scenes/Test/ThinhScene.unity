@@ -814,7 +814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 573552279898351586, guid: bed96c06eeb8ae043879b9c974c4d3c0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6044709178391727751, guid: bed96c06eeb8ae043879b9c974c4d3c0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -873,13 +873,17 @@ PrefabInstance:
       propertyPath: attackRange
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2901287515955388868, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
+      propertyPath: maxAttackRange
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4137938896697395675, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
       propertyPath: m_Name
       value: Plasma
       objectReference: {fileID: 0}
     - target: {fileID: 4137938896697395675, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4137938896697395675, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
       propertyPath: m_TagString
@@ -944,7 +948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2773358565288829495, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2773358565288829495, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
       propertyPath: m_TagString
@@ -1131,7 +1135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6150446168149057616, guid: ef814c7b18fa8c94895fada49d8b67c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6150446168149057616, guid: ef814c7b18fa8c94895fada49d8b67c6, type: 3}
       propertyPath: m_TagString

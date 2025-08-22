@@ -3,8 +3,8 @@ public class Impact : PoolableObject
 {
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private string impactName;
-    public float lifeTime = 1.5f;
-    public float currentLifeTime;
+    [SerializeField] private float lifeTime = 1.5f;
+    private float currentLifeTime;
     private void Awake()
     {
         if (particle == null)
@@ -46,7 +46,6 @@ public class Impact : PoolableObject
     {
         base.OnDespawn();
         particle.Stop();
-        currentLifeTime = lifeTime;
         gameObject.transform.SetParent(PoolManager.Instance.transform);
         PoolManager.Instance.ReleaseToPool(impactName, this);
         gameObject.SetActive(false);

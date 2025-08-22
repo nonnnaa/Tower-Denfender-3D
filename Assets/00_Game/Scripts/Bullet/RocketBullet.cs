@@ -7,8 +7,8 @@ public class RocketBullet : PoolableObject, IBullet
     [SerializeField] private float speed = 15f;
     [SerializeField] private float minCurveHeight = 5f;
     [SerializeField] private float maxCurveHeight = 50f;
-    [SerializeField] private float minDistance = 5f; // set theo setting của turret control
-    [SerializeField] private float maxDistance = 100f; // tương tự cái trên
+    [SerializeField] private float minDistance = 5f; // follow turret setting
+    [SerializeField] private float maxDistance = 100f; // follow turret setting
     [Tooltip("Điều chỉnh độ 'thẳng' của rocket khi bắt đầu bay. Giá trị càng lớn, rocket bay thẳng càng xa trước khi bẻ cong.")]
     [SerializeField] private float initialForwardInfluence = 0.4f;
     [SerializeField] private float delayAfterHit = 0.1f;
@@ -21,19 +21,18 @@ public class RocketBullet : PoolableObject, IBullet
     private Vector3 targetPosition;
     private Tween moveTween;
     private Vector3 lastPos;
-
-    //--- Target control ---
+    
     public void SetTarget(Transform newTarget)
     {
         currentTarget = newTarget;
         if (currentTarget != null)
-            targetPosition = currentTarget.position; // Khóa vị trí ngay lúc bắn
+            targetPosition = currentTarget.position;
         StartShooting();
     }
 
     public void Shoot(Vector3 direction)
     {
-        transform.forward = direction.normalized; // Đảm bảo rocket hướng đúng hướng bắn
+        transform.forward = direction.normalized;
         targetPosition = transform.position + direction.normalized * 10f;
         StartShooting();
     }
@@ -99,8 +98,7 @@ public class RocketBullet : PoolableObject, IBullet
         })
         .SetLink(gameObject);
     }
-
-    //--- Pooling Control ---
+    
     private void ReleaseToPool()
     {
         if (moveTween != null && moveTween.IsActive())

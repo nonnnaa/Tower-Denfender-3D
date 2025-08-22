@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using CONSTANT;
 
 public interface IBullet
 {
@@ -18,15 +17,13 @@ public class ShotGunBullet : PoolableObject, IBullet
     private static RaycastHit[] hitBuffer = new RaycastHit[5];
     private const float MinMoveDistance = 0.01f;
     protected Transform currentParent;
-
-
+    
     public void SetCurrentParent(Transform parent)
     {
         currentParent = parent;
     }
     protected virtual void HandlePreShooting(float timeDelay = 0f)
     {
-        // Handle
         Invoke(nameof(StartShootingCoroutine), timeDelay);
     }
     public void Shoot(Vector3 direction)
