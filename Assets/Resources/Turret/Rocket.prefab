@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 4204823670642089619}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,7 +213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2773358565288829495}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.9650664, y: 9.273499, z: -13.661695}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -309,23 +309,22 @@ MonoBehaviour:
   firePoint: {fileID: 1338568384176249071}
   rotationSpeed: 5
   fireInterval: 2
-  attackRange: 100
+  maxAttackRange: 100
   minAttackRange: 5
   timeToReload: 1
   minPitch: 5
   maxPitch: 50
+  arcAngleAtMinRange: 20
+  arcAngleAtMaxRange: 5
   rocketSlotTransforms:
   - {fileID: 6010848980405705327}
   - {fileID: 1802248869585953825}
   - {fileID: 7556305469384746716}
   - {fileID: 7310026747904411372}
   - {fileID: 7488965104733411618}
-  - {fileID: 7972196604425112877}
   - {fileID: 8778167621527569923}
+  - {fileID: 7972196604425112877}
   - {fileID: 5938716713421494194}
-  target: {fileID: 0}
-  arcAngleAtMinRange: 20
-  arcAngleAtMaxRange: 5
 --- !u!1 &3256681565203068946
 GameObject:
   m_ObjectHideFlags: 0
