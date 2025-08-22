@@ -23,10 +23,6 @@ public class TurretControl : FSMSystem
     {
         
     }
-    protected virtual void OnActivateEffect()
-    {
-        
-    }
 
     protected virtual void OnDamaged()
     {

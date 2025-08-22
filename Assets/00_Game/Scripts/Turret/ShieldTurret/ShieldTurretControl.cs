@@ -3,12 +3,19 @@ using UnityEngine;
 using CONSTANT;
 public class ShieldTurretControl : TurretControl
 {
+    [Header("Turret Data")]
     [SerializeField] private float timeToBuffHp;
     [SerializeField] private float timeToBuffDef; // should be plus time of vfx play
     [SerializeField] private float hpBuff;
     [SerializeField] private float defBuff;
+
+
+    #region Temp
     private Coroutine hpBuffCoroutine, defBuffCoroutine;
     private bool isHpCoroutineRunning, isDefCoroutineRunning;
+
+    #endregion
+    
     
     private void Start()
     {
@@ -17,9 +24,8 @@ public class ShieldTurretControl : TurretControl
         OnActivateEffect();
     }
 
-    protected override void OnActivateEffect() // run 1 lan khi turret active in game
+    private void OnActivateEffect() // run each time when turret active in scene
     {
-        base.OnActivateEffect();
         if (hpBuffCoroutine != null)
         {
             StopCoroutine(hpBuffCoroutine);
@@ -44,7 +50,6 @@ public class ShieldTurretControl : TurretControl
 
     private void BuffDef()
     {
-        Debug.Log("BuffDef");
         GameObject[] turrets = GameObject.FindGameObjectsWithTag($"Turret");
         foreach (GameObject turret in turrets)
         {
@@ -60,7 +65,6 @@ public class ShieldTurretControl : TurretControl
             // handle buff
             BuffDef();
             yield return new WaitForSeconds(timeToBuffDef);
-            //yield return new WaitForSeconds(1.5f); // time of vfx 
         }
     }
 }

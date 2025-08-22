@@ -1,28 +1,55 @@
-using System;
 using UnityEngine;
 
-public class ShotGunTurretControl : FSMSystem
+public class ShotGunTurretControl : TurretControl
 {
-    [Header("Turret Settings")]
-    public Transform turretBaseY;        
-    public Transform turretHeadX;       
-    public Transform firePoint;          
-    public float rotationSpeed = 5f;
-    public float fireInterval = 0.5f;
-    public float attackRange = 15f;
-    public float minAttackRange = 3f;
+    [Header("Turret Data")]
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float fireInterval = 1f;
+    [SerializeField] private float maxAttackRange = 15f;
+    [SerializeField] private float minAttackRange = 4f;
+    
+    [Header("Turret Setting")]
+    [SerializeField] private Transform turretBaseY;        
+    [SerializeField] private Transform turretHeadX;       
+    [SerializeField] private Transform firePoint;
 
-    [NonSerialized] public Transform target;
+    #region Turret State
+    public ShotGunTurretIdleState idleState;
+    public ShotGunTurretAttackState attackState;
+    
+    #endregion
 
+
+    #region Temp
+    private Transform target;
     private Quaternion defaultBaseYRot;
     private Quaternion defaultHeadXRot;
     
-    public ShotGunTurretIdleState idleState;
-    public ShotGunTurretAttackState attackState;
+    #endregion
+    
+    #region Get Set
+    public void SetTarget(Transform newtTarget)
+    {
+        target = newtTarget;
+    }
+    public Transform GetTurretBaseY() => turretBaseY;
+    public Transform GetTurretHeadX() => turretHeadX;
+    public Transform GetFirePoint() => firePoint;
+    public float GetRotationSpeed() => rotationSpeed;
+    public float GetFireInterval() => fireInterval;
+    public float GetMaxAttackRange() => maxAttackRange;
+    public float GetMinAttackRange() => minAttackRange;
+    
+    public Transform GetTarget() => target;
+    #endregion
 
+
+
+
+    #region Unity Functions
     private void Awake()
     {
-        defaultBaseYRot = turretBaseY.rotation;
+        defaultBaseYRot = turretBaseY.localRotation;
         defaultHeadXRot = turretHeadX.localRotation;
         idleState = new ShotGunTurretIdleState(this);
         attackState = new ShotGunTurretAttackState(this);
@@ -32,13 +59,20 @@ public class ShotGunTurretControl : FSMSystem
     {
         ChangeState(idleState);
     }
+    
+    
+    #endregion
+    
 
+    #region Functions
     public void ResetRotation()
     {
-        turretBaseY.rotation = Quaternion.Lerp(
+        turretBaseY.localRotation = Quaternion.Lerp(
             turretBaseY.rotation, defaultBaseYRot, Time.deltaTime * rotationSpeed);
 
         turretHeadX.localRotation = Quaternion.Lerp(
             turretHeadX.localRotation, defaultHeadXRot, Time.deltaTime * rotationSpeed);
     }
+    #endregion
+    
 }
