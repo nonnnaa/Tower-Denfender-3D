@@ -27,10 +27,11 @@ public class MuzzleFlare : PoolableObject
     {
         if (newParent != null)
         {
-            Quaternion combinedRotation = newParent.rotation * Quaternion.LookRotation((transform.position - newParent.transform.position).normalized);
-            transform.rotation = combinedRotation;
+            transform.SetParent(newParent);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
         gameObject.SetActive(true);
+        transform.position = position;
         particle.Play();
         lifeTime = 1.5f;
     }

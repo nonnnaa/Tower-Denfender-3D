@@ -279,6 +279,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a33d3234c818ff42aa01726e31ea48a, type: 3}
+--- !u!4 &363780649 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7972196604425112877, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
+  m_PrefabInstance: {fileID: 4613136680965424964}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &601242915
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +718,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 868930231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1517686998 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8778167621527569923, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
+  m_PrefabInstance: {fileID: 4613136680965424964}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1523541484
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 573552279898351586, guid: bed96c06eeb8ae043879b9c974c4d3c0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6044709178391727751, guid: bed96c06eeb8ae043879b9c974c4d3c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.672784
@@ -862,6 +876,10 @@ PrefabInstance:
     - target: {fileID: 4137938896697395675, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
       propertyPath: m_Name
       value: Plasma
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137938896697395675, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4137938896697395675, guid: 7f721348edc616b40933060a9f20c7ff, type: 3}
       propertyPath: m_TagString
@@ -925,9 +943,21 @@ PrefabInstance:
       value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 2773358565288829495, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2773358565288829495, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
       propertyPath: m_TagString
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 4204823670642089619, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
+      propertyPath: rocketSlotTransforms.Array.data[5]
+      value: 
+      objectReference: {fileID: 1517686998}
+    - target: {fileID: 4204823670642089619, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
+      propertyPath: rocketSlotTransforms.Array.data[6]
+      value: 
+      objectReference: {fileID: 363780649}
     - target: {fileID: 4577082618652958263, guid: bdeb765ce613f644fa297fb1db6f9228, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9327838
@@ -1031,6 +1061,10 @@ PrefabInstance:
       value: Lightning
       objectReference: {fileID: 0}
     - target: {fileID: 8222275398514437393, guid: b7acf6b9e5528604a9fc82ea6eca159c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8222275398514437393, guid: b7acf6b9e5528604a9fc82ea6eca159c, type: 3}
       propertyPath: m_TagString
       value: Turret
       objectReference: {fileID: 0}
@@ -1090,6 +1124,10 @@ PrefabInstance:
     - target: {fileID: 6150446168149057616, guid: ef814c7b18fa8c94895fada49d8b67c6, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150446168149057616, guid: ef814c7b18fa8c94895fada49d8b67c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6150446168149057616, guid: ef814c7b18fa8c94895fada49d8b67c6, type: 3}
       propertyPath: m_TagString

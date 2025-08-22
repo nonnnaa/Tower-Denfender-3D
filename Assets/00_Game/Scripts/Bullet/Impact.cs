@@ -31,6 +31,7 @@ public class Impact : PoolableObject
     {
         base.OnSpawn(position, newParent);
         gameObject.SetActive(true);
+        transform.position = position;
         currentLifeTime = lifeTime;
         if (newParent != null)
         {
