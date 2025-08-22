@@ -1,58 +1,76 @@
 using UnityEngine;
 
-public class LightningTurretControl : FSMSystem
+public class LightningTurretControl : TurretControl
 {
+    [Header("Turret Data")]
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float fireInterval = 2f;
+    [SerializeField] private float maxAttackRange = 100f;
+    [SerializeField] private float minAttackRange = 3f;
+    [SerializeField] private float timeAttack = 10f;
+    
+    
+    [Header("Turret Settings")]
+    [SerializeField] private Transform turretBaseY;        
+    [SerializeField] private Transform turretHeadX;        
+    [SerializeField] private Transform firePoint;  
     [SerializeField] private LightningControl lightningControl;
     [SerializeField] private ParticleSystem impactParticleSystem, muzzleFlareParticleSystem;
-    public LightningControl GetLightningControl() => lightningControl;
-
-    public void StopParticleSystem(bool isStop)
-    {
-        if (!isStop)
-        {
-            impactParticleSystem.Play();
-            muzzleFlareParticleSystem.Play();
-        }
-        else
-        {
-            impactParticleSystem.Stop();
-            muzzleFlareParticleSystem.Stop();
-        }
-    } 
-    [Header("Turret Settings")]
-    public Transform turretBaseY;        // trục xoay Y
-    public Transform turretHeadX;        // trục xoay X
-    public Transform firePoint;          // điểm bắn
-    public float rotationSpeed = 5f;
-    public float fireInterval = 2f;
-    public float attackRange = 100f;
-    public float minAttackRange = 3f;
-    public float timeAttack = 10f;
-
-    [HideInInspector] public Transform target;
-
+    
+    
+    #region Temp
+    private Transform target;
     private Quaternion defaultBaseYRot;
     private Quaternion defaultHeadXRot;
 
-    // giữ reference các state
+    
+    #endregion
+
+    #region Turret State
     public LightningTurretIdleState idleState;
     public LightningTurretAttackState attackState;
+    
+    
+    #endregion
+
+
+    #region Get Set
+    public LightningControl GetLightningControl() => lightningControl;
+    public Transform GetTurretBaseY() => turretBaseY;
+    public Transform GetTurretHeadX() => turretHeadX;
+    public Transform GetFirePoint() => firePoint;
+    public float GetRotationSpeed() => rotationSpeed;
+    public float GetFireInterval() => fireInterval;
+
+    public float GetMinAttackRange() => minAttackRange;
+
+    public float GetMaxAttackRange() => maxAttackRange;
+
+    public float GetTimeAttack() => timeAttack;
+    
+    public Transform GetTarget() => target;
+    public void SetTarget(Transform newTarget) => target = newTarget;
+    #endregion
+
+    #region Unity Functions
 
     private void Awake()
     {
-        // lưu góc mặc định
         defaultBaseYRot = turretBaseY.rotation;
         defaultHeadXRot = turretHeadX.localRotation;
-        // tạo state 1 lần
+        
         idleState = new LightningTurretIdleState(this);
         attackState = new LightningTurretAttackState(this);
+        
     }
 
     private void Start()
     {
-        // set state ban đầu
         ChangeState(idleState);
     }
+
+    #endregion
+    
 
     public void ResetRotation()
     {
@@ -61,4 +79,17 @@ public class LightningTurretControl : FSMSystem
         turretHeadX.localRotation = Quaternion.Lerp(
             turretHeadX.localRotation, defaultHeadXRot, Time.deltaTime * rotationSpeed);
     }
+    public void StopParticleSystem(bool isStop)
+    {
+         if (!isStop)
+         {
+             impactParticleSystem.Play();
+             muzzleFlareParticleSystem.Play();
+         }
+         else
+         {
+             impactParticleSystem.Stop();
+             muzzleFlareParticleSystem.Stop();
+         }
+    } 
 }
