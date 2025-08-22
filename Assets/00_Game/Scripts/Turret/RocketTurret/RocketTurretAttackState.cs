@@ -12,14 +12,13 @@ public class RocketTurretAttackState : FSMState
     {
         this.turretControl = turretControl;
     }
-
-    public void SetTarget(Transform newTarget)
-    {
-        target = newTarget;
-    }
-
     public override void EnterState()
     {
+        target = turretControl.GetTarget();
+        if (attackCoroutine != null)
+        {
+            turretControl.StopCoroutine(attackCoroutine);
+        }
         attackCoroutine = turretControl.StartCoroutine(AttackRoutine());
     }
 
@@ -42,22 +41,16 @@ public class RocketTurretAttackState : FSMState
                 yield break;
             }
 
-            float dist = Vector3.Distance(turretControl.firePoint.position, target.position);
+            float dist = Vector3.Distance(turretControl.GetFirePoint().position, target.position);
 
-            if (dist <= turretControl.minAttackRange || dist >= turretControl.attackRange)
+            if (dist <= turretControl.GetMinAttackRange() || dist >= turretControl.GetMaxAttackRange())
             {
                 turretControl.ChangeState(turretControl.idleState);
                 yield break;
             }
-
-            // --- xoay turret cho tới khi thẳng hướng ---
             yield return RotateUntilAimed(target);
-
-            // --- bắn ---
             Fire();
-
-            // chờ interval trước khi lặp lại
-            yield return new WaitForSeconds(turretControl.fireInterval);
+            yield return new WaitForSeconds(turretControl.GetFireInterval());
         }
     }
 
@@ -68,52 +61,52 @@ public class RocketTurretAttackState : FSMState
             if (newTarget == null) yield break; 
 
             Vector3 targetPos = newTarget.position;
-            Vector3 startPos = turretControl.firePoint.position;
+            Vector3 startPos = turretControl.GetFirePoint().position;
 
             Vector3 dir = targetPos - startPos;
             float dist = Vector3.Distance(startPos, targetPos);
 
             // --- 1. Xoay theo Y (ngang)
             Vector3 flatDir = new Vector3(dir.x, 0f, dir.z);
-            Quaternion targetYRotation = turretControl.turretBaseY.rotation; // Mặc định là rotation hiện tại
+            Quaternion targetYRotation = turretControl.GetTurretBaseY().rotation; // Mặc định là rotation hiện tại
             if (flatDir.sqrMagnitude > 0.01f)
             {
                 targetYRotation = Quaternion.LookRotation(flatDir);
-                turretControl.turretBaseY.rotation = Quaternion.Slerp( // Slerp cho chuyển động mượt hơn
-                    turretControl.turretBaseY.rotation,
+                turretControl.GetTurretBaseY().rotation = Quaternion.Slerp( // Slerp cho chuyển động mượt hơn
+                    turretControl.GetTurretBaseY().rotation,
                     targetYRotation,
-                    Time.deltaTime * turretControl.rotationSpeed
+                    Time.deltaTime * turretControl.GetRotationSpeed()
                 );
             }
 
             // --- 2. Tính toán góc bắn theo X (dọc) với độ cong ---
             // a. Tính góc bắn thẳng tới mục tiêu (base pitch)
-            Vector3 localDir = turretControl.turretBaseY.InverseTransformDirection(dir);
+            Vector3 localDir = turretControl.GetTurretBaseY().InverseTransformDirection(dir);
             float basePitch = Mathf.Atan2(localDir.y, localDir.z) * Mathf.Rad2Deg;
 
             // b. Tính góc cộng thêm (bonus pitch) dựa vào khoảng cách
             // Nội suy tuyến tính để tìm ra góc bonus phù hợp
-            float t = Mathf.InverseLerp(turretControl.minAttackRange, turretControl.attackRange, dist);
-            float bonusPitch = Mathf.Lerp(turretControl.arcAngleAtMinRange, turretControl.arcAngleAtMaxRange, t);
+            float t = Mathf.InverseLerp(turretControl.GetMinAttackRange(), turretControl.GetMaxAttackRange(), dist);
+            float bonusPitch = Mathf.Lerp(turretControl.GetArcAngleAtMinRange(), turretControl.GetArcAngleAtMaxRange(), t);
 
             // c. Góc cuối cùng = góc cơ bản + góc bonus
             float finalPitch = basePitch + bonusPitch;
             
             // d. Giới hạn góc bắn trong khoảng cho phép
-            finalPitch = Mathf.Clamp(finalPitch, turretControl.minPitch, turretControl.maxPitch);
+            finalPitch = Mathf.Clamp(finalPitch, turretControl.GetMinPitch(), turretControl.GetMaxPitch());
             
             // e. Áp dụng góc quay
             Quaternion targetXRotation = Quaternion.Euler(-finalPitch, 0f, 0f);
-            turretControl.turretHeadX.localRotation = Quaternion.Slerp( 
-                turretControl.turretHeadX.localRotation,
+            turretControl.GetTurretHeadX().localRotation = Quaternion.Slerp( 
+                turretControl.GetTurretHeadX().localRotation,
                 targetXRotation,
-                Time.deltaTime * turretControl.rotationSpeed
+                Time.deltaTime * turretControl.GetRotationSpeed()
             );
 
             // --- 3. Kiểm tra đã ngắm thẳng chưa (dựa trên góc thay vì hướng vector) ---
             // Chúng ta so sánh góc hiện tại và góc mục tiêu của cả 2 trục
-            float angleYDiff = Quaternion.Angle(turretControl.turretBaseY.rotation, targetYRotation);
-            float angleXDiff = Quaternion.Angle(turretControl.turretHeadX.localRotation, targetXRotation);
+            float angleYDiff = Quaternion.Angle(turretControl.GetTurretBaseY().rotation, targetYRotation);
+            float angleXDiff = Quaternion.Angle(turretControl.GetTurretHeadX().localRotation, targetXRotation);
             
             if (angleYDiff < 1f && angleXDiff < 1f) // Ngưỡng chấp nhận là 1 độ
             {
@@ -122,9 +115,7 @@ public class RocketTurretAttackState : FSMState
             yield return null;
         }
     }
-
-
-
+    
     private void Fire()
     {
         if (target == null) return;

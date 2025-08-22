@@ -1,43 +1,67 @@
 using UnityEngine;
 using CONSTANT;
-public class RocketTurretControl : FSMSystem
+public class RocketTurretControl : TurretControl
 {
-    [Header("Turret Settings")]
-    public Transform turretBaseY;        // trục xoay Y
-    public Transform turretHeadX;        // trục xoay X
-    public Transform firePoint;          // điểm bắn
-    public float rotationSpeed = 5f;
-    public float fireInterval = 2f;
-    public float attackRange = 100f;
-    public float minAttackRange = 5f;
-    public float timeToReload = 1f;
-    public float minPitch = 5f; // góc thấp (địch gần)
-    public float maxPitch = 50f; // góc cao (địch xa)
-    [SerializeField] private Transform[] rocketSlotTransforms = new Transform[8];
-    private PoolableObject[] rockets = new PoolableObject[8];
-    public PoolableObject[] GetRockets() => rockets;
-    [HideInInspector] public Transform target;
-
-    private Quaternion defaultBaseYRot;
-    private Quaternion defaultHeadXRot;
-
-    [Header("Arc Trajectory Settings")]
+    [Header("Turret Data")]
+    [SerializeField] private Transform turretBaseY;        
+    [SerializeField] private Transform turretHeadX;        
+    [SerializeField] private Transform firePoint;          
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float fireInterval = 2f;
+    [SerializeField] private float maxAttackRange = 100f;
+    [SerializeField] private float minAttackRange = 5f;
+    [SerializeField] private float timeToReload = 1f;
+    [SerializeField] private float minPitch = 5f; 
+    [SerializeField] private float maxPitch = 50f; 
     [Tooltip("Góc cộng thêm (độ) khi mục tiêu ở khoảng cách TỐI THIỂU. Giúp tạo đường cong cao cho mục tiêu ở gần.")]
-    public float arcAngleAtMinRange = 20f;
+    [SerializeField] private float arcAngleAtMinRange = 20f;
 
     [Tooltip("Góc cộng thêm (độ) khi mục tiêu ở khoảng cách TỐI ĐA. Giúp tạo đường cong phẳng hơn cho mục tiêu ở xa.")]
-    public float arcAngleAtMaxRange = 5f;
+    [SerializeField] private float arcAngleAtMaxRange = 5f;
     
+    
+    [Header("Turret Settings")]
+    [SerializeField] private Transform[] rocketSlotTransforms = new Transform[8];
+
+
+    #region Temp
+    private PoolableObject[] rockets = new PoolableObject[8];
+    private Transform target;
+    private Quaternion defaultBaseYRot;
+    private Quaternion defaultHeadXRot;
+    #endregion
+
+    #region Turret State
     public RocketTurretIdleState idleState;
     public RocketTurretAttackState attackState;
     public RocketTurretReloadState reloadState;
+
+    #endregion
+    
+    #region Get Set
+    public PoolableObject[] GetRockets() => rockets;
+    public Transform GetTurretBaseY() => turretBaseY;
+    public Transform GetTurretHeadX() => turretHeadX;
+    public Transform GetFirePoint() => firePoint;
+    public float GetRotationSpeed() => rotationSpeed;
+    public float GetFireInterval() => fireInterval;
+    public float GetMaxAttackRange() => maxAttackRange;
+    public float GetMinAttackRange() => minAttackRange;
+    public float GetTimeToReload() => timeToReload;
+    public float GetMinPitch() => minPitch;
+    public float GetMaxPitch() => maxPitch;
+    public float GetArcAngleAtMinRange() => arcAngleAtMinRange;
+    public float GetArcAngleAtMaxRange() => arcAngleAtMaxRange;
+    
+    public Transform GetTarget() => target;
+    public void SetTarget(Transform newTarget)  => target = newTarget;
+    #endregion
+    
+    #region Unity Functions
     private void Awake()
     {
-        // save default rotation
         defaultBaseYRot = turretBaseY.rotation;
         defaultHeadXRot = turretHeadX.localRotation;
-        
-        // init state
         idleState = new RocketTurretIdleState(this);
         attackState = new RocketTurretAttackState(this);
         reloadState = new RocketTurretReloadState(this);
@@ -45,9 +69,12 @@ public class RocketTurretControl : FSMSystem
 
     private void Start()
     {
-        // set init state 
         ChangeState(reloadState);
     }
+
+    #endregion
+
+    #region Functions
 
     public void ResetRotation()
     {
@@ -57,7 +84,6 @@ public class RocketTurretControl : FSMSystem
         turretHeadX.localRotation = Quaternion.Lerp(
             turretHeadX.localRotation, defaultHeadXRot, Time.deltaTime * rotationSpeed);
     }
-
     public void FillRocket()
     {
         for (int i = 0 ; i < 8; i++)
@@ -70,4 +96,6 @@ public class RocketTurretControl : FSMSystem
             }
         }
     }
+    
+    #endregion
 }

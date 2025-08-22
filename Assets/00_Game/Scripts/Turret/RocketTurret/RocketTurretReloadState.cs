@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RocketTurretReloadState : FSMState
 {
-    private RocketTurretControl turretControl;
+    private readonly RocketTurretControl turretControl;
     private Coroutine reloadRoutine;
     private int bulletCount;
     public RocketTurretReloadState(RocketTurretControl turretControl)
@@ -23,7 +23,7 @@ public class RocketTurretReloadState : FSMState
     {
         while (bulletCount <= 8)
         {
-            yield return new WaitForSeconds(turretControl.timeToReload);
+            yield return new WaitForSeconds(turretControl.GetTimeToReload());
             turretControl.FillRocket();
             bulletCount++;
         }
