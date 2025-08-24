@@ -4,7 +4,7 @@ using UnityEngine;
 public class CanvasGamePlay : UICanvas
 {
     [SerializeField] private TextMeshProUGUI coinText;
-
+    [SerializeField] private TextMeshProUGUI text;
 
     public override void Setup()
     {
@@ -18,5 +18,11 @@ public class CanvasGamePlay : UICanvas
     public void SettingButton()
     {
         UIManager.Instance.OpenUI<CanvasSetting>().SetState(this);
+    }
+
+    public void PauseButton()
+    {
+        text.text = "Continue";
+        Time.timeScale = 0;
     }
 }
