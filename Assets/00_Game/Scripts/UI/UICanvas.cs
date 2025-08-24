@@ -4,7 +4,7 @@ using UnityEngine;
 public class UICanvas : MonoBehaviour
 {
     [SerializeField] bool isDestroyOnClose = false;
-    private void Awake()
+    protected virtual void Awake()
     {
         // xu ly tai tho
         RectTransform rect = GetComponent<RectTransform>();
@@ -35,6 +35,12 @@ public class UICanvas : MonoBehaviour
     // tat canvas sau t (s)
     public virtual void Close(float time)
     {
+        StartCoroutine(CloseE(time));
+    }
+
+    IEnumerator CloseE(float time)
+    {
+        yield return new WaitForSeconds(time);
         if (isDestroyOnClose)
         {
             Destroy(gameObject);
@@ -43,12 +49,6 @@ public class UICanvas : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        StartCoroutine(CloseE(time));
-    }
-
-    IEnumerator CloseE(float time)
-    {
-        yield return new WaitForSeconds(time);
     }
     
 }

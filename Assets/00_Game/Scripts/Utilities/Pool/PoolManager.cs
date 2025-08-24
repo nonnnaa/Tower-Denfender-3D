@@ -3,38 +3,42 @@ using UnityEngine;
 
 public class PoolManager : SingletonMono<PoolManager>
 {
-    public List<ObjectPool> pools;
-    public static Dictionary<string, ObjectPool> dic_pool = new Dictionary<string, ObjectPool>();
+    [SerializeField] private List<PoolControl> poolInfors = new List<PoolControl>();
+    private Dictionary<string, PoolControl> poolMapping = new Dictionary<string, PoolControl>();
 
-    void Start()
+    protected override void Awake()
     {
-        foreach (ObjectPool pool in pools)
+        base.Awake();
+        foreach (var pool in poolInfors)
         {
-            CreatePoolObjects(pool);
-            dic_pool[pool.poolName] = pool;
+            pool.Initialize(transform);                
+            poolMapping[pool.PoolName] = pool;         
         }
     }
     
-    public void AddNewPool(ObjectPool pool)
+    public PoolableObject Spawn(string poolName, Vector3 pos, Transform parent = null)
     {
-        if (!dic_pool.ContainsKey(pool.poolName))
+        if (poolMapping.TryGetValue(poolName, out var pool))
         {
-            CreatePoolObjects(pool);
-            dic_pool[pool.poolName] = pool;
+            return pool.Spawn(pos, parent);
+        }
+        return null;
+    }
+
+    public void Despawn(string poolName, PoolableObject obj)
+    {
+        if (poolMapping.TryGetValue(poolName, out var pool))
+        {
+            pool.Despawn(obj);
         }
     }
-    private void CreatePoolObjects(ObjectPool pool)
+
+    public void ReleaseToPool(string poolName, PoolableObject obj)
     {
-        for (int i = 0; i < pool.total; i++)
+        if (poolMapping.TryGetValue(poolName, out var poolControl))
         {
-            Transform trans = Instantiate(pool.prefab, Vector3.zero, Quaternion.identity);
-            trans.gameObject.SetActive(false);
-            pool.elements.Add(trans);
-            pool.poolableCache.Add(trans.GetComponent<IPoolable>());
+            poolControl.ReleaseToPool(obj);
         }
     }
-    private void OnDestroy()
-    {
-        dic_pool.Clear();
-    }
+    
 }

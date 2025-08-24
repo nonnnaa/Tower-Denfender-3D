@@ -1,4 +1,4 @@
-﻿// Author: Daniele Giardini - http://www.demigiant.com
+// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2015/03/12 15:55
 
 using System;
@@ -260,14 +260,14 @@ namespace DG.Tweening
 #endif
                     break;
                 case TargetType.Rigidbody:
-#if true // PHYSICS_MARKER
+#if false // PHYSICS_MARKER
                     tween = ((Rigidbody)target).DOMove(endValueV3, duration, optionalBool0);
 #else
                     tween = ((Transform)target).DOMove(endValueV3, duration, optionalBool0);
 #endif
                     break;
                 case TargetType.Rigidbody2D:
-#if true // PHYSICS2D_MARKER
+#if false // PHYSICS2D_MARKER
                     tween = ((Rigidbody2D)target).DOMove(endValueV3, duration, optionalBool0);
 #else
                     tween = ((Transform)target).DOMove(endValueV3, duration, optionalBool0);
@@ -284,14 +284,14 @@ namespace DG.Tweening
                     tween = ((Transform)target).DORotate(endValueV3, duration, optionalRotationMode);
                     break;
                 case TargetType.Rigidbody:
-#if true // PHYSICS_MARKER
+#if false // PHYSICS_MARKER
                     tween = ((Rigidbody)target).DORotate(endValueV3, duration, optionalRotationMode);
 #else
                     tween = ((Transform)target).DORotate(endValueV3, duration, optionalRotationMode);
 #endif
                     break;
                 case TargetType.Rigidbody2D:
-#if true // PHYSICS2D_MARKER
+#if false // PHYSICS2D_MARKER
                     tween = ((Rigidbody2D)target).DORotate(endValueFloat, duration);
 #else
                     tween = ((Transform)target).DORotate(endValueV3, duration, optionalRotationMode);

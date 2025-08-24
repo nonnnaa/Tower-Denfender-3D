@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GameManager : SingletonMono<GameManager>
 {
+    // current state : enum
+    // state pattent
+    
+    
     // Start is called before the first frame update
     void Start()
     {

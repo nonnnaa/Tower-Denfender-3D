@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3894984271328198960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1299675742846813068}
+  - component: {fileID: 7483353392479969865}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1299675742846813068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894984271328198960}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7483353392479969865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894984271328198960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 700765f501ef37845bb5ac2cfe961a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolInfors:
+  - poolName: ImpactPlasmaTurret
+    prefab: {fileID: 9213086936205658979, guid: 1f3f3d8d2f149684bad0e977f0d726ff, type: 3}
+    total: 5
+  - poolName: MuzzleFlarePlasmaTurret
+    prefab: {fileID: 8626064646917120117, guid: 0fc67c0f795193045a186d3573c03beb, type: 3}
+    total: 5
+  - poolName: ProjectilePlasmaTurret
+    prefab: {fileID: 6803930914982924177, guid: eb32dde7579e9134b9ca6b391bd0f7e2, type: 3}
+    total: 5
+  - poolName: ImpactShortGunTurret
+    prefab: {fileID: 2535647717128806144, guid: 76532b77fb7f5124f8e9f20dea26219e, type: 3}
+    total: 5
+  - poolName: MuzzleFlareShortGunTurret
+    prefab: {fileID: 4191289976801002547, guid: 85c21d7c044727d4aa4e0a1861998063, type: 3}
+    total: 5
+  - poolName: ProjectileShortGunTurret
+    prefab: {fileID: 4957752249381196554, guid: 0a049cbcfb57fa24ba911a0b8692d441, type: 3}
+    total: 5
+  - poolName: ProjectileRocketTurret
+    prefab: {fileID: 3467973861361565570, guid: 354d314ca42f6864c8eca59e52fb42b9, type: 3}
+    total: 5
+  - poolName: TurretBuffDef
+    prefab: {fileID: -4489637227528692262, guid: a46942f593ee1144b911c0106d892ec8, type: 3}
+    total: 10

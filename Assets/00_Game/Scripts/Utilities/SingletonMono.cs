@@ -2,7 +2,6 @@ using UnityEngine;
 public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
-
     public static T Instance
     {
         get
@@ -26,7 +25,6 @@ public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         instance = this as T;
         DontDestroyOnLoad(gameObject);
     }
