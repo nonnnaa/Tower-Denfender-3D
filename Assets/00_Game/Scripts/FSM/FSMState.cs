@@ -10,7 +10,7 @@ public class FSMState
     }
     public virtual void ExitState()
     {
-
+        
     }
     public virtual void FixedUpdateState()
     {
@@ -28,7 +28,7 @@ public class FSMState
     {
 
     }
-    public virtual void OnMidleAnim()
+    public virtual void OnMidlleAnim()
     {
 
     }

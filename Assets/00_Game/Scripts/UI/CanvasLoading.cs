@@ -32,7 +32,7 @@ public class CanvasLoading : UICanvas
             {
                 canvasGroup.alpha = 1;
                 if (LoadSceneManager.Instance != null)
-                    LoadSceneManager.Instance.LoadSceneByName(SceneName.InGameScene, FadeUI);
+                    LoadSceneManager.Instance.LoadSceneByName($"ThinhScene", FadeUI);
             });
     }
 

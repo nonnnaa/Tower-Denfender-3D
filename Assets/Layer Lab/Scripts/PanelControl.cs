@@ -144,7 +144,7 @@ namespace LayerLab.GUIScripts
             buttonNext.gameObject.SetActive(_page < defaultPanels.Count - 1);
         }
 
-        //SetTitle, SetArrow Active
+        //SetTitle, SetArrow OnActive
         private void CheckControl()
         {
             if (!IsOtherMode)

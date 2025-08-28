@@ -2,8 +2,8 @@ using UnityEngine;
 public class FSMAnimState : StateMachineBehaviour
 {
     private FSMSystem fsmSystem;
-    private float timeMiddle;
     private float timeCount;
+    [SerializeField] private float timeMiddle;
     private bool isCall;
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -21,7 +21,7 @@ public class FSMAnimState : StateMachineBehaviour
         if(timeCount >= timeMiddle && !isCall)
         {
             isCall = true;
-            fsmSystem.OnMidleAnim();
+            fsmSystem.OnMidlleAnim();
         }
     }
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

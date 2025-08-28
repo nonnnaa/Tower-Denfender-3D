@@ -1,0 +1,16 @@
+﻿id,enemyId,skillName,animType,radius,damage,duration,prefabName
+1,Soul1,MeleeAttack,Melee,1.5,20,0,SlashVFX
+2,Soul1,RangedAttack,Projectile,8,15,0,ArrowPrefab
+3,Soul1,CastSpell,Cast,6,10,3,BuffAura
+4,Soul1,Summon,Summon,0,0,0,MinionPrefab
+5,Soul1,AOEAttack,AOE,4,30,0,Explosion
+7,Soul2,MeleeAttack,Melee,1.5,20,0,SlashVFX
+8,Soul2,RangedAttack,Projectile,8,15,0,ArrowPrefab
+9,Soul2,CastSpell,Cast,6,10,3,BuffAura
+10,Soul2,Summon,Summon,0,0,0,MinionPrefab
+11,Soul2,AOEAttack,AOE,4,30,0,Explosion
+13,Soul3,MeleeAttack,Melee,1.5,20,0,SlashVFX
+14,Soul3,RangedAttack,Projectile,8,15,0,ArrowPrefab
+15,Soul3,CastSpell,Cast,6,10,3,BuffAura
+16,Soul3,Summon,Summon,0,0,0,MinionPrefab
+17,Soul3,AOEAttack,AOE,4,30,0,Explosion
