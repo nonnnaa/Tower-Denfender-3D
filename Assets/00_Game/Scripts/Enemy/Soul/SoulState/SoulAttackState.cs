@@ -4,20 +4,18 @@ public class SoulAttackState : FSMState
 {
    private SoulControl soulControl;
    private AbilityControl abilityControl;
-   private SoulDataBinding dataBinding;
    private GameObject tower;
    public SoulAttackState(SoulControl soulControl)
    {
       this.soulControl = soulControl;
       abilityControl = soulControl.GetComponent<AbilityControl>();
-      dataBinding = soulControl.GetComponent<SoulDataBinding>();
       tower = GameObject.FindGameObjectWithTag("Tower");
    }
 
    public override void EnterState()
    {
       base.EnterState();
-      dataBinding.IsAttacking = true;
+      soulControl.SoulDataBinding.IsAttacking = true;
    }
 
    public override void UpdateState()
@@ -33,6 +31,6 @@ public class SoulAttackState : FSMState
    public override void ExitState()
    {
       base.ExitState();
-      dataBinding.IsAttacking = false;
+      soulControl.SoulDataBinding.IsAttacking = false;
    }
 }

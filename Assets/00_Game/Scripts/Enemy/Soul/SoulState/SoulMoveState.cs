@@ -16,7 +16,6 @@ public class SoulMoveState : FSMState
     {
         
     }
-
     public override void UpdateState()
     {
         if (tower != null)

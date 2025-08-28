@@ -11,6 +11,8 @@ namespace CONSTANT
         public static string CastSpell = "CastSpell";
         public static string Summon = "Summon";
         public static string Projectile = "Projectile";
+        public static string Spin = "Spin";
+        public static string Roll = "Roll";
     }
     public static class SceneName
     {
