@@ -27,7 +27,7 @@ public class LightningControl : MonoBehaviour
     [SerializeField] private int currentMaterialIndex;
     private Material instanceMaterial;
     private Material[] instanceMaterials; // cache các instance
-    private int max;
+    private int max; 
     //[SerializeField] 
     private int columns = 2;
     //[SerializeField] 

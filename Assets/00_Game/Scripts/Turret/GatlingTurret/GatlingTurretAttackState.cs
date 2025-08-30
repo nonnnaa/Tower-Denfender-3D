@@ -72,7 +72,7 @@ public class GatlingTurretAttackState : FSMState
         Transform firePoint = turretControl.GetFirePoint();
 
         PoolableObject bulletObj = PoolManager.Instance.Spawn(
-            "ProjectileGatlingBullet",
+            CONSTANT.ProjectileName.ProjectileGatlingBullet,
             firePoint.position,
             null
         );

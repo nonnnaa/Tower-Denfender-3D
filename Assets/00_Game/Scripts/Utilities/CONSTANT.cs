@@ -26,7 +26,9 @@ namespace CONSTANT
         public static readonly string ProjectilePlasmaTurret = "ProjectilePlasmaTurret";
         public static readonly string ProjectileRocketTurret = "ProjectileRocketTurret";
         public static readonly string ProjectileGatlingBullet = "ProjectileGatlingTurret";
-        
+        public static readonly string ProjectileDisruptorBullet = "ProjectileDisruptorTurret";
+
+
     }
 
     public static class ImpactName
