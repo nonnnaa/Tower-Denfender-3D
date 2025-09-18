@@ -20,6 +20,8 @@ public class LoadSceneManager : SingletonMono<LoadSceneManager>
 
     IEnumerator LoadSceneProgress()
     {
+        UIManager.Instance.OpenUI<CanvasLoading>();
+        
         currentProgress = 0f;
         yield return new WaitForEndOfFrame();
 
@@ -54,7 +56,7 @@ public class LoadSceneManager : SingletonMono<LoadSceneManager>
                 currentProgress += 1f;
                 OnUpdateProgressEvent?.Invoke(currentProgress);
             }
-            callback?.Invoke();
+            UIManager.Instance.CloseUI<CanvasLoading>(0);
             yield return new WaitForSeconds(1f);
             
             // Khi UI đã đầy 100% thì mới cho phép active scene
@@ -63,8 +65,8 @@ public class LoadSceneManager : SingletonMono<LoadSceneManager>
             // Chờ scene thực sự được active
             while (!asyncOperation.isDone)
                 yield return null;
+            
+            callback?.Invoke();
         }
-
-        
     }
 }

@@ -1,22 +1,19 @@
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class CanvasGamePlay : UICanvas
 {
-    [SerializeField] private TextMeshProUGUI coinText;
-
-
-    public override void Setup()
+    [SerializeField] private List<string> unitKeys;
+    [SerializeField] private List<UnitSelectControl> unitSelectControls;
+    
+    protected override void Awake()
     {
-        base.Setup();
-        coinText.text = "0";
+        base.Awake();
+        for(int i = 0; i < unitKeys.Count; i++)
+        {
+            unitSelectControls[i].Init(unitKeys[i]);
+        }
     }
-    public void UpdateCoinText(int coin)
-    {
-        coinText.text = coin.ToString();
-    }
-    public void SettingButton()
-    {
-        UIManager.Instance.OpenUI<CanvasSetting>().SetState(this);
-    }
+    
+    
+    
 }

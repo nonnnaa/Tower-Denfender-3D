@@ -5,6 +5,7 @@ public class SoulAttackState : FSMState
    private SoulControl soulControl;
    private AbilityControl abilityControl;
    private GameObject tower;
+   private int attackNormalRatio = 50;
    public SoulAttackState(SoulControl soulControl)
    {
       this.soulControl = soulControl;
@@ -21,16 +22,34 @@ public class SoulAttackState : FSMState
    public override void UpdateState()
    {
       base.UpdateState();
-      float distance = Vector3.Distance(tower.transform.position, soulControl.transform.position);
+      float distance = Vector3.Distance(
+         tower.transform.position,
+         soulControl.transform.position
+      );
+
       if (distance > soulControl.GetAttackRange())
       {
          soulControl.ChangeState(soulControl.moveState);
       }
    }
-
    public override void ExitState()
    {
       base.ExitState();
       soulControl.SoulDataBinding.IsAttacking = false;
+   }
+
+   public override void OnExitAnim()
+   {
+      base.OnExitAnim();
+      if (abilityControl.GetAbilityState() != AbilityState.None)
+      {
+         return;
+      }
+      int randomValue = Random.Range(0, 100);
+      //Debug.Log(randomValue);
+      if (randomValue > attackNormalRatio)
+      {
+         abilityControl.SelectAbilitySkill();
+      }
    }
 }

@@ -7,5 +7,5 @@ public enum TeamType
 
 public class EnemyControl : FSMSystem
 {
-    protected const TeamType Team = TeamType.TeamB;
+    public const TeamType Team = TeamType.TeamB;
 }

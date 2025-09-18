@@ -66,6 +66,7 @@ public class EnemyInWave
         coolDownToSpawn = coolDown;
         timeStartWave = timeStart;
     }
+    
     private float timeStartWave;
     private int idEnemy;
     private float coolDownToSpawn;

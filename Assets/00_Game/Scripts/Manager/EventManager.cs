@@ -1,35 +1,41 @@
 using System;
 using System.Collections.Generic;
 
+
+public enum EventKey
+{
+    TriggerAnim
+}
+
 public class EventManager : SingletonMono<EventManager>
 {
-    private static Dictionary<string, Action<object[]>> eventDictionary = new();
+    private static Dictionary<EventKey, Action<object[]>> eventDictionary = new();
 
-    public static void Subscribe(string eventName, Action<object[]> listener)
+    public void Subscribe(EventKey eventKey, Action<object[]> listener)
     {
-        if (!eventDictionary.TryAdd(eventName, listener))
+        if (!eventDictionary.TryAdd(eventKey, listener))
         {
-            eventDictionary[eventName] += listener;
+            eventDictionary[eventKey] += listener;
         }
     }
 
-    public static void Unsubscribe(string eventName, Action<object[]> listener)
+    public void Unsubscribe(EventKey eventKey, Action<object[]> listener)
     {
-        if (eventDictionary.ContainsKey(eventName))
+        if (eventDictionary.ContainsKey(eventKey))
         {
-            eventDictionary[eventName] -= listener;
-            if (eventDictionary[eventName] == null)
+            eventDictionary[eventKey] -= listener;
+            if (eventDictionary[eventKey] == null)
             {
-                eventDictionary.Remove(eventName);
+                eventDictionary.Remove(eventKey);
             }
         }
     }
 
-    public static void Publish(string eventName, params object[] parameters)
+    public void Publish(EventKey eventKey, params object[] parameters)
     {
-        if (eventDictionary.ContainsKey(eventName))
+        if (eventDictionary.ContainsKey(eventKey))
         {
-            eventDictionary[eventName]?.Invoke(parameters);
+            eventDictionary[eventKey]?.Invoke(parameters);
         }
     }
 }

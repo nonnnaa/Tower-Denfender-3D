@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AbilitySkill : ScriptableObject
+public abstract class AbilitySkill : ScriptableObject
 {
     [SerializeField] private float coolDownTime;
     public float CoolDownTime => coolDownTime;
@@ -10,7 +10,8 @@ public class AbilitySkill : ScriptableObject
     
     [SerializeField] private float activeTime;
     public float ActiveTime => activeTime;
-
+    
+    public abstract AnimType  AnimType { get; }
     public virtual bool CanActivate()
     {
         return false;

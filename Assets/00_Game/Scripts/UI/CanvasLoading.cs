@@ -1,23 +1,19 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using CONSTANT;
+using UnityEngine.UI; 
 
 public class CanvasLoading : UICanvas
 {
     [SerializeField] private Slider loadingValueSlider;
     [SerializeField] private TextMeshProUGUI loadingValueText;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Animator loadingAnimator;
 
     protected override void Awake()
     {
         base.Awake();
-        if (LoadSceneManager.Instance != null)
-        {
-            LoadSceneManager.Instance.OnUpdateProgressEvent += UpdateLoadingUI;
-        }
+        LoadSceneManager.Instance.OnUpdateProgressEvent += UpdateLoadingUI;
     }
 
     public override void Open()
@@ -31,20 +27,14 @@ public class CanvasLoading : UICanvas
             .OnComplete(() =>
             {
                 canvasGroup.alpha = 1;
-                if (LoadSceneManager.Instance != null)
-                    LoadSceneManager.Instance.LoadSceneByName($"ThinhScene", FadeUI);
             });
     }
 
-    private void FadeUI()
+    private void FadeUI(Action callback)
     {
         if (canvasGroup == null) return;
         canvasGroup.DOFade(0, 1)
-            .SetLink(canvasGroup.gameObject)
-            .OnComplete(() => 
-            {
-                Close(0f);
-            });
+            .SetLink(canvasGroup.gameObject);
     }
 
     private void UpdateLoadingUI(float progressValue)
@@ -57,8 +47,13 @@ public class CanvasLoading : UICanvas
 
     public override void Close(float time)
     {
-        base.Close(time);
-        if (canvasGroup != null)
-            DOTween.Kill(canvasGroup); 
+        FadeUI(() =>
+        {
+            base.Close(time);
+            if (canvasGroup != null)
+            {
+                DOTween.Kill(canvasGroup); 
+            }
+        });
     }
 }

@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class ConfigManager : SingletonMono<ConfigManager>
 {
-    private FileConfigTurret fileConfigTurret;
-    private FileConfigEnemy fileConfigEnemy;
-    private FileConfigGameLevel fileConfigGameLevel;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        Init(null);
-    }
-
+    [SerializeField] private FileConfigTurret fileConfigTurret;
+    [SerializeField] private FileConfigEnemy fileConfigEnemy;
+    [SerializeField] private FileConfigGameLevel fileConfigGameLevel;
+    
     public void Init(Action callback)
     {
         StartCoroutine(OnStart(callback));
@@ -34,10 +28,6 @@ public class ConfigManager : SingletonMono<ConfigManager>
         
         fileConfigGameLevel =  Resources.Load<FileConfigGameLevel>("Config/FileConfigGameLevel");
         yield return new WaitUntil(() => fileConfigGameLevel != null);
-        
-        if (callback != null)
-        {
-            callback();
-        }
+        callback?.Invoke();
     }
 }

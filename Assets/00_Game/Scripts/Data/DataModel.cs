@@ -8,7 +8,8 @@ using UnityEngine;
 /// Local data manager that handles CRUD operations (Create, Read, Update, Delete)
 /// for UserData stored in JSON format inside Application.persistentDataPath.
 /// </summary>
-public class DataModelLocal
+[CreateAssetMenu(menuName = "Data/DataModelLocal")]
+public class DataModelLocal : ScriptableObject
 {
     private UserData userData;  // The main data container for the game
     private string savePath => Path.Combine(Application.persistentDataPath, "UserData.json");
@@ -62,8 +63,8 @@ public class DataModelLocal
         {
             Debug.Log("[CreateData] Data already exists, skipping creation.");
         }
-
         callback?.Invoke();
+        Debug.Log("Data File Path : " + savePath);
     }
 
     /// <summary>

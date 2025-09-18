@@ -16,17 +16,31 @@ public class GameLevelManager : SingletonMono<GameLevelManager>
 
     private void Start()
     {
-        StartCoroutine(StartNewWave(enemiesInWaves[0]));
+        StartCoroutine(StartWaves());
+    }
+
+    IEnumerator StartWaves()
+    {
+        foreach (var wave in enemiesInWaves)
+        {
+            yield return StartCoroutine(StartNewWave(wave));
+        }
     }
 
     IEnumerator StartNewWave(List<EnemyInWave> enemyInWave)
     {
-        foreach (var enemy in enemyInWave)
+        for (int i = 0; i < enemyInWave.Count; i++)
         {
+            EnemyInWave enemy = enemyInWave[i];
             yield return new WaitForSeconds(enemy.GetCoolDown());
+
             int enemyId = enemy.GetId();
             FileConfigEnemyRecord enemyRecord = ConfigManager.Instance.GetFileConfigEnemy().GetEnemyRecordById(enemyId);
-            EnemyControl enemyControl = Instantiate(enemyRecord.Prefab, spawnPositions[0].position, spawnPositions[0].rotation);
+            
+            Transform spawnPos = spawnPositions[i % spawnPositions.Count];
+            Instantiate(enemyRecord.Prefab, spawnPos.position, spawnPos.rotation);
         }
     }
+    
+    
 }

@@ -20,8 +20,11 @@ public class SoulMoveState : FSMState
     {
         if (tower != null)
         {
-            float distance = Vector3.Distance(tower.transform.position, soulTransform.position);
-            if (distance < soulControl.GetAttackRange())
+            float distance = Vector3.Distance(
+                tower.transform.position,
+                soulControl.transform.position
+            );
+            if (distance <= soulControl.GetAttackRange())
             {
                 soulControl.ChangeState(soulControl.attackState);
             }

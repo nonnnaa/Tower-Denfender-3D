@@ -16,27 +16,30 @@ public class SoulControl : EnemyControl
     public SoulAttackState attackState;
     public SoulHitState hitState;
     public SoulDeadState deadState;
-
     
     public float GetSpeedMove() => dataRecord.Speed;
     public float GetAttackRange() => dataRecord.AttackRange;
     public void Awake()
     {
-        dataRecord = ConfigManager.Instance.GetFileConfigEnemy().GetEnemyRecordByName("Soul3");
+        Init("Soul3");
         moveState = new SoulMoveState(this);
         attackState = new SoulAttackState(this);
         hitState = new SoulHitState(this);
         deadState = new SoulDeadState(this);
     }
 
-    public void Init()
+    public void Init(string enemyKey)
     {
-        
+        dataRecord = ConfigManager.Instance.GetFileConfigEnemy().GetEnemyRecordByName(enemyKey);
     }
-    
     
     private void Start()
     {
         ChangeState(moveState);
+    }
+
+    public override void OnMidlleAnim()
+    {
+        base.OnMidlleAnim();
     }
 }

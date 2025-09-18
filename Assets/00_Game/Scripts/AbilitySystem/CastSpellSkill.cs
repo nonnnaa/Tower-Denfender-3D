@@ -6,6 +6,9 @@ public class CastSpellSkill : AbilitySkill
     [SerializeField] private float rangeCast;
     private Transform parent;
     private Transform tower;
+
+    public override AnimType AnimType => AnimType.CastSpell;
+
     public override bool CanActivate()
     {
         if (tower == null)
@@ -16,9 +19,9 @@ public class CastSpellSkill : AbilitySkill
         {
             return true;
         }
-
         return false;
     }
+    
     public override void OnActive()
     {
         base.OnActive();

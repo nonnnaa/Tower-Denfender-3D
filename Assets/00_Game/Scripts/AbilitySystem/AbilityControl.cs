@@ -1,109 +1,118 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public enum AbilityState
 {
-   Ready,
-   Active,
-   Cooldown,
+    None,
+    Ready,
+    Active,
+    Cooldown,
 }
 
 [Serializable]
 public class AbilityInfo
 {
     [SerializeField] private AbilitySkill skill;
-    [SerializeField] private float ratio;
+    [SerializeField] private int ratio;
     public AbilitySkill GetSkill() => skill;
-    public float GetRatio() => ratio;
+    public int GetRatio() => ratio;
 }
 
 public class AbilityControl : MonoBehaviour
 {
+    SoulDataBinding dataBinding;
     [SerializeField] private List<AbilityInfo> abilitySkillInfor = new List<AbilityInfo>();
-    
     private AbilitySkill abilitySkill;
-    private AbilityState abilityState = AbilityState.Cooldown;
+    private AbilityState abilityState = AbilityState.None;
+    public AbilityState GetAbilityState() => abilityState;
     private float cooldownTime;
     private float activeTime;
     private float triggerTime;
     private bool isTriggered;
-
-    private void Update()
+    private int sumOfRatios;
+    private void Awake()
     {
-        if (abilitySkill == null) return;
-        if(abilitySkill.CanActivate())
-        {
-            HandleSkillLogic();
-        }
+        sumOfRatios = GetSumOfRatios();
+        dataBinding = GetComponent<SoulDataBinding>();
     }
-    void HandleSkillLogic()
+
+    IEnumerator HandleSkillLogic()
     {
-        switch (abilityState)
+        while (abilityState != AbilityState.None && abilitySkill != null)
         {
-            case AbilityState.Ready:
-               
-                abilitySkill = SelectSkillByRatio();
-                abilitySkill.OnActive();
-                abilityState = AbilityState.Active;
-                activeTime = abilitySkill.ActiveTime;
-                isTriggered = false;
-                triggerTime = 0;
-                break;
-
-            case AbilityState.Active:
-                if (activeTime > 0)
-                {
-                    activeTime -= Time.deltaTime;
-                    triggerTime += Time.deltaTime;
-
-                    if (!isTriggered && triggerTime > abilitySkill.TriggerTime)
-                    {
-                        abilitySkill.OnTrigger();
-                        isTriggered = true;
-                    }
-                }
-                else
-                {
-                    abilityState = AbilityState.Cooldown;
-                    cooldownTime = abilitySkill.CoolDownTime;
-                }
-                break;
-
-            case AbilityState.Cooldown:
-                if (cooldownTime > 0)
-                {
-                    cooldownTime -= Time.deltaTime;
-                }
-                else
-                {
-                    abilityState = AbilityState.Ready;
-                    abilitySkill = null;
-                }
-                break;
-        }
-    }
-    private AbilitySkill SelectSkillByRatio()
-    {
-        if (abilitySkillInfor.Count == 0) return null;
-        float totalWeight = 0f;
-        foreach (var infor in abilitySkillInfor)
-        {
-            totalWeight += infor.GetRatio(); 
-        }
-
-        float randomValue = Random.value * totalWeight;
-        float cumulative = 0f;
-
-        foreach (var infor in abilitySkillInfor)
-        {
-            cumulative += infor.GetRatio();
-            if (randomValue <= cumulative)
+            switch (abilityState)
             {
-                return infor.GetSkill();
+                case AbilityState.Ready:
+                    abilitySkill.OnActive();
+                    dataBinding.SetTriggerAnim(abilitySkill.AnimType);
+                    abilityState = AbilityState.Active;
+                    activeTime = abilitySkill.ActiveTime;
+                    isTriggered = false;
+                    triggerTime = 0;
+                    break;
+
+                case AbilityState.Active:
+                    if (activeTime > 0)
+                    {
+                        activeTime -= Time.deltaTime;
+                        triggerTime += Time.deltaTime;
+                        if (!isTriggered && triggerTime > abilitySkill.TriggerTime)
+                        {
+                            abilitySkill.OnTrigger();
+                            isTriggered = true;
+                        }
+                    }
+                    else
+                    {
+                        abilityState = AbilityState.Cooldown;
+                        cooldownTime = abilitySkill.CoolDownTime;
+                    }
+                    break;
+                case AbilityState.Cooldown:
+                    if (cooldownTime > 0)
+                    {
+                        cooldownTime -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        abilityState = AbilityState.None;
+                        abilitySkill = null;
+                    }
+                    break;
+            }
+            yield return new WaitForSecondsRealtime(Time.deltaTime);
+        }
+    }
+    
+
+    public void SelectAbilitySkill()
+    {
+        int randomValue = Random.Range(0, sumOfRatios);
+        int currentLimit = abilitySkillInfor[0].GetRatio();
+        for(int i=0 ; i<abilitySkillInfor.Count; i++)
+        {
+            if (randomValue < currentLimit)
+            {
+                abilitySkill =  abilitySkillInfor[i].GetSkill();
+                abilityState = AbilityState.Ready;
+                StartCoroutine(HandleSkillLogic());
+            }
+            else
+            {
+                currentLimit += abilitySkillInfor[i].GetRatio();
             }
         }
-        return null; 
+    }
+    private int GetSumOfRatios()
+    {
+        int sum = 0;
+        foreach (AbilityInfo abilityInfo in abilitySkillInfor)
+        {
+            sum += abilityInfo.GetRatio();
+        }
+        return sum;
     }
 }

@@ -23,7 +23,6 @@ public class TurretControl : FSMSystem
     {
         
     }
-
     protected virtual void OnDamaged()
     {
         

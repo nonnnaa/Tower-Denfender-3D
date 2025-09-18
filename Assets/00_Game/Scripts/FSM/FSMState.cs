@@ -30,7 +30,7 @@ public class FSMState
     }
     public virtual void OnMidlleAnim()
     {
-
+        
     }
     public virtual void OnExitAnim()
     {

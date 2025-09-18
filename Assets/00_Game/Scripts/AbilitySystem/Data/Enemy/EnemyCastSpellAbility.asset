@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df1aa1fc5f65c94458e7f30ba4f55d15, type: 3}
   m_Name: EnemyCastSpellAbility
   m_EditorClassIdentifier: 
-  coolDownTime: 10
+  coolDownTime: 5
   triggerTime: 1
   activeTime: 1
   damage: 15
+  rangeCast: 0

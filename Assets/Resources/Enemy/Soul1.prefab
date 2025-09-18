@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 990591457493972778}
   m_Layer: 0
   m_Name: Soul1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
