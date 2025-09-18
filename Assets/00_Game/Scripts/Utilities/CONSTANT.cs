@@ -1,10 +1,25 @@
 namespace CONSTANT
 {
+    public class CharactorAnimName
+    {
+        public static string Spawn = "Spawn";
+        public static string Idle = "Idle";
+        public static string Move = "Move";
+        public static string Hit = "Hit";
+        public static string Attack = "Attack";
+        public static string Dead = "Dead";
+        public static string CastSpell = "CastSpell";
+        public static string Summon = "Summon";
+        public static string Projectile = "Projectile";
+        public static string Spin = "Spin";
+        public static string Roll = "Roll";
+    }
     public static class SceneName
     {
         public static string BootScene = "BootScene";
         public static string BufferScene = "BufferScene";
         public static string InGameScene = "InGameScene";
+        
     }
     public static class TagName
     {
@@ -42,5 +57,10 @@ namespace CONSTANT
     {
         public static  readonly string TurretBuffHp = "TurretBuffHp";
         public static readonly string TurretBuffDef = "TurretBuffDef";
+    }
+
+    public static class AbilityName
+    {
+        public static readonly string SoulCastSpell = "SoulCastSpell";
     }
 }

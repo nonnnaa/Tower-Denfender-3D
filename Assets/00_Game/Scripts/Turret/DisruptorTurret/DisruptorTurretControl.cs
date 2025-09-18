@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class DisruptorTurretControl : TurretControl
 {
@@ -23,7 +24,7 @@ public class DisruptorTurretControl : TurretControl
     [SerializeField] private ParticleSystem muzzleFlarePS;   // tia lóe ở nòng
     [SerializeField] private ParticleSystem impactPrefab;    // prefab effect trúng mục tiêu
     [SerializeField] private ParticleSystem rangeCircle;     // vòng tròn phạm vi
-
+    private List<Transform> activeImpactEnemies = new List<Transform>();
     #region Temp
     private Transform target;
     private Quaternion defaultBaseYRot;
@@ -75,7 +76,6 @@ public class DisruptorTurretControl : TurretControl
         }
     }
 
-    // Hiệu ứng trúng enemy (gắn 1 lần duy nhất, sau đó bật/tắt)
     public void PlayImpactEffect(Transform enemy)
     {
         if (enemy == null || impactPrefab == null)
@@ -85,10 +85,12 @@ public class DisruptorTurretControl : TurretControl
         }
 
         ParticleSystem impact = FindOrCreateImpact(enemy);
-
         if (impact != null && !impact.isPlaying)
         {
             impact.Play();
+
+            if (!activeImpactEnemies.Contains(enemy))
+                activeImpactEnemies.Add(enemy);
         }
     }
 
@@ -101,6 +103,18 @@ public class DisruptorTurretControl : TurretControl
         {
             impact.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
+
+        activeImpactEnemies.Remove(enemy);
+    }
+
+    // 🚀 Stop toàn bộ impact cùng lúc
+    public void StopAllImpactEffects()
+    {
+        foreach (var enemy in new List<Transform>(activeImpactEnemies))
+        {
+            StopImpactEffect(enemy);
+        }
+        activeImpactEnemies.Clear();
     }
 
     private ParticleSystem FindImpact(Transform enemy)
@@ -121,10 +135,10 @@ public class DisruptorTurretControl : TurretControl
             impact = Instantiate(impactPrefab, enemy.position, Quaternion.identity, enemy);
             impact.name = impactPrefab.name;
 
-            // ⚡ Quan trọng: giữ effect không tự hủy
+            // đảm bảo không tự hủy
             var main = impact.main;
             main.stopAction = ParticleSystemStopAction.None;
-            main.loop = true; // để nó chỉ tắt khi mình gọi StopImpactEffect
+            main.loop = true;
         }
 
         return impact;

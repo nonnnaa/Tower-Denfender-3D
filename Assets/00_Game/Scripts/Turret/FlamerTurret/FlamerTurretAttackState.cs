@@ -29,7 +29,7 @@ public class FlamerTurretAttackState : FSMState
         turretControl.PlaySmoke(target);
 
         float dist = Vector3.Distance(turretControl.transform.position, target.position);
-        if (dist < turretControl.GetMinAttackRange() || dist > turretControl.GetMaxAttackRange())
+        if (dist > turretControl.GetMaxAttackRange())
         {
             turretControl.StopFlame();
             turretControl.StopSmoke(target);

@@ -22,7 +22,7 @@ public class FlamerTurretIdleState : FSMState
         {
             float dist = Vector3.Distance(turretControl.transform.position, enemy.position);
 
-            if (dist >= turretControl.GetMinAttackRange() && dist <= turretControl.GetMaxAttackRange())
+            if (dist <= turretControl.GetMaxAttackRange())
             {
                 turretControl.SetTarget(enemy);
                 turretControl.ChangeState(turretControl.attackState);

@@ -1,18 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class MissionManager : SingletonMono<MissionManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private FileConfigGameLevelRecord gameLevelRecord;
+    private List<List<EnemyInWave>> enemiesInWaves;
 
-    // Update is called once per frame
-    void Update()
+    protected override void Awake()
     {
-        
+        base.Awake();
+        gameLevelRecord = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(0);
+        enemiesInWaves = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(0).EnemyWaves;
     }
+    
 }

@@ -28,7 +28,7 @@ public class GatlingTurretAttackState : FSMState
 
         // Kiểm tra khoảng cách
         float dist = Vector3.Distance(turretControl.transform.position, target.position);
-        if (dist < turretControl.GetMinAttackRange() || dist > turretControl.GetMaxAttackRange())
+        if (dist > turretControl.GetMaxAttackRange())
         {
             turretControl.SetTarget(null);
             turretControl.ChangeState(turretControl.idleState);
@@ -71,22 +71,32 @@ public class GatlingTurretAttackState : FSMState
     {
         Transform firePoint = turretControl.GetFirePoint();
 
+        // Spawn bullet từ PoolManager
         PoolableObject bulletObj = PoolManager.Instance.Spawn(
             CONSTANT.ProjectileName.ProjectileGatlingBullet,
             firePoint.position,
-            null
+            null // parent, để mặc định PoolManager transform
         );
 
         if (bulletObj != null)
         {
-            // Dùng Shoot thay cho Rigidbody velocity
+            // Bảo đảm bullet active
+            bulletObj.gameObject.SetActive(true);
+
+            // Lấy component GatlingBullet
             GatlingBullet bullet = bulletObj.GetComponent<GatlingBullet>();
             if (bullet != null)
             {
+                // Bắn theo hướng firePoint.forward
                 bullet.Shoot(firePoint.forward);
             }
         }
+
+        // Hiệu ứng muzzle flash
         turretControl.PlayMuzzleFlash();
+
+        // Xoay Gatling barrel
         turretControl.RotateGatlingBarrel();
     }
+
 }

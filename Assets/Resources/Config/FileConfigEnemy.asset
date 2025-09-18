@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067d01688735b1647a84cb20e661b2fd, type: 3}
+  m_Name: FileConfigEnemy
+  m_EditorClassIdentifier: 
+  records:
+  - id: 1
+    name: Soul1
+    prefabName: Soul1
+    level: 1
+    hp: 100
+    atk: 15
+    def: 5
+    speed: 2.5
+    attackRange: 2
+  - id: 2
+    name: Soul2
+    prefabName: Soul2
+    level: 2
+    hp: 200
+    atk: 25
+    def: 10
+    speed: 2
+    attackRange: 2
+  - id: 3
+    name: Soul3
+    prefabName: Soul3
+    level: 3
+    hp: 400
+    atk: 40
+    def: 20
+    speed: 1.5
+    attackRange: 2

@@ -33,7 +33,6 @@ public class GatlingTurretControl : TurretControl
     public Transform GetFirePoint() => firePoint;
     public float GetRotationSpeed() => rotationSpeed;
     public float GetFireInterval() => fireInterval;
-    public float GetMinAttackRange() => minAttackRange;
     public float GetMaxAttackRange() => maxAttackRange;
 
     public Transform GetTarget() => target;

@@ -34,7 +34,6 @@ public class FlamerTurretControl : TurretControl
     public Transform GetTurretBaseY() => turretBaseY;
     public Transform GetTurretHeadX() => turretHeadX;
     public float GetRotationSpeed() => rotationSpeed;
-    public float GetMinAttackRange() => minAttackRange;
     public float GetMaxAttackRange() => maxAttackRange;
 
     public Transform GetTarget() => target;

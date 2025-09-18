@@ -34,9 +34,9 @@ public class FSMSystem : MonoBehaviour
     {
         currentState?.OnEnterAnim();
     }
-    public void OnMidleAnim()
+    public void OnMidlleAnim()
     {
-        currentState?.OnMidleAnim();
+        currentState?.OnMidlleAnim();
     }
     public void OnExitAnim()
     {

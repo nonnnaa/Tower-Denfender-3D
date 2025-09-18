@@ -5,7 +5,7 @@ using System.Reflection;
 
 public class ConfigCompare<T> : IComparer where T : class, new()
 {
-    List<FieldInfo> fields;
+    List<FieldInfo> fields = new List<FieldInfo>();
     public ConfigCompare(params string[] keysS)
     {
         Type type = typeof(T);

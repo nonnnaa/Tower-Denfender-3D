@@ -3,6 +3,6 @@ public class FileConfigTurret : FileConfig<FileConfigTurretRecord>
 {
     public override void DefineConfigCompare()
     {
-        records = new List<FileConfigTurretRecord>();
+        configCompare = new ConfigCompare<FileConfigTurretRecord>("id");
     }
 }

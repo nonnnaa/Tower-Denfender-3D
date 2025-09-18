@@ -39,10 +39,10 @@ public class DisruptorTurretAttackState : FSMState
         if (attackRoutine != null)
             turretControl.StopCoroutine(attackRoutine);
 
-        // tắt impact khi turret ngừng tấn công
-        Transform target = turretControl.GetTarget();
-        if (target != null) turretControl.StopImpactEffect(target);
+        // tắt toàn bộ impact đang chạy
+        turretControl.StopAllImpactEffects();
     }
+
 
 
     private IEnumerator AttackRoutine()
