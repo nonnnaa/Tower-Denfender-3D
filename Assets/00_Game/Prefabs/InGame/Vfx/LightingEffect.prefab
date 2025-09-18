@@ -362,8 +362,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beginPoint: {fileID: 8962254119169778836}
-  targetPoint: {fileID: 1074063395060183105}
+  targetPoint: {fileID: 6281747960269076283}
   lineRendererComponent: {fileID: 6634674277905466058}
+  impactLightningTransform: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: 50acb7819c35fa74ea0a0a55640c6894, type: 2}
   - {fileID: 2100000, guid: df9cac133086f0b41a78b85ec55f6caf, type: 2}
