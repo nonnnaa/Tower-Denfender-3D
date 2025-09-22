@@ -20,11 +20,12 @@ public class BootLoader : MonoBehaviour
             // 2.Login
             
             // 3. Load Buffer Scene
+            UIManager.Instance.OpenUI<CanvasLoading>();
             dataControl.Init(() =>
             {
-                LoadSceneManager.Instance.LoadSceneByName("ThinhScene", () =>
+                LoadSceneManager.Instance.LoadSceneByName(SceneName.BufferScene, () =>
                 {
-                    //UIManager.Instance.CloseUI<CanvasLoading>(0);
+                    UIManager.Instance.CloseAll();
                     UIManager.Instance.OpenUI<CanvasHome>();
                 });
             });

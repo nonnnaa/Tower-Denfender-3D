@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,11 +16,7 @@ public class UIManager : SingletonMono<UIManager>
             canvasPrefabs.Add(prefabs[i].GetType(), prefabs[i]);
         }
     }
-
-    private void Start()
-    {
-        OpenUI<CanvasLoading>();
-    }
+    
 
     // mo canvas
     public T OpenUI<T>() where T : UICanvas

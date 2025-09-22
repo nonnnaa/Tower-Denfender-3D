@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UICanvas : MonoBehaviour
 {
-    [SerializeField] bool isDestroyOnClose = false;
+    [SerializeField] bool isDestroyOnClose;
     protected virtual void Awake()
     {
         // xu ly tai tho
@@ -35,12 +35,11 @@ public class UICanvas : MonoBehaviour
     // tat canvas sau t (s)
     public virtual void Close(float time)
     {
-        StartCoroutine(CloseE(time));
+        Invoke(nameof(CloseE), time);
     }
-
-    IEnumerator CloseE(float time)
+ 
+    public void CloseE()
     {
-        yield return new WaitForSeconds(time);
         if (isDestroyOnClose)
         {
             Destroy(gameObject);

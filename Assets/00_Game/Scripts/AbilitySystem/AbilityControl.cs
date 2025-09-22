@@ -23,20 +23,28 @@ public class AbilityInfo
 
 public class AbilityControl : MonoBehaviour
 {
-    SoulDataBinding dataBinding;
+    private SoulDataBinding dataBinding;
     [SerializeField] private List<AbilityInfo> abilitySkillInfor = new List<AbilityInfo>();
     private AbilitySkill abilitySkill;
     private AbilityState abilityState = AbilityState.None;
+
     public AbilityState GetAbilityState() => abilityState;
+
     private float cooldownTime;
     private float activeTime;
     private float triggerTime;
     private bool isTriggered;
     private int sumOfRatios;
+
     private void Awake()
     {
         sumOfRatios = GetSumOfRatios();
         dataBinding = GetComponent<SoulDataBinding>();
+
+        if (dataBinding == null)
+        {
+            Debug.LogError($"[{name}] SoulDataBinding not found! Please add component.");
+        }
     }
 
     IEnumerator HandleSkillLogic()
@@ -46,12 +54,21 @@ public class AbilityControl : MonoBehaviour
             switch (abilityState)
             {
                 case AbilityState.Ready:
-                    abilitySkill.OnActive();
-                    dataBinding.SetTriggerAnim(abilitySkill.AnimType);
-                    abilityState = AbilityState.Active;
-                    activeTime = abilitySkill.ActiveTime;
-                    isTriggered = false;
-                    triggerTime = 0;
+                    if (abilitySkill != null)
+                    {
+                        abilitySkill.OnActive();
+                        if (dataBinding != null)
+                            dataBinding.SetTriggerAnim(abilitySkill.AnimType);
+
+                        abilityState = AbilityState.Active;
+                        activeTime = abilitySkill.ActiveTime;
+                        isTriggered = false;
+                        triggerTime = 0;
+                    }
+                    else
+                    {
+                        abilityState = AbilityState.None;
+                    }
                     break;
 
                 case AbilityState.Active:
@@ -59,7 +76,8 @@ public class AbilityControl : MonoBehaviour
                     {
                         activeTime -= Time.deltaTime;
                         triggerTime += Time.deltaTime;
-                        if (!isTriggered && triggerTime > abilitySkill.TriggerTime)
+
+                        if (!isTriggered && abilitySkill != null && triggerTime > abilitySkill.TriggerTime)
                         {
                             abilitySkill.OnTrigger();
                             isTriggered = true;
@@ -68,9 +86,11 @@ public class AbilityControl : MonoBehaviour
                     else
                     {
                         abilityState = AbilityState.Cooldown;
-                        cooldownTime = abilitySkill.CoolDownTime;
+                        if (abilitySkill != null)
+                            cooldownTime = abilitySkill.CoolDownTime;
                     }
                     break;
+
                 case AbilityState.Cooldown:
                     if (cooldownTime > 0)
                     {
@@ -83,35 +103,53 @@ public class AbilityControl : MonoBehaviour
                     }
                     break;
             }
-            yield return new WaitForSecondsRealtime(Time.deltaTime);
+            yield return null;
         }
     }
-    
 
     public void SelectAbilitySkill()
     {
-        int randomValue = Random.Range(0, sumOfRatios);
-        int currentLimit = abilitySkillInfor[0].GetRatio();
-        for(int i=0 ; i<abilitySkillInfor.Count; i++)
+        if (abilitySkillInfor == null || abilitySkillInfor.Count == 0)
         {
+            Debug.LogWarning($"[{name}] No ability skills available to select!");
+            return;
+        }
+
+        if (sumOfRatios <= 0)
+        {
+            Debug.LogWarning($"[{name}] Sum of ratios is zero, cannot select ability skill.");
+            return;
+        }
+
+        int randomValue = Random.Range(0, sumOfRatios);
+        int currentLimit = 0;
+
+        for (int i = 0; i < abilitySkillInfor.Count; i++)
+        {
+            currentLimit += abilitySkillInfor[i].GetRatio();
+
             if (randomValue < currentLimit)
             {
-                abilitySkill =  abilitySkillInfor[i].GetSkill();
+                abilitySkill = abilitySkillInfor[i].GetSkill();
+                if (abilitySkill == null)
+                {
+                    Debug.LogWarning($"[{name}] Selected ability at index {i} is NULL!");
+                    return;
+                }
+
                 abilityState = AbilityState.Ready;
                 StartCoroutine(HandleSkillLogic());
-            }
-            else
-            {
-                currentLimit += abilitySkillInfor[i].GetRatio();
+                break; 
             }
         }
     }
+
     private int GetSumOfRatios()
     {
         int sum = 0;
         foreach (AbilityInfo abilityInfo in abilitySkillInfor)
         {
-            sum += abilityInfo.GetRatio();
+            sum += Mathf.Max(0, abilityInfo.GetRatio()); 
         }
         return sum;
     }

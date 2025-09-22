@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -19,41 +18,18 @@ public class CanvasLoading : UICanvas
     public override void Open()
     {
         base.Open();
-        //Debug.Log("Open");
         if (canvasGroup == null) return;
         canvasGroup.alpha = 0;
-        canvasGroup.DOFade(1, 1)
-            .SetLink(canvasGroup.gameObject) // tween sẽ bị kill khi object bị destroy
-            .OnComplete(() =>
-            {
-                canvasGroup.alpha = 1;
-            });
+        canvasGroup.DOFade(1, 1).SetLink(gameObject).OnComplete(() =>
+        {
+            canvasGroup.alpha = 1;
+        });
     }
-
-    private void FadeUI(Action callback)
-    {
-        if (canvasGroup == null) return;
-        canvasGroup.DOFade(0, 1)
-            .SetLink(canvasGroup.gameObject);
-    }
-
     private void UpdateLoadingUI(float progressValue)
     {
         if (loadingValueSlider == null || loadingValueText == null) return;
 
         loadingValueSlider.value = progressValue;
         loadingValueText.text = $"Loading... {(int)progressValue}%";
-    }
-
-    public override void Close(float time)
-    {
-        FadeUI(() =>
-        {
-            base.Close(time);
-            if (canvasGroup != null)
-            {
-                DOTween.Kill(canvasGroup); 
-            }
-        });
     }
 }

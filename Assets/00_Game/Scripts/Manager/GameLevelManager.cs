@@ -6,7 +6,8 @@ public class GameLevelManager : SingletonMono<GameLevelManager>
 {
     private FileConfigGameLevelRecord gameLevelRecord;
     private List<List<EnemyInWave>> enemiesInWaves;
-    [SerializeField] private List<Transform> spawnPositions;
+    [SerializeField] private Transform spawnA;
+    [SerializeField] private Transform spawnB;
     protected override void Awake()
     {
         base.Awake();
@@ -37,8 +38,7 @@ public class GameLevelManager : SingletonMono<GameLevelManager>
             int enemyId = enemy.GetId();
             FileConfigEnemyRecord enemyRecord = ConfigManager.Instance.GetFileConfigEnemy().GetEnemyRecordById(enemyId);
             
-            Transform spawnPos = spawnPositions[i % spawnPositions.Count];
-            Instantiate(enemyRecord.Prefab, spawnPos.position, spawnPos.rotation);
+            Instantiate(enemyRecord.Prefab, spawnB.position, spawnB.rotation);
         }
     }
     

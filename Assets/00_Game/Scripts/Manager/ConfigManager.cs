@@ -16,6 +16,11 @@ public class ConfigManager : SingletonMono<ConfigManager>
     {
         return fileConfigEnemy;
     }
+
+    public FileConfigTurret GetFileConfigTurret()
+    {
+        return fileConfigTurret;
+    }
     public FileConfigGameLevel GetFileConfigGameLevel() => fileConfigGameLevel;
     
     IEnumerator OnStart(Action callback)
