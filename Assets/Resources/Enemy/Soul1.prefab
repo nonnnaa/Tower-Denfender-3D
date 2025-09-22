@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 257988997025039948}
+  hpHubPoint: {fileID: 2721671765596230592}
   dataRecord:
     id: 0
     name: 

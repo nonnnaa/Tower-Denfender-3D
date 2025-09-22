@@ -12,6 +12,7 @@ public class ShotGunBullet : PoolableObject, IBullet
     [SerializeField] private float lifeTime = 3f;
     [SerializeField] private float delayAfterHit;
     [SerializeField] private string projectileName, impactName;
+    [SerializeField] private int damage = 50;
     private Vector3 moveDirection;
     private Coroutine moveCoroutine; 
     private static RaycastHit[] hitBuffer = new RaycastHit[5];
@@ -87,6 +88,11 @@ public class ShotGunBullet : PoolableObject, IBullet
     {
         
         PoolManager.Instance.Spawn(impactName, point, enemy.transform);
+        EnemyControl enemyControl = enemy.GetComponent<EnemyControl>();
+        if (enemyControl != null)
+        {
+            enemyControl.TakeDamage(damage);
+        }
         Invoke(nameof(ReleaseToPool), delayAfterHit);
     }
     // Poolable function

@@ -46,11 +46,11 @@ public class HpHub : PoolableObject
         canvasGroup.alpha = 0;
     }
     
-    public void UpdateHP(int cur, int max)
+    public void UpdateHp(int cur, int max)
     {
         canvasGroup.alpha = 1;
 
-        float val = (float)cur / (float)max;
+        float val = (float)cur / max;
 
         twHp?.Kill();
         twHp = hpFG.DOFillAmount(val, 0.5f).SetEase(Ease.OutCubic);

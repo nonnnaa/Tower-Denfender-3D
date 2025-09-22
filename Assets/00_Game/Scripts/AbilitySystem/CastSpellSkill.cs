@@ -25,12 +25,12 @@ public class CastSpellSkill : AbilitySkill
     public override void OnActive()
     {
         base.OnActive();
-        Debug.Log("CastSpellSkill take damage: " + damage);
+        //Debug.Log("CastSpellSkill take damage: " + damage);
     }
 
     public override void OnTrigger()
     {
         base.OnTrigger();
-        Debug.Log("CastSpellSkill Trigger damage");
+        //Debug.Log("CastSpellSkill Trigger damage");
     }
 }

@@ -31,5 +31,5 @@ public class FileConfigEnemyRecord
     [SerializeField] private float attackRange;
     public float AttackRange => attackRange;
 
-    public EnemyControl Prefab => Resources.Load<EnemyControl>("Enemy/" + prefabName);
+    public EnemyControl GetPrefab() => Resources.Load<EnemyControl>("Enemy/" + prefabName);
 }

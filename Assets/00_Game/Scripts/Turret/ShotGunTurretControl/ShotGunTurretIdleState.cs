@@ -25,7 +25,7 @@ public class ShotGunTurretIdleState : FSMState
         if (enemy != null)
         {
             float dist = Vector3.Distance(turretControl.gameObject.transform.position, enemy.position);
-            Debug.Log(dist);
+            //Debug.Log(dist);
             if (dist >= turretControl.GetMinAttackRange() && dist <= turretControl.GetMaxAttackRange())
             {
                 turretControl.SetTarget(enemy);

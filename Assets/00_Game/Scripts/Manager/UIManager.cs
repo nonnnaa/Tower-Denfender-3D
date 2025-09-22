@@ -10,7 +10,7 @@ public class UIManager : SingletonMono<UIManager>
     protected override void Awake()
     {
         base.Awake();
-        // load UI Prefab tu Resources
+        // load UI GetPrefab tu Resources
         UICanvas[] prefabs = Resources.LoadAll<UICanvas>($"UI/");
         for (int i = 0; i < prefabs.Length; i++)
         {

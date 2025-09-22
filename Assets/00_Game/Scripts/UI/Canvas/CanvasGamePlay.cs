@@ -13,6 +13,7 @@ public class CanvasGamePlay : UICanvas
         pauseButton.onClick.AddListener(OnClickPauseButton);
     }
 
+    public RectTransform GetHudHp() => hudHp;
     public override void Setup()
     {
         turretIconControl.Init(ConfigManager.Instance.GetFileConfigTurret().GetAllFileConfigTurretRecord());

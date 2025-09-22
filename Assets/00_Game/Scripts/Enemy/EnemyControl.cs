@@ -8,10 +8,16 @@ public enum TeamType
 public class EnemyControl : FSMSystem
 {
     public const TeamType Team = TeamType.TeamB;
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] protected Transform attackPoint;
+    [SerializeField] protected Transform hpHubPoint;
     public Transform AttackPoint => attackPoint;
 
     public virtual void Init(string enemyKey)
+    {
+        
+    }
+
+    public virtual void TakeDamage(int damage)
     {
         
     }

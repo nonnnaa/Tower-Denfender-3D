@@ -576,6 +576,7 @@ MonoBehaviour:
   turretIconControl: {fileID: 1396779763082239559}
   sellTurretControl: {fileID: 1666771046022759178}
   pauseButton: {fileID: 8457596498960362130}
+  hudHp: {fileID: 1186365480805285490}
 --- !u!1 &3691735426389467269
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,10 +966,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2958324366558465532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6259129252215412832
 GameObject:

@@ -19567,5 +19567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   lifeTime: 3
+  delayAfterHit: 0
   projectileName: ProjectileShortGunTurret
   impactName: ImpactShortGunTurret
+  damage: 50

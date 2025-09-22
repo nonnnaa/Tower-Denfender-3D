@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 5
-  fireInterval: 1
+  fireInterval: 3
   maxAttackRange: 100
   minAttackRange: 4
   turretBaseY: {fileID: 8170199373324266509}

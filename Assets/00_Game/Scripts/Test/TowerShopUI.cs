@@ -18,7 +18,7 @@ public class TowerShopUI : MonoBehaviour
     public List<TowerData> towers = new List<TowerData>();
 
     [Header("UI References")]
-    public GameObject towerButtonPrefab; // Prefab chứa Button + Image + Text
+    public GameObject towerButtonPrefab; // GetPrefab chứa Button + Image + Text
     public Transform contentPanel;       // Panel để chứa các button (Vertical Layout / Grid Layout)
 
     void Start()

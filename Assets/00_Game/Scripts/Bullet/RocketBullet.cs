@@ -114,6 +114,11 @@ public class RocketBullet : PoolableObject, IBullet
             var imp = impact.GetComponent<Impact>();
             if (imp != null) imp.SetScaleParticleSystem(3f);
         }
+        EnemyControl enemyControl = enemy.GetComponent<EnemyControl>();
+        if (enemyControl != null)
+        {
+            enemyControl.TakeDamage(1);
+        }
         Invoke(nameof(ReleaseToPool), delayAfterHit);
     }
 
