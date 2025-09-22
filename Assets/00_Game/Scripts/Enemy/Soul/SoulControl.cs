@@ -16,20 +16,21 @@ public class SoulControl : EnemyControl
     public SoulAttackState attackState;
     public SoulHitState hitState;
     public SoulDeadState deadState;
+
     
     public float GetSpeedMove() => dataRecord.Speed;
     public float GetAttackRange() => dataRecord.AttackRange;
     public void Awake()
     {
-        Init("Soul3");
         moveState = new SoulMoveState(this);
         attackState = new SoulAttackState(this);
         hitState = new SoulHitState(this);
         deadState = new SoulDeadState(this);
     }
 
-    public void Init(string enemyKey)
+    public override void Init(string enemyKey)
     {
+        base.Init(enemyKey);
         dataRecord = ConfigManager.Instance.GetFileConfigEnemy().GetEnemyRecordByName(enemyKey);
     }
     

@@ -6,7 +6,7 @@ public class PoolableObject : MonoBehaviour
     {
         transform.rotation = rotation;
     }
-    public virtual void OnSpawn(Vector3 position, Transform parent = null)
+    public virtual void OnSpawn(Vector3 position, Transform newParent = null)
     {
         
     }

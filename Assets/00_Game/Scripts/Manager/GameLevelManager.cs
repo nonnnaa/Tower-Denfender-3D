@@ -39,7 +39,8 @@ public class GameLevelManager : SingletonMono<GameLevelManager>
             int enemyId = enemy.GetId();
             FileConfigEnemyRecord enemyRecord = ConfigManager.Instance.GetFileConfigEnemy().GetEnemyRecordById(enemyId);
             
-            Instantiate(enemyRecord.Prefab, spawnB.position, spawnB.rotation);
+            EnemyControl enemyControl = Instantiate(enemyRecord.Prefab, spawnB.position, spawnB.rotation);
+            enemyControl.Init(enemyRecord.Name);
         }
     }
     

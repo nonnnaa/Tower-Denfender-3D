@@ -86,11 +86,11 @@ public class GatlingBullet : PoolableObject, IBullet
     }
 
     // PoolableObject overrides
-    public override void OnSpawn(Vector3 position, Transform parent = null)
+    public override void OnSpawn(Vector3 position, Transform newParent = null)
     {
-        base.OnSpawn(position, parent);
+        base.OnSpawn(position, newParent);
         transform.position = position;
-        transform.SetParent(parent != null ? parent : PoolManager.Instance.transform);
+        transform.SetParent(newParent != null ? newParent : PoolManager.Instance.transform);
         gameObject.SetActive(true);
     }
 

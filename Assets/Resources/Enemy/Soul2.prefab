@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8690344208485270584}
   - component: {fileID: 5741335435129502511}
   - component: {fileID: 7025929957838357662}
+  - component: {fileID: 1356458747649851740}
   m_Layer: 0
   m_Name: Soul2
   m_TagString: Enemy
@@ -61,13 +62,15 @@ Transform:
   m_GameObject: {fileID: 445284577835188968}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 205.45308, y: -0.0000038146973, z: 376.6915}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6045129396354477118}
   - {fileID: 6958159463804991754}
   - {fileID: 712225022342408957}
+  - {fileID: 1276396687471419585}
+  - {fileID: 4489762649698168029}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4551530798799341802
@@ -103,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba66c47bb5eb40546a12011f1e6ade0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPoint: {fileID: 4489762649698168029}
   dataRecord:
     id: 0
     name: 
@@ -140,6 +144,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilitySkillInfor: []
+--- !u!136 &1356458747649851740
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445284577835188968}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1138949850384953881
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +294,37 @@ Transform:
   - {fileID: 5911446245286418813}
   m_Father: {fileID: 3443088715514680999}
   m_LocalEulerAnglesHint: {x: 53.644554, y: -110.607956, z: 1.817489}
+--- !u!1 &3694528476549282206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276396687471419585}
+  m_Layer: 0
+  m_Name: Hud
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1276396687471419585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694528476549282206}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4244513485545899614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4422925112506842952
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,3 +677,34 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.5078975, y: -0.025929242, z: -0.0000005066395}
     m_Extent: {x: 0.8434075, y: 0.7014874, z: 0.83882356}
   m_DirtyAABB: 0
+--- !u!1 &9156733828977530562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4489762649698168029}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4489762649698168029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9156733828977530562}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4244513485545899614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

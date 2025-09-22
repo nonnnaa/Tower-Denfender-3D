@@ -6,7 +6,7 @@ public class CanvasGamePlay : UICanvas
     [SerializeField] private TurretIconControl turretIconControl;
     [SerializeField] private SellTurretControl sellTurretControl;
     [SerializeField] private Button pauseButton;
-
+    [SerializeField] private RectTransform hudHp;
     protected override void Awake()
     {
         base.Awake();

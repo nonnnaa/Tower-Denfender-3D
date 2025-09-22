@@ -63,4 +63,9 @@ namespace CONSTANT
     {
         public static readonly string SoulCastSpell = "SoulCastSpell";
     }
+
+    public static class UIElementName
+    {
+        public static readonly string HpHub = "HpHub";
+    }
 }
