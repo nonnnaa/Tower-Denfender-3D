@@ -12,13 +12,16 @@ public class TurretSlotControl : MonoBehaviour, IPointerClickHandler
         {
             EventManager.Instance.OnOpenSellTurretPopup.Invoke();
         }
-        CurrentSelectedSlot = this;
-        EventManager.Instance.OnOpenTurretSelection.Invoke();
+        else
+        {
+            CurrentSelectedSlot = this;
+            EventManager.Instance.OnOpenTurretSelection.Invoke(true);
+        }
     }
 
     public void SpawnTurret(string turretName)
     {
-        GameObject go = Instantiate(Resources.Load("Turret/" + turretName, typeof(GameObject)) as GameObject, spawnPoint, true);
+        TurretControl go = Instantiate(Resources.Load("Turret/" + turretName, typeof(TurretControl)) as TurretControl, spawnPoint, true);
         go.transform.localPosition = Vector3.zero;
         CurrentSelectedSlot = null;
         isTaken = true;

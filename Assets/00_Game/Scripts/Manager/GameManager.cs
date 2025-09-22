@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class GameManager : SingletonMono<GameManager>
 {
-    // current state : enum
-    // state pattent
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    public enum GameState
     {
-        
+        None,
+        PAUSE,
+        PLAYING
     }
+    private GameState currentGameState = GameState.None;
+    public GameState CurrentGameState => currentGameState;
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeGameState(GameState newGameState)
     {
-        
+        currentGameState = newGameState;
     }
 }

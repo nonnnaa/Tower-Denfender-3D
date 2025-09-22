@@ -5,12 +5,12 @@ public class CanvasGamePlay : UICanvas
 {
     [SerializeField] private TurretIconControl turretIconControl;
     [SerializeField] private SellTurretControl sellTurretControl;
-    [SerializeField] private Button settingButton;
+    [SerializeField] private Button pauseButton;
 
     protected override void Awake()
     {
         base.Awake();
-        settingButton.onClick.AddListener(OnClickSettingButton);
+        pauseButton.onClick.AddListener(OnClickPauseButton);
     }
 
     public override void Setup()
@@ -19,9 +19,10 @@ public class CanvasGamePlay : UICanvas
         sellTurretControl.Init();
     }
 
-    public void OnClickSettingButton()
+    public void OnClickPauseButton()
     {
-        UIManager.Instance.OpenUI<CanvasSetting>();
-        Debug.Log("Setting Button Onclick");
+        UIManager.Instance.OpenUI<CanvasPauseGame>();
+        GameManager.Instance.ChangeGameState(GameManager.GameState.PAUSE);
+        Debug.Log("Pause Button Onclick");
     }
 }

@@ -3,6 +3,16 @@ using UnityEngine;
 public class TurretControl : FSMSystem
 {
     protected HealthControl healthControl;
+
+    protected override void Update()
+    {
+        if (GameManager.Instance.CurrentGameState == GameManager.GameState.PAUSE)
+        {
+            return;
+        }
+        base.Update();
+    }
+
     protected virtual void OnInit()
     {
         

@@ -20,4 +20,5 @@ public class SpriteLibControl : SingletonMono<SpriteLibControl>
     {
         return dic[name_srpite];
     }
+    
 }

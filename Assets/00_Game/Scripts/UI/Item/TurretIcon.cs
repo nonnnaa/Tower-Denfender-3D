@@ -16,6 +16,7 @@ public class TurretIcon : MonoBehaviour
         if (TurretSlotControl.CurrentSelectedSlot != null)
         {
             TurretSlotControl.CurrentSelectedSlot.SpawnTurret(record.Name);
+            EventManager.Instance.OnOpenTurretSelection.Invoke(false);
         }
     }
 }

@@ -22,9 +22,10 @@ public class GameLevelManager : SingletonMono<GameLevelManager>
 
     IEnumerator StartWaves()
     {
-        foreach (var wave in enemiesInWaves)
+        for(int  i = 0; i < enemiesInWaves.Count; i++)
         {
-            yield return StartCoroutine(StartNewWave(wave));
+            yield return new WaitForSeconds(gameLevelRecord.TimeStartWaves[i]);
+            StartCoroutine(StartNewWave(enemiesInWaves[i]));
         }
     }
 

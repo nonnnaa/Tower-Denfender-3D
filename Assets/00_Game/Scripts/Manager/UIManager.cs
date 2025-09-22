@@ -6,6 +6,7 @@ public class UIManager : SingletonMono<UIManager>
     Dictionary<System.Type, UICanvas> canvasActives = new Dictionary<System.Type, UICanvas>();
     Dictionary<System.Type, UICanvas> canvasPrefabs = new Dictionary<System.Type, UICanvas>();
     [SerializeField] private Transform parent;
+    
     protected override void Awake()
     {
         base.Awake();

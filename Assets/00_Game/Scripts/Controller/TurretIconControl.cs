@@ -25,10 +25,10 @@ public class TurretIconControl : MonoBehaviour
         OnClose();
     }
 
-    private void OnOpen()
+    private void OnOpen(bool isOpen)
     {
-        gameObject.SetActive(true);
-        closeButton.gameObject.SetActive(true);
+        gameObject.SetActive(isOpen);
+        closeButton.gameObject.SetActive(isOpen);
     }
 
     private void OnClose()

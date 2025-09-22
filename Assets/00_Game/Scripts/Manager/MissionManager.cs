@@ -12,8 +12,5 @@ public class MissionManager : SingletonMono<MissionManager>
         enemiesInWaves = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(0).EnemyWaves;
     }
 
-    public void DropTurret(FileConfigTurretRecord record)
-    {
-        
-    }
+    
 }
