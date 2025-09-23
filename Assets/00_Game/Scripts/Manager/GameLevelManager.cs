@@ -11,10 +11,14 @@ public class GameLevelManager : SingletonMono<GameLevelManager>
     protected override void Awake()
     {
         base.Awake();
-        gameLevelRecord = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(1);
-        enemiesInWaves = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(1).EnemyWaves;
+        InitLevel(LevelData.SelectedLevelId+1);
     }
 
+    public void InitLevel(int index)
+    {
+        gameLevelRecord = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(index);
+        enemiesInWaves = ConfigManager.Instance.GetFileConfigGameLevel().GetFileConfigGameLevelRecordById(index).EnemyWaves;
+    }
     private void Start()
     {
         StartCoroutine(StartWaves());
