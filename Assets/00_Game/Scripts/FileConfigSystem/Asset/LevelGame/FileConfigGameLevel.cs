@@ -16,4 +16,20 @@ public class FileConfigGameLevel : FileConfig<FileConfigGameLevelRecord>
         }
         return null;
     }
+
+    public int GetEnemyCount(int id)
+    {
+        int count = 0;
+        foreach (var record in records)
+        {
+            if (record.Id == id)
+            {
+                foreach (var wave in record.EnemyWaves)
+                {
+                    count += wave.Count;
+                }
+            }
+        }
+        return count;
+    }
 }

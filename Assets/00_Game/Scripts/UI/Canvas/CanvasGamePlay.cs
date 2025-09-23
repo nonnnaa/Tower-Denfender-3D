@@ -23,7 +23,7 @@ public class CanvasGamePlay : UICanvas
     public void OnClickPauseButton()
     {
         UIManager.Instance.OpenUI<CanvasPauseGame>();
-        GameManager.Instance.ChangeGameState(GameManager.GameState.PAUSE);
+        //GameManager.Instance.ChangeGameState(GameManager.GameState.PAUSE);
         Debug.Log("Pause Button Onclick");
     }
 }

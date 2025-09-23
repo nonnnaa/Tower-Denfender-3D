@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 7319165809553563182}
   - component: {fileID: 7762884890134477091}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,14 +413,14 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &5102095502883815042
 MonoBehaviour:
@@ -453,6 +453,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestroyOnClose: 0
   closeButton: {fileID: 6227375393149825288}
+  resumeButton: {fileID: 7750227971760456098}
+  quitButton: {fileID: 6667821393001256988}
 --- !u!1 &2763812062095166049
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +468,7 @@ GameObject:
   - component: {fileID: 2788841510377457242}
   - component: {fileID: 7750227971760456098}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Resume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +743,7 @@ GameObject:
   - component: {fileID: 9187850847706352475}
   - component: {fileID: 2408709563055892862}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Restart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1254,7 +1256,7 @@ GameObject:
   - component: {fileID: 2865626079716386639}
   - component: {fileID: 6667821393001256988}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

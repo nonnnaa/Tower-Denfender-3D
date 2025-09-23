@@ -20,8 +20,8 @@ MonoBehaviour:
     hp: 100
     atk: 15
     def: 5
-    speed: 2.5
-    attackRange: 2
+    speed: 1
+    attackRange: 1
   - id: 2
     name: Soul2
     prefabName: Soul2
@@ -29,8 +29,8 @@ MonoBehaviour:
     hp: 200
     atk: 25
     def: 10
-    speed: 2
-    attackRange: 2
+    speed: 1.25
+    attackRange: 1
   - id: 3
     name: Soul3
     prefabName: Soul3
@@ -38,5 +38,5 @@ MonoBehaviour:
     hp: 400
     atk: 40
     def: 20
-    speed: 4
-    attackRange: 8
+    speed: 1.5
+    attackRange: 1

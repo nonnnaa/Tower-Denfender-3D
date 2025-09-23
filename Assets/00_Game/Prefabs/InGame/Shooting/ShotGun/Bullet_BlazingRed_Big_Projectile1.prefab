@@ -19565,9 +19565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d077721088448804bb0b9e063fee96c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 50
   lifeTime: 3
   delayAfterHit: 0
   projectileName: ProjectileShortGunTurret
   impactName: ImpactShortGunTurret
-  damage: 50
+  damage: 100

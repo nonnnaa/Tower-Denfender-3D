@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using System.Collections;
 using Random = UnityEngine.Random;
@@ -46,35 +45,40 @@ public class LightningControl : MonoBehaviour
         instanceMaterials = new Material[materials.Length];
     }
 
+    private Coroutine tilingCoroutine;
+
     private void OnEnable()
     {
         Initialize();
-        StartCoroutine(UpdateTiling());
+        tilingCoroutine = StartCoroutine(UpdateTiling());
         if (lineRendererComponent != null)
             lineRendererComponent.enabled = true;
-        targetPoint.SetParent(transform);
+        ShowLine();
+        PlayParticles();
     }
-
-    void OnDisable()
+    
+    private void OnDisable()
     {
         if (lineRendererComponent != null)
+        {
             lineRendererComponent.enabled = false;
+        }
         run = false;
-        StopCoroutine(UpdateTiling());
+        if (tilingCoroutine != null)
+        {
+            StopCoroutine(tilingCoroutine);
+            tilingCoroutine = null;
+        }
+        HideLine();
+        StopParticles();
+        StopAllCoroutines();
     }
 
+    private Transform currentTarget;
     public void SetTarget(Transform newTarget)
     {
-        // if (Physics.Raycast(transform.position, (newTarget.position - transform.position).normalized, 
-        //         out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask($"Enemy")))
-        // {
-           // targetPoint.position = hit.point;
-           // targetPoint.LookAt(newTarget);
-           
-           targetPoint.position = newTarget.position;
-           targetPoint.rotation = newTarget.rotation;
-           targetPoint.SetParent(newTarget);
-        //}
+        targetPoint = newTarget;
+        
     }
 
     private void Initialize()
@@ -116,81 +120,84 @@ public class LightningControl : MonoBehaviour
     {
         while (run)
         {
-            if (targetPoint != null)
+            if (targetPoint == null)
             {
-                if (Physics.Raycast(transform.position, (targetPoint.position - transform.position).normalized, 
-                        out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask($"Enemy")))
+                HideLine();
+                StopParticles();
+                yield return null;
+                continue;
+            }
+            
+            if (Physics.Raycast(transform.position, (targetPoint.position - transform.position).normalized, 
+                    out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask($"Enemy")))
+            {
+                impactLightningTransform.position = hit.point;
+                impactLightningTransform.LookAt(transform);
+            }
+            currentFrame++;
+            if (currentFrame >= rows * columns)
+                currentFrame = 0;
+
+            lineRendererComponent.positionCount = points;
+            lineRendererComponent.startWidth = lineScale;
+            lineRendererComponent.endWidth = lineScale;
+
+            Vector3 startPos = beginPoint.position;
+            Vector3 endPos = targetPoint.position;
+            lineRendererComponent.SetPosition(0, startPos);
+            lineRendererComponent.SetPosition(points - 1, endPos);
+
+            if (points >= 3)
+            {
+                for (int i = 1; i < points - 1; i++)
                 {
-                    impactLightningTransform.position = hit.point;
-                    impactLightningTransform.LookAt(transform);
-                }
-                currentFrame++;
-                if (currentFrame >= rows * columns)
-                    currentFrame = 0;
+                    float scale = (float)i / (points - 1);
+                    var pos = Vector3.Lerp(startPos, endPos, scale);
 
-                lineRendererComponent.positionCount = points;
-                lineRendererComponent.startWidth = lineScale;
-                lineRendererComponent.endWidth = lineScale;
-
-                Vector3 startPos = beginPoint.position;
-                Vector3 endPos = targetPoint.position;
-                lineRendererComponent.SetPosition(0, startPos);
-                lineRendererComponent.SetPosition(points - 1, endPos);
-
-                if (points >= 3)
-                {
-                    for (int i = 1; i < points - 1; i++)
+                    if (distanceBasedDisplacement)
                     {
-                        float scale = (float)i / (points - 1);
-                        var pos = Vector3.Lerp(startPos, endPos, scale);
-
-                        if (distanceBasedDisplacement)
-                        {
-                            float distance = Vector3.Distance(startPos, endPos);
-                            distance = distance * pointsDisplacement / points;
-                            pos.y += Random.Range(-distance, distance);
-                            pos.x += Random.Range(-distance, distance);
-                            if (zDisplacement) pos.z += Random.Range(-distance, distance);
-                        }
-                        else
-                        {
-                            pos.y += Random.Range(-pointsDisplacement, pointsDisplacement);
-                            pos.x += Random.Range(-pointsDisplacement, pointsDisplacement);
-                            if (zDisplacement) pos.z += Random.Range(-pointsDisplacement, pointsDisplacement);
-                        }
-                        lineRendererComponent.SetPosition(i, pos);
+                        float distance = Vector3.Distance(startPos, endPos);
+                        distance = distance * pointsDisplacement / points;
+                        pos.y += Random.Range(-distance, distance);
+                        pos.x += Random.Range(-distance, distance);
+                        if (zDisplacement) pos.z += Random.Range(-distance, distance);
                     }
-                }
-
-                if (randomize)
-                {
-                    if (Random.Range(0, 2) == 0) // fix: trả về 0 hoặc 1
+                    else
                     {
-                        size.y *= -1;
-                        if (Random.Range(0, 2) == 0)
-                            size.x *= -1;
-                        instanceMaterial.SetTextureScale(MainTex, size);
+                        pos.y += Random.Range(-pointsDisplacement, pointsDisplacement);
+                        pos.x += Random.Range(-pointsDisplacement, pointsDisplacement);
+                        if (zDisplacement) pos.z += Random.Range(-pointsDisplacement, pointsDisplacement);
                     }
-                    Vector2 offset = offsets[Random.Range(0, max)];
-                    instanceMaterial.SetTextureOffset(MainTex, offset);
+                    lineRendererComponent.SetPosition(i, pos);
                 }
-                else
+            }
+
+            if (randomize)
+            {
+                if (Random.Range(0, 2) == 0) 
                 {
-                    int col = currentFrame % columns;
-                    int row = currentFrame / columns;
-                    Vector2 offset = new Vector2(col / (float)columns, row / (float)rows);
-                    instanceMaterial.SetTextureOffset(MainTex, offset);
+                    size.y *= -1;
+                    if (Random.Range(0, 2) == 0)
+                        size.x *= -1;
+                    instanceMaterial.SetTextureScale(MainTex, size);
                 }
-
-                lineRendererComponent.sortingLayerName = "3";
-                lineRendererComponent.sortingOrder = 500;
-
-                yield return new WaitForSeconds(1f / framesPerSecond);
+                Vector2 offset = offsets[Random.Range(0, max)];
+                instanceMaterial.SetTextureOffset(MainTex, offset);
             }
             else
             {
-                yield return new WaitForSeconds(1f / framesPerSecond);
+                int col = currentFrame % columns;
+                int row = currentFrame / columns;
+                Vector2 offset = new Vector2(col / (float)columns, row / (float)rows);
+                instanceMaterial.SetTextureOffset(MainTex, offset);
             }
+
+            lineRendererComponent.sortingLayerName = "3";
+            lineRendererComponent.sortingOrder = 500;
+
+            yield return new WaitForSeconds(1f / framesPerSecond);
+
+            yield return null;
         }
     }
 
@@ -221,4 +228,31 @@ public class LightningControl : MonoBehaviour
         }
         UpdateMaterial();
     }
+    [SerializeField] private ParticleSystem impactParticleSystem, muzzleFlareParticleSystem;
+    
+    private void PlayParticles()
+    {
+        impactParticleSystem?.Play();
+        muzzleFlareParticleSystem?.Play();
+    }
+
+    private void StopParticles()
+    {
+        impactParticleSystem?.Stop();
+        muzzleFlareParticleSystem?.Stop();
+    }
+    private void HideLine()
+    {
+        if (lineRendererComponent != null)
+            lineRendererComponent.enabled = false;
+    }
+
+    private void ShowLine()
+    {
+        if (lineRendererComponent != null)
+        {
+            lineRendererComponent.enabled = true;
+        }
+    }
+
 }

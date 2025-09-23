@@ -39161,6 +39161,8 @@ MonoBehaviour:
   lineScale: 3
   currentMaterialIndex: 0
   run: 0
+  impactParticleSystem: {fileID: 3353733311459209105}
+  muzzleFlareParticleSystem: {fileID: 1582835937144308297}
 --- !u!1 &6440580948081808500
 GameObject:
   m_ObjectHideFlags: 0
@@ -53902,8 +53904,6 @@ MonoBehaviour:
   turretHeadX: {fileID: 457858589453288593}
   firePoint: {fileID: 8993194101526645610}
   lightningControl: {fileID: 4003165434006153184}
-  impactParticleSystem: {fileID: 3353733311459209105}
-  muzzleFlareParticleSystem: {fileID: 1582835937144308297}
 --- !u!1 &8775580941230227536
 GameObject:
   m_ObjectHideFlags: 0

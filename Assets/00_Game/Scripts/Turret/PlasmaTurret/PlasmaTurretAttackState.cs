@@ -56,6 +56,7 @@ public class PlasmaTurretAttackState : FSMState
     {
         while (true)
         {
+            if (newTarget == null) yield break;
             Vector3 dir = newTarget.position - turretControl.GetFirePoint().position;
             // Rotate Y
             Vector3 flatDir = new Vector3(dir.x, 0f, dir.z);

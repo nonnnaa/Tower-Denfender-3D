@@ -86,7 +86,6 @@ public class ShotGunBullet : PoolableObject, IBullet
     
     public void HitTarget(GameObject enemy, Vector3 point)
     {
-        
         PoolManager.Instance.Spawn(impactName, point, enemy.transform);
         EnemyControl enemyControl = enemy.GetComponent<EnemyControl>();
         if (enemyControl != null)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LightningTurretControl : TurretControl
@@ -15,7 +16,7 @@ public class LightningTurretControl : TurretControl
     [SerializeField] private Transform turretHeadX;        
     [SerializeField] private Transform firePoint;  
     [SerializeField] private LightningControl lightningControl;
-    [SerializeField] private ParticleSystem impactParticleSystem, muzzleFlareParticleSystem;
+    
     
     
     #region Temp
@@ -79,17 +80,4 @@ public class LightningTurretControl : TurretControl
         turretHeadX.localRotation = Quaternion.Lerp(
             turretHeadX.localRotation, defaultHeadXRot, Time.deltaTime * rotationSpeed);
     }
-    public void StopParticleSystem(bool isStop)
-    {
-         if (!isStop)
-         {
-             impactParticleSystem.Play();
-             muzzleFlareParticleSystem.Play();
-         }
-         else
-         {
-             impactParticleSystem.Stop();
-             muzzleFlareParticleSystem.Stop();
-         }
-    } 
 }

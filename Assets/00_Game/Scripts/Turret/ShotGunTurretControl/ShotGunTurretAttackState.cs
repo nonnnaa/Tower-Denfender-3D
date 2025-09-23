@@ -58,6 +58,7 @@ public class ShotGunTurretAttackState : FSMState
     {
         while (true)
         {
+            if (newTarget == null) yield break;
             Vector3 dir = newTarget.position - turretControl.GetFirePoint().position;
 
             // Rotate Y

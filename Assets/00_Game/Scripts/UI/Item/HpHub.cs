@@ -4,8 +4,7 @@ using UnityEngine.UI;
 using CONSTANT;
 public class HpHub : PoolableObject
 {
-    [Header("UI Elements")]
-    [SerializeField] private Image hpFG;
+    [SerializeField] private Image hpImage;
     [SerializeField] private CanvasGroup canvasGroup;
 
     private RectTransform rect;
@@ -19,9 +18,10 @@ public class HpHub : PoolableObject
     {
         rect = GetComponent<RectTransform>();
     }
-    public override void OnSpawn(Vector3 position, Transform parent = null)
+    
+    public override void OnSpawn(Vector3 position, Transform newParent = null)
     {
-        base.OnSpawn(position, parent);
+        base.OnSpawn(position, newParent);
         gameObject.SetActive(true);
         canvasGroup.alpha = 0;
     }
@@ -36,25 +36,22 @@ public class HpHub : PoolableObject
         gameObject.SetActive(false);
     }
     
-    public void SetupHub(Transform anchorHub, RectTransform parent)
+    public void SetupHub(Transform newAnchorHub, RectTransform newParent)
     {
-        this.anchorHub = anchorHub;
-        this.parent = parent;
-        transform.SetParent(parent, false);
-        
-        hpFG.fillAmount = 1;
+        anchorHub = newAnchorHub;
+        parent = newParent;
+        transform.SetParent(newParent, false);
+        hpImage.fillAmount = 1;
         canvasGroup.alpha = 0;
     }
     
     public void UpdateHp(int cur, int max)
     {
         canvasGroup.alpha = 1;
-
         float val = (float)cur / max;
 
         twHp?.Kill();
-        twHp = hpFG.DOFillAmount(val, 0.5f).SetEase(Ease.OutCubic);
-
+        twHp = hpImage.DOFillAmount(val, 0.5f).SetEase(Ease.OutCubic);
         twFade?.Kill();
         twFade = canvasGroup.DOFade(0, 0.5f).SetDelay(1f).OnComplete(() =>
         {
@@ -67,8 +64,7 @@ public class HpHub : PoolableObject
         if (anchorHub != null && parent != null)
         {
             Vector2 screenPoint = Camera.main.WorldToScreenPoint(anchorHub.position);
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenPoint, null, out localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenPoint, null, out Vector2 localPoint);
             rect.anchoredPosition = localPoint;
         }
     }

@@ -38,13 +38,13 @@ public class ShotGunTurretIdleState : FSMState
 
     private Transform FindNearestEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        EnemyControl[] enemies = GameObject.FindObjectsByType<EnemyControl>(FindObjectsSortMode.None);
         Transform nearest = null;
         float minDist = Mathf.Infinity;
 
-        foreach (GameObject e in enemies)
+        foreach (EnemyControl e in enemies)
         {
-            float dist = Vector3.Distance(turretControl.GetFirePoint().position, e.transform.position);
+            float dist = Vector3.Distance(turretControl.GetFirePoint().position, e.AttackPoint.position);
             if (dist < minDist)
             {
                 minDist = dist;

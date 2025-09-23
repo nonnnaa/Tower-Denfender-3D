@@ -71,8 +71,9 @@ public class SoulControl : EnemyControl
         Debug.Log(dataInGame.Hp + " - " + damage);
     }
 
-    private void OnDead()
+    protected override void OnDead()
     {
-        Destroy(gameObject);
+        base.OnDead();
+        EventManager.Instance.OnEnemyDestroy?.Invoke();
     }
 }

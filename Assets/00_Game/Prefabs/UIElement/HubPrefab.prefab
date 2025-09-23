@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d544ab29c3cf5834eb3a7e937b65deba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpFG: {fileID: 3126634187110491938}
+  hpImage: {fileID: 3126634187110491938}
   canvasGroup: {fileID: 9165222120591080060}
 --- !u!1 &5095868011009319800
 GameObject:

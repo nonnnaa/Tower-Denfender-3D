@@ -35,7 +35,6 @@ public class LightningTurretAttackState : FSMState
             attackCoroutine = null;
         }
         turretControl.GetLightningControl().enabled = false;
-        turretControl.StopParticleSystem(true);
     }
 
     private IEnumerator AttackRoutine()
@@ -46,7 +45,6 @@ public class LightningTurretAttackState : FSMState
             {
                 turretControl.ChangeState(turretControl.idleState);
                 turretControl.GetLightningControl().enabled = false;
-                turretControl.StopParticleSystem(true);
                 yield break;
             }
 
@@ -55,14 +53,12 @@ public class LightningTurretAttackState : FSMState
             {
                 turretControl.ChangeState(turretControl.idleState);
                 turretControl.GetLightningControl().enabled = false;
-                turretControl.StopParticleSystem(true);
                 yield break;
             }
             Fire();
             yield return new WaitForSeconds(turretControl.GetTimeAttack());
             
             turretControl.GetLightningControl().enabled = false;
-            turretControl.StopParticleSystem(true);
             
             yield return new WaitForSeconds(turretControl.GetFireInterval());
         }
@@ -97,6 +93,5 @@ public class LightningTurretAttackState : FSMState
     {
         turretControl.GetLightningControl().enabled = true;
         turretControl.GetLightningControl().SetTarget(target);
-        turretControl.StopParticleSystem(false);
     }
 }

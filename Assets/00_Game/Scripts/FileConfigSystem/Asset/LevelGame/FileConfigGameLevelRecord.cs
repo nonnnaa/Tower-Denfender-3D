@@ -56,6 +56,16 @@ public class FileConfigGameLevelRecord
             return result1;
         }
     }
+
+    public int GetEnemyCount()
+    {
+        int count = 0;
+        foreach (var wave in EnemyWaves)
+        {
+            count += wave.Count;
+        }
+        return count;
+    }
 }
 // idEnemy - coolDown : idEnemy xem trong excel FileConfigEnemy id này chứa thông tin về level lẫn monster type r
 public class EnemyInWave

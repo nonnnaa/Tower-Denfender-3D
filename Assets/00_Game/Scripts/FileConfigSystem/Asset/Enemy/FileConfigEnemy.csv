@@ -1,4 +1,4 @@
 ﻿id,name,prefabName,level,hp,atk,def,speed,attackRange
-1,Soul1,Soul1,1,100,15,5,2.5,2
-2,Soul2,Soul2,2,200,25,10,2,2
-3,Soul3,Soul3,3,400,40,20,1.5,2
+1,Soul1,Soul1,1,100,15,5,1,1
+2,Soul2,Soul2,2,200,25,10,1.25,1
+3,Soul3,Soul3,3,400,40,20,1.5,1

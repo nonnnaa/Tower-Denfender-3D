@@ -21,4 +21,8 @@ public class EnemyControl : FSMSystem
     {
         
     }
+    protected virtual void OnDead()
+    {
+        Destroy(gameObject);
+    }
 }
